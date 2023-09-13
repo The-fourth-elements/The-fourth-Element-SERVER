@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const {userCreateController,userGetController, userLoginController, userGetAllController} = require('../controllers/userController')
+const { 
+    userCreateController, 
+    userGetController, 
+    userLoginController, 
+    userGetAllController
+} = require('../controllers/userController')
  
 //crear y recibir informacion de un usuario.
 router.post('/user', userCreateController);
