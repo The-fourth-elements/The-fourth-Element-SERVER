@@ -11,7 +11,7 @@ const server = express();
 server.use(express.json());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*') // aca no se que ponerle xd porque no seria localhost:3000 3===D
+    res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
@@ -28,6 +28,3 @@ server.use((err, req, res, next) => {
 });
 
 module.exports = server;
-
-
-// se hizo esta configuracion si esta mal vallase a la concha de su madre xd <3
