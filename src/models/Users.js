@@ -1,44 +1,51 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const bcrypt = require('bcrypt')
 
 const UserSchemas = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
         require: true
     },
-    lastName:{
+    lastName: {
         type: String
     },
-    adress:{
+    adress: {
         type: String
     },
-    city:{
-        type: Number
+    city: {
+        type: Schema.Types.ObjectId,
+        ref: 'City'
     },
-    natinality:{
-        type: Number
+    nationality: {
+        type: Schema.Types.ObjectId,
+        ref: 'Nationality'
     },
-    module:{
-        type: Array
+    module: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Module'
+    }],
+    role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
     },
-    role:{
-        type: Number
+    progress: {
+        type: Schema.Types.ObjectId,
+        ref: 'Progress'
     },
-    progress:{
-        type: Number
+    status: {
+        type: Schema.Types.ObjectId,
+        ref: 'Status'
     },
-    status:{
-        type: Boolean
-    },
-    profile_img:{
+    profile_img: {
         type: String
     },
-    email:{
+    email: {
         type: String,
         unique: true
     },
-    password:{
+    password: {
         type: String
     }
 });
