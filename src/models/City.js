@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-const CityMongoose = new mongoose.Schemas({
+const CityMongoose = new mongoose.Schema({
     name:{
         type: String
     }
 })
 
-module.exports = mongoose.model("City", CityMongoose);
+const City = mongoose.model("City", CityMongoose);
+module.exports = City;

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const NationalityMongoose = new mongoose.Schemas({
+const NationalityMongoose = new mongoose.Schema({
     name:{
         type: String
     }
 })
 
-
-module.exports = mongoose.model("Nationality", NationalityMongoose);
+const Nationality = mongoose.model("Nationality", NationalityMongoose);
+module.exports = Nationality;
