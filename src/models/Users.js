@@ -52,12 +52,29 @@ const UserSchemas = new mongoose.Schema({
 
 UserSchemas.pre("save", async function(next){
 const salt = await bcrypt.genSalt();
-console.log(this.password)
-
 this.password = await bcrypt.hash(this.password,salt)
-console.log(this.password)
 next();
 })
+
+
+UserSchemas.statics.login = async function(email,password){
+    
+    try {
+        
+        const user = await this.findOne({email})
+    
+        if(user){
+          const auth = await bcrypt.compare(password,user.password)
+          if(auth){
+            return user
+          } 
+          throw Error('password incorrect')
+        }
+        throw Error('email is invalid')
+    } catch (error) {
+        return {"error": error.message}
+    }
+}
 
 
 const Users = mongoose.model("Users", UserSchemas);

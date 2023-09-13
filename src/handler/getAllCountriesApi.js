@@ -6,8 +6,7 @@ async function getAllCountresApi () {
         const response = await fetch("https://www.universal-tutorial.com/api/countries/")
 
         const countries = await response.json()
-        
-        console.log(countries)
+
     } catch (error) {
         console.log(error.message)
     }
