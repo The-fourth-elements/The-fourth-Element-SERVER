@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 require('dotenv').config();
 const { URL } = process.env;
+const routes = require('./routes/index.js');
 //const expressValidator = require('../src/middleware'); aca es como se veria una carpeta con el middleware de validacion con express-validator
 
 const server = express();
@@ -16,6 +17,8 @@ server.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
   });
+
+server.use('/', routes);
 
 //esto es para que el catch si hay un error lo agarre como tu hermana a esta
 server.use((err, req, res, next) => {
