@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ProgressMongoose = new mongoose.Schemas({
+const ProgressMongoose = new mongoose.Schema({
     certificated:{
         type: Boolean
     },
@@ -12,4 +12,5 @@ const ProgressMongoose = new mongoose.Schemas({
     }
 })
 
-module.exports = mongoose.model("Progress", ProgressMongoose);
+const Progress = mongoose.model("Progress", ProgressMongoose);
+module.exports = Progress;

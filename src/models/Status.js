@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const StatusMongoose = new mongoose.Schemas({
+const StatusMongoose = new mongoose.Schema({
     state:{
         type: Boolean
     },
@@ -14,4 +14,5 @@ const StatusMongoose = new mongoose.Schemas({
     }
 })
 
-module.exports = mongoose.model("Status", StatusMongoose);
+const Status = mongoose.model("Status", StatusMongoose);
+module.exports = Status;

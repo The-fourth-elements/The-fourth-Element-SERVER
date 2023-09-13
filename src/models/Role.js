@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-const RoleMongoose = new mongoose.Schemas({
+const RoleMongoose = new mongoose.Schema({
     permission:{
         type: Number
     }
 })
 
-module.exports = mongoose.model("Role", RoleMongoose);
+const Role = mongoose.model("Role", RoleMongoose);
+module.exports = Role;
