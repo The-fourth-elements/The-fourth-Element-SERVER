@@ -1,72 +1,60 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
 const bcrypt = require('bcrypt')
 
 const UserSchemas = new mongoose.Schema({
-    name: {
+    name:{
         type: String,
         require: true
     },
-    lastName: {
+    lastName:{
         type: String
     },
-    adress: {
+    adress:{
         type: String
     },
-    city: {
-        type: Schema.Types.ObjectId,
-        ref: 'City'
+    city:{
+        type: Number
     },
-    nationality: {
-        type: Schema.Types.ObjectId,
-        ref: 'Nationality'
+    natinality:{
+        type: Number
     },
-    module: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Module'
-    }],
-    role: {
-        type: Schema.Types.ObjectId,
-        ref: 'Role'
+    module:{
+        type: Array
     },
-    progress: {
-        type: Schema.Types.ObjectId,
-        ref: 'Progress'
+    role:{
+        type: Number
     },
-    status: {
-        type: Schema.Types.ObjectId,
-        ref: 'Status'
+    progress:{
+        type: Number
     },
-    profile_img: {
+    status:{
+        type: Boolean
+    },
+    profile_img:{
         type: String
     },
-    email: {
+    email:{
         type: String,
         unique: true
     },
-    password: {
+    password:{
         type: String
     }
 });
 
 UserSchemas.pre("save", async function(next){
-const salt = await bcrypt.genSalt();
-this.password = await bcrypt.hash(this.password,salt)
-next();
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password,salt)
+    next();
 })
 
-
 UserSchemas.statics.login = async function(email,password){
-    
     try {
-        
         const user = await this.findOne({email})
-    
         if(user){
           const auth = await bcrypt.compare(password,user.password)
           if(auth){
-            return user
+            return user;
           } 
           throw Error('password incorrect')
         }
@@ -75,7 +63,6 @@ UserSchemas.statics.login = async function(email,password){
         return {"error": error.message}
     }
 }
-
 
 const Users = mongoose.model("Users", UserSchemas);
 
