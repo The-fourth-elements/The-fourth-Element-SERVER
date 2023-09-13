@@ -11,16 +11,15 @@ const server = express();
 server.use(express.json());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', `${URL}`); // aca no se que ponerle xd porque no seria localhost:3000 3===D
+    res.header('Access-Control-Allow-Origin', '*') // aca no se que ponerle xd porque no seria localhost:3000 3===D
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
   });
-
 server.use('/', routes);
+ 
 
-//esto es para que el catch si hay un error lo agarre como tu hermana a esta
 server.use((err, req, res, next) => {
   const status = err.status || 500;
   const message = err.message || err;
