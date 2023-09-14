@@ -3,11 +3,9 @@ const morgan = require('morgan');
 require('dotenv').config();
 const { URL } = process.env;
 const routes = require('./routes/index.js');
-//const expressValidator = require('../src/middleware'); aca es como se veria una carpeta con el middleware de validacion con express-validator
 
 const server = express();
 
-//server.use(expressValidator()); aca llamaria a la funcion de validaciones 
 server.use(express.json());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
@@ -26,5 +24,6 @@ server.use((err, req, res, next) => {
   console.error(err);
   res.status(status).send(message);
 });
+
 
 module.exports = server;
