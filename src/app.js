@@ -18,7 +18,6 @@ server.use((req, res, next) => {
 
 server.use('/', routes);
 
-//esto es para que el catch si hay un error lo agarre como tu hermana a esta
 server.use((err, req, res, next) => {
   const status = err.status || 500;
   const message = err.message || err;
