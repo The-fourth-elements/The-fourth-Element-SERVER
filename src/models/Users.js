@@ -15,7 +15,7 @@ const UserSchemas = new mongoose.Schema({
     city:{
         type: Number
     },
-    natinality:{
+    nationality:{
         type: Number
     },
     module:{
