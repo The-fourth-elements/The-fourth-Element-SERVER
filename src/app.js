@@ -16,7 +16,6 @@ server.use((req, res, next) => {
     next();
   });
 server.use('/', routes);
- 
 
 server.use((err, req, res, next) => {
   const status = err.status || 500;
