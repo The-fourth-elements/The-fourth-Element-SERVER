@@ -14,10 +14,8 @@ router.post('/login', userLoginController)
 router.get('/user',  userGetController);
 router.get('/users',userGetAllController)
 
-
 // router.get('ruta', funcion);  
 // router.get('ruta', funcion);
 // router.post('ruta', funcion);
-
 
 module.exports = router;
