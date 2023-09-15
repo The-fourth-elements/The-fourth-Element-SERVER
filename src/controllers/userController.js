@@ -2,10 +2,7 @@ const Users = require('../models/Users')
 const {handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
 const { createToken } = require('../services/token')
 
-
-
 //obtener usuario por id
-
 async function userGetController(req,res) {
     try {     
         const {id} = req.query
@@ -19,7 +16,6 @@ async function userGetController(req,res) {
     }
 }
 
-
 //obtener todos los usuarios
 async function userGetAllController(req,res){
     try {     
@@ -32,9 +28,7 @@ async function userGetAllController(req,res){
     }
 }
 
-
 //registro de usuario
-
 async function userCreateController (req,res){
     try {
         const user = req.body;
@@ -46,7 +40,6 @@ async function userCreateController (req,res){
         res.status(400).json(error.message)
     }
 }
-
 
 // logeo del usuario
 async function userLoginController(req,res){
@@ -66,8 +59,6 @@ async function userLoginController(req,res){
         res.status(404).json({"error": error.message})
     }
 }
-
-
 
 module.exports = {
     userGetController,

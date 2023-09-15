@@ -17,5 +17,4 @@ router.post('/auth',requireAuthController)
 // router.get('ruta', funcion);
 // router.post('ruta', funcion);
 
-
 module.exports = router;
