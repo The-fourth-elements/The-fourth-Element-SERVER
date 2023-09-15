@@ -1,5 +1,6 @@
 const Users = require('../models/Users')
 const {handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
+const { createToken } = require('../services/token')
 
 //obtener usuario por id
 async function userGetController(req,res) {
@@ -29,11 +30,12 @@ async function userGetAllController(req,res){
 
 //registro de usuario
 async function userCreateController (req,res){
-
     try {
         const user = req.body;
         const newUser = await Users.create(user)
-        res.status(200).json(newUser)
+        const token = await createToken(String(newUser._id))
+        res.cookie("jwt",token, {httpOnly: true })
+        res.status(200).json({access:true,message:"User created"})
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -45,7 +47,11 @@ async function userLoginController(req,res){
         const {email,password} = req.body
         const user = await Users.login(email,password)
         if(!user?.error){
-            res.status(200).json({"user": user._id});
+            
+           
+            const token =  createToken(String(user._id))
+            res.cookie("jwt",token,{ httpOnly: true })
+            res.status(200).json({ success: true, message: "Login successful" });        
         }
         else
         throw Error(response.error)
