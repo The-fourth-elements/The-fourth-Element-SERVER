@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { isEmail } = require('validator');
+const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 
 const UserSchemas = new mongoose.Schema({
     name:{
@@ -35,10 +37,20 @@ const UserSchemas = new mongoose.Schema({
     },
     email:{
         type: String,
-        unique: true
+        unique: true,
+        required: [true, 'Please enter an email'],
+        lowercase: true,
+        validate: [isEmail, 'Please enter a valid email']
     },
     password:{
-        type: String
+        type: String,
+        required: [true, 'Please enter an password'],
+        validate: {
+            validator: function(value){
+                return regexPass.test(value);
+            },
+            message: 'Please enter a minimun six characters, one number and one capital letter'
+        }
     }
 });
 
