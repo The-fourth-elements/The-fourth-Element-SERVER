@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const ModuleMongoose = new mongoose.Schema({
     name:{
@@ -12,7 +13,11 @@ const ModuleMongoose = new mongoose.Schema({
     },
     video_url:{
         type: String
-    }
+    },
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Users'
+    }]
 })
 
 const Module = mongoose.model("Module", ModuleMongoose);

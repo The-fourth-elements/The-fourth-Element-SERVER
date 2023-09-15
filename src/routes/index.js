@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {userCreateController,userGetController, userLoginController, userGetAllController} = require('../controllers/userController')
-const {requireAuthController} = require('../controllers/authController')
+ 
 //crear y recibir informacion de un usuario.
 router.post('/user', userCreateController);
 router.post('/login', userLoginController)
