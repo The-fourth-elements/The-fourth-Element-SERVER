@@ -55,6 +55,7 @@ async function resetPassword(req, res){
         
 }
 
+
 module.exports ={
     requireAuthController,
     forgotPassword,

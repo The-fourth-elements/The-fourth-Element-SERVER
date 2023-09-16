@@ -12,7 +12,8 @@ function createToken(content){
 function validateToken(token){
    return jwt.verify(token,SECRET_WORD,(err,decodedToken)=>{
         if(err){
-            return {error:err.expiredAt};
+            console.log(decodedToken)
+            return {error:err.expiredAt}
         } else {
            return true;
         }

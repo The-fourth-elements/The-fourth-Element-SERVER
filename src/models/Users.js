@@ -19,12 +19,12 @@ const UserSchemas = new mongoose.Schema({
         validate: [isAlpha, 'Address must be a string']
     },
     city:{
-        type: String,
-        validate: [isAlpha, 'City must be a string']
+        type: mongoose.Types.ObjectId,
+        // validate: [isMongoId, 'City must be a ObjectId']
     },
     nationality:{
-        type: String,
-        validate: [isAlpha, 'Nationality must be a string']
+        type: mongoose.Types.ObjectId,
+        // validate: [isMongoId, 'Nationality must be a ObjectId']
     },
     module:{
         type: Array

@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
-
+const {isAlpha} = require('validator')
 const CityMongoose = new mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        unique:true,
+        required: [true, 'Please enter an city name'],
+        validate: [isAlpha, 'Name must be a string']
     }
 })
 
