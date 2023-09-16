@@ -1,6 +1,6 @@
 const { Users } = require('../models/Users')
-const {handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
-const { createToken } = require('../services/token');
+const { handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
+const { createToken } = require('../services/token')
 const findOrCreateCity = require('../handler/findOrCreateCity');
 const findOrCreateNationality = require('../handler/findOrCreateNationality')
 
