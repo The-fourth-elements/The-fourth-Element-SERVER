@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const {isEmail, isURL, isAlpha } = require('validator');
+const {isEmail, isURL,isMongoId, isAlpha } = require('validator');
 const {encrypt,compare} = require('../services/crypt');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
@@ -20,12 +19,12 @@ const UserSchemas = new mongoose.Schema({
         validate: [isAlpha, 'Address must be a string']
     },
     city:{
-        type: String,
-        validate: [isAlpha, 'City must be a string']
+        type: mongoose.Types.ObjectId,
+        // validate: [isMongoId, 'City must be a ObjectId']
     },
     nationality:{
-        type: String,
-        validate: [isAlpha, 'Nationality must be a string']
+        type: mongoose.Types.ObjectId,
+        // validate: [isMongoId, 'Nationality must be a ObjectId']
     },
     module:{
         type: Array

@@ -1,5 +1,5 @@
 const Nationality = require('../models/Nationality')
-async function allCountryDB (country) {
+module.exports = async (country) => {
     try {
         
         const countries = await Nationality.findOne({name:country})
@@ -17,5 +17,3 @@ async function allCountryDB (country) {
 
 }
 
-
-module.exports = allCountryDB
