@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose
 
 const ProgressMongoose = new mongoose.Schema({
     certificated:{
@@ -10,11 +9,7 @@ const ProgressMongoose = new mongoose.Schema({
     },
     assistance:{
         type: Number
-    },
-    users: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Users'
-    }]
+    }
 })
 
 const Progress = mongoose.model("Progress", ProgressMongoose);
