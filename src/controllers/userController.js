@@ -1,5 +1,5 @@
 const { Users } = require('../models/Users')
-const {handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
+const { handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
 const { createToken } = require('../services/token')
 
 //obtener usuario por id
