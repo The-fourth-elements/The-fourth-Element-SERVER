@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 require('dotenv').config();
-const { URL } = process.env;
 const routes = require('./routes/index.js');
 const cookieParser = require('cookie-parser')
 

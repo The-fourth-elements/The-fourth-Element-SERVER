@@ -99,5 +99,6 @@ const Users = mongoose.model("Users", UserSchemas);
 
 module.exports = {
     Users,
-    regexPass
+    regexPass,
+    regexNumber
 };
