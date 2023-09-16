@@ -1,39 +1,59 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const {isEmail, isURL, isAlpha } = require('validator');
 const {encrypt,compare} = require('../services/crypt');
-const { isEmail } = require('validator');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
+const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
     name:{
         type: String,
-        require: true
+        require: true,
+        validate: [isAlpha, 'Name must be a string']
     },
     lastName:{
-        type: String
+        type: String,
+        validate: [isAlpha, 'Last name must be a string']
     },
     adress:{
-        type: String
+        type: String,
+        validate: [isAlpha, 'Address must be a string']
     },
     city:{
-        type: Number
+        type: String,
+        validate: [isAlpha, 'City must be a string']
     },
     nationality:{
-        type: Number
+        type: String,
+        validate: [isAlpha, 'Nationality must be a string']
     },
     module:{
         type: Array
     },
     role:{
-        type: Number
+        type: Number,
+        validate: {
+            validator: function(value){
+                return regexNumber.test(value)
+            },
+            message: 'Role must be a number'
+        }
     },
     progress:{
-        type: Number
+        type: Number,
+        validate: {
+            validator: function(value){
+                return regexNumber.test(value)
+            },
+            message: 'Progress must be a number'
+        }
     },
     status:{
-        type: Boolean
+        type: Boolean,
     },
     profile_img:{
-        type: String
+        type: String,
+        validate: [isURL, 'Profile image must be a valid URL']
     },
     email:{
         type: String,

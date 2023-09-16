@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose
 
 const StatusMongoose = new mongoose.Schema({
     state: {
@@ -12,11 +11,7 @@ const StatusMongoose = new mongoose.Schema({
     },
     ending_date: {
         type: Date
-    },
-    users: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Users'
-    }]
+    }
 })
 
 const Status = mongoose.model("Status", StatusMongoose);
