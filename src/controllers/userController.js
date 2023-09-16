@@ -1,6 +1,8 @@
 const { Users } = require('../models/Users')
 const {handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
-const { createToken } = require('../services/token')
+const { createToken } = require('../services/token');
+const findOrCreateCity = require('../handler/findOrCreateCity');
+const findOrCreateNationality = require('../handler/findOrCreateNationality')
 
 //obtener usuario por id
 async function userGetController(req,res) {
@@ -32,7 +34,12 @@ async function userGetAllController(req,res){
 async function userCreateController (req,res){
     try {
         const user = req.body;
-        const newUser = await Users.create(user);
+        const city = await findOrCreateCity(user.city)
+        const nationality = await findOrCreateNationality(user.nationality)
+
+        if(!city && !nationality) throw Error('faild city or nationality')
+        
+        const newUser = await Users.create({...user, city:city._id, nationality:nationality._id});
         const token = createToken(String(newUser._id));
         res.cookie("jwt",token, {httpOnly: true });
         res.status(200).json({access:true,message:"User created"});
@@ -43,7 +50,7 @@ async function userCreateController (req,res){
 
 // logeo del usuario
 async function userLoginController(req,res){
-    try {
+    try { 
         const {email,password} = req.body;
         const user = await Users.login(email,password);
         if(!user?.error){
