@@ -1,39 +1,59 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const {isEmail, isURL, isAlpha } = require('validator');
 const {encrypt,compare} = require('../services/crypt');
-const { isEmail } = require('validator');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
+const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
     name:{
         type: String,
-        require: true
+        require: true,
+        validate: [isAlpha, 'Name must be a string']
     },
     lastName:{
-        type: String
+        type: String,
+        validate: [isAlpha, 'Last name must be a string']
     },
     adress:{
-        type: String
+        type: String,
+        validate: [isAlpha, 'Address must be a string']
     },
     city:{
-        type: Number
+        type: String,
+        validate: [isAlpha, 'City must be a string']
     },
     nationality:{
-        type: Number
+        type: String,
+        validate: [isAlpha, 'Nationality must be a string']
     },
     module:{
         type: Array
     },
     role:{
-        type: Number
+        type: Number,
+        validate: {
+            validator: function(value){
+                return regexNumber.test(value)
+            },
+            message: 'Role must be a number'
+        }
     },
     progress:{
-        type: Number
+        type: Number,
+        validate: {
+            validator: function(value){
+                return regexNumber.test(value)
+            },
+            message: 'Progress must be a number'
+        }
     },
     status:{
-        type: Boolean
+        type: Boolean,
     },
     profile_img:{
-        type: String
+        type: String,
+        validate: [isURL, 'Profile image must be a valid URL']
     },
     email:{
         type: String,
@@ -55,26 +75,29 @@ const UserSchemas = new mongoose.Schema({
 });
 
 UserSchemas.pre("save", async function(next){
-this.password = encrypt(this.password)
-next();
+    this.password = encrypt(this.password)
+    next();
 })
 
 UserSchemas.statics.login = async function(email,password){
     try {
         const user = await this.findOne({email})
         if(user){
-          const auth = await compare(password,user.password)
+          const auth = await compare(password,user.password);
           if(auth){
             return user;
           } 
-          throw Error('password incorrect')
+          throw Error('password incorrect');
         }
-        throw Error('email is invalid')
+        throw Error('email is invalid');
     } catch (error) {
-        return {"error": error.message}
+        return {"error": error.message};
     }
 }
 
 const Users = mongoose.model("Users", UserSchemas);
 
-module.exports = Users;
+module.exports = {
+    Users,
+    regexPass
+};

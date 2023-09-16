@@ -15,7 +15,7 @@ function validateToken(token){
             console.log(decodedToken)
             return {error:err.expiredAt}
         } else {
-           return true
+           return true;
         }
     })
 }
