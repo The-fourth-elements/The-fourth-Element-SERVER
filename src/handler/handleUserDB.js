@@ -2,7 +2,6 @@
 
 
 
-
 async function handleUserDB (Users, id){
         try {
             const user = await Users.findOne({
