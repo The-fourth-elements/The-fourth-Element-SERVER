@@ -36,11 +36,9 @@ async function userCreateController (req,res){
         const user = req.body;
         const city = await findOrCreateCity(user.city)
         const nationality = await findOrCreateNationality(user.nationality)
-        console.log(city,nationality)
 
         if(!city && !nationality) throw Error('faild city or nationality')
         
-        console.log(city._id,nationality._id)
         const newUser = await Users.create({...user, city:city._id, nationality:nationality._id});
         const token = createToken(String(newUser._id));
         res.cookie("jwt",token, {httpOnly: true });
