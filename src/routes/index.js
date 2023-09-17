@@ -13,8 +13,4 @@ router.get('/users', userGetAllController)
 //validar información de usuario
 router.post('/auth',requireAuthController)
 
-// router.get('ruta', funcion);  
-// router.get('ruta', funcion);
-// router.post('ruta', funcion);
-
 module.exports = router;
