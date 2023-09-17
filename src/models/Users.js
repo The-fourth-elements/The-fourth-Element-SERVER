@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const {isEmail, isURL, isAlpha } = require('validator');
+const {encrypt,compare} = require('../services/crypt');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
 
@@ -74,8 +75,7 @@ const UserSchemas = new mongoose.Schema({
 });
 
 UserSchemas.pre("save", async function(next){
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password,salt)
+    this.password = encrypt(this.password)
     next();
 })
 
@@ -83,18 +83,21 @@ UserSchemas.statics.login = async function(email,password){
     try {
         const user = await this.findOne({email})
         if(user){
-          const auth = await bcrypt.compare(password,user.password)
+          const auth = await compare(password,user.password);
           if(auth){
             return user;
           } 
-          throw Error('password incorrect')
+          throw Error('password incorrect');
         }
-        throw Error('email is invalid')
+        throw Error('email is invalid');
     } catch (error) {
-        return {"error": error.message}
+        return {"error": error.message};
     }
 }
 
 const Users = mongoose.model("Users", UserSchemas);
 
-module.exports = Users;
+module.exports = {
+    Users,
+    regexPass
+};
