@@ -18,8 +18,4 @@ router.post('/auth/forgot', forgotPassword);
 router.post('/reset-password', resetPassword);
 
 
-// router.get('ruta', funcion);  
-// router.get('ruta', funcion);
-// router.post('ruta', funcion);
-
 module.exports = router;
