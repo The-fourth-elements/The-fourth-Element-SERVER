@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const {isEmail, isURL,isMongoId, isAlpha } = require('validator');
-const {encrypt,compare} = require('../services/crypt');
+const {isEmail, isURL, isAlpha } = require('validator');
+const { encrypt, compare } = require('../services/crypt');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
 
@@ -98,5 +98,6 @@ const Users = mongoose.model("Users", UserSchemas);
 
 module.exports = {
     Users,
-    regexPass
+    regexPass,
+    regexNumber
 };
