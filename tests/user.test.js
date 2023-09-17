@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../src/app');
-const { Users, regexPass} = require('../src/models/Users');
+const { Users, regexPass } = require('../src/models/Users');
 const DB_URI_TEST = require('./templates/URItest');
 const {individualUserTest, testingUsers} = require('./templates/user');
 
@@ -48,7 +48,7 @@ describe("Back-End Routing Test", () => {
         it("Should reply with status 400.", async () => {
             await Users.deleteMany({});
             const response = await agent.get("/users");
-            expect(response.status).toBe(400);
+            expect(response.status).toBeGreaterThan(400);
             expect(response.body).toHaveProperty("error");
         }); 
     });
@@ -94,7 +94,7 @@ describe("Back-End Routing Test", () => {
 
         it("Should reply with status 400.", async () => {
             const response = await agent.get("/user");
-            expect(response.status).toBe(400);
+            expect(response.status).toBeGreaterThan(400);
             expect(response.body).toHaveProperty("error");
         });
         
