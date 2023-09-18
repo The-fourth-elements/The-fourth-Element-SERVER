@@ -64,9 +64,34 @@ async function userLoginController(req,res, next){
     }
 }
 
+async function userUpdate(req, res, next){
+    try {
+        const { id } = req.body;
+        const body = req;
+        const data = await Users.findOneAndUpdate(id, body);
+        if(data) res.status(200).json(data);
+        throw Error('An error occurred while updating');
+    } catch (error) {
+        next({message: error.message, statusCode: 404})
+    }
+}
+
+async function userDelete(req, res, next){
+    try {
+        const { id } = req.body;
+        const data = await Users.delete({_id:id});
+        if(data) return res.status(204).send('User delete');
+        throw Error('User not found');
+    } catch (error) {
+        next({message: error.message, statusCode: 400});
+    }
+}
+
 module.exports = {
     userGetController,
     userCreateController,
     userLoginController,
-    userGetAllController
+    userGetAllController,
+    userUpdate,
+    userDelete
 }
