@@ -1,5 +1,6 @@
 const { isEmail } = require('validator');
 const { encrypt } = require('../services/crypt');
+const { decriptToken } = require('../services/token');
 
 async function handleUserDB (Users, id){
     try {
@@ -59,9 +60,6 @@ async function handlerResetPass(Users, token, password){
         return { error: error.message }
     }
 }
-
-
-
 
 module.exports = {
     handleUserDB,
