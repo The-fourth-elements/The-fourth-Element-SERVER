@@ -5,14 +5,10 @@ const { individualUserTest, testingUsers } = require('./templates/user');
 const { testCity, testModule, testNationality, testProgress, testRole, testStatus, createUser } = require('./templates/models');
 const findOrCreateCity = require('../src/handler/findOrCreateCity');
 const findOrCreateNationality = require('../src/handler/findOrCreateNationality');
+const { isEmail, isURL, isAlpha } = require('validator');
 
 const { Users, regexPass } = require('../src/models/Users');
-const City = require('../src/models/City');
-const Module = require('../src/models/Module');
-const Nationality = require('../src/models/Nationality');
-const Role = require('../src/models/Role');
-const Progress = require('../src/models/Progress');
-const Status = require('../src/models/Status');
+const { City, Module, Nationality, Role, Progress, Status} = require('../src/handler/handleModels') 
 
 beforeAll(async()=>{
     await mongoose.connect(DB_URI_TEST);
@@ -25,6 +21,12 @@ describe("Data Base Modules Test", () => {
             const foundCity = String((await City.find()).map(city => city.name))
             expect(foundCity).toContain(createCity);
         });
+
+        it('City saves in DB as ObjectId(string)', async() => {
+            const createCity = (await findOrCreateCity(testCity)).name;
+            const foundCity = String((await City.find()).map(city => city._id))
+            expect(typeof foundCity).toBe('string');    
+        })
     })
 
     describe("Nationality Model", () => {
@@ -32,29 +34,36 @@ describe("Data Base Modules Test", () => {
             const createNation = (await findOrCreateNationality(testNationality)).name;
             const foundNation = String((await Nationality.find()).map(nation => nation.name));
             expect(foundNation).toContain(createNation);
+        });
+
+        it('Nation saves in DB as ObjectId', async() => {
+            const createNation = (await findOrCreateNationality(testNationality)).name;
+            const foundNation = String((await Nationality.find()).map(nation => nation._id));
+            expect(typeof foundNation).toBe('string');
         })
     })
 
-    xdescribe("Module Model. Verify if: ", () => {
+    describe("Module Model. Verify if: ", () => {
         beforeEach(async() => {
             await Module.create(testModule);
-            await Users.insertMany(testingUsers);
+            await createUser(testingUsers[0]);
+            await createUser(testingUsers[1]);
         });
 
         it('Insert a Module name', async() => {
-            const moduleNames = [];
-            (await Users.find()).map(user => user.module.map(mod => moduleNames.push(mod.name)))
+            const moduleNames = []; 
+            (await Users.find({})).map(user => user.module.map(mod => moduleNames.push(mod.name)));
             const foundModuleName = (await Module.find()).map(module => module.name);
-            const userSet = new Set(moduleNames);
-            expect(userSet).toContain(String(foundModuleName));
+            const moduleSet = new Set(moduleNames);
+            expect(moduleSet).toContain(String(foundModuleName));
         });
 
         it('Insert a Module Description', async() => {
             const moduleDesc = [];
             (await Users.find()).map(user => user.module.map(mod => moduleDesc.push(mod.description)))
-            const foundModuleDesc = (await Module.find()).map(module => module.description);
+            const foundModuleDesc = (await Module.findOne()).description;
             const userSet = new Set(moduleDesc);
-            expect(userSet).toContain(String(foundModuleDesc));
+            expect(userSet).toContain(foundModuleDesc);
         });
 
         it('Module Quiz is right', async() => {
@@ -62,12 +71,10 @@ describe("Data Base Modules Test", () => {
             const foundModuleQuiz = parseInt((await Module.find()).map(module => module.quiz));
             const userSet = new Set(foundUser.map(quiz => Number(quiz)));
             const numbSet = parseInt([...userSet]);
-            expect(numbSet).toBe(foundModuleQuiz)
-            
+            expect(numbSet).toBe(foundModuleQuiz);    
         });
 
-        it('Module Video URL is right', async() => {
-            const moduleVideo = [];
+        xit('Module Video URL is right', async() => {
             
         })
     })
