@@ -6,10 +6,14 @@ const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
+    firebaseID:{
+        type: String,
+        require: true
+    },
     name:{
         type: String,
         require: true,
-        validate: [isAlpha, 'Name must be a string']
+   
     },
     lastName:{
         type: String,
@@ -74,26 +78,26 @@ const UserSchemas = new mongoose.Schema({
     }
 });
 
-UserSchemas.pre("save", async function(next){
-    this.password = encrypt(this.password)
-    next();
-})
+ UserSchemas.pre("save", async function(next){
+     this.password = encrypt(this.password)
+     next();
+ })
 
-UserSchemas.statics.login = async function(email,password){
-    try {
-        const user = await this.findOne({email})
-        if(user){
-          const auth = await compare(password,user.password);
-          if(auth){
-            return user;
-          } 
-          throw Error('password incorrect');
-        }
-        throw Error('email is invalid');
-    } catch (error) {
-        return {"error": error.message};
-    }
-}
+ UserSchemas.statics.login = async function(email,password){
+     try {
+         const user = await this.findOne({email})
+         if(user){
+           const auth = await compare(password,user.password);
+           if(auth){
+             return user;
+           } 
+           throw Error('password incorrect');
+         }
+         throw Error('email is invalid');
+     } catch (error) {
+         return {"error": error.message};
+     }
+ }
 
 const Users = mongoose.model("Users", UserSchemas);
 
