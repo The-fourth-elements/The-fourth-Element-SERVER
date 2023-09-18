@@ -11,7 +11,7 @@ router.post('/login', userLoginController);
 router.get('/user', userGetController);
 router.get('/users', userGetAllController);
 router.put('/user', userUpdate);
-router.delete('/user', userDelete);
+router.delete('/user/:id', userDelete);
 
 router.get('/signin', createGoogleUser)
 
