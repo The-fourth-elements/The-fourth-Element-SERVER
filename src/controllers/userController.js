@@ -37,10 +37,10 @@ async function userCreateController (req,res, next){
         const user = req.body;
         const city = await findOrCreateCity(user.city)
         const nationality = await findOrCreateNationality(user.nationality)
-
         if(!city && !nationality) throw Error("City or Nationality can't be created or found");
+        const password = await encrypt(user.password);
         
-        const newUser = await Users.create({...user, city: city._id, password: encrypt(user.password), nationality: nationality._id});
+        const newUser = await Users.create({...user, city: city._id, password: password, nationality: nationality._id});
         const token = createToken(String(newUser._id));
         res.cookie("jwt",token, {httpOnly: true });
         res.status(200).json({ access:true, message:"User created" });
