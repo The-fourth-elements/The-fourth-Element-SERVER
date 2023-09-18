@@ -6,7 +6,7 @@ const { handlerForgotPass, handlerResetPass } = require('../handler/handleUserDB
 const { URL } = process.env
 
 //ruta para validar el token.
-function requireAuthController(req,res){
+function requireAuthController(req,res, next){
     try {
         let token;
         if(req.cookies.jwt){
@@ -22,11 +22,11 @@ function requireAuthController(req,res){
         } 
         throw Error('token is invalid')
     } catch (error) {
-        res.status(400).json({access:false, message:error.message})
+        next({message: error.message, statusCode: 400})
     }
 }
 
-async function forgotPassword(req, res){
+async function forgotPassword(req, res, next){
     const { email } = req.body;
     try {
         if(email){
@@ -44,11 +44,11 @@ async function forgotPassword(req, res){
             };
         };
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        next({message: error.message, statusCode: 400})
     }
 };
 
-async function resetPassword(req, res){
+async function resetPassword(req, res, next){
     const { token, password } = req.body;
     try {
         const response = handlerResetPass(Users, token, password);
@@ -58,7 +58,7 @@ async function resetPassword(req, res){
             throw new Error("Can't change the password, review data.");
         }
     } catch (error) {
-        res.status(404).json({Error: error.message})
+        next({message: error.message, statusCode: 404})
     }
         
 }
