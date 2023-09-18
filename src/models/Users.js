@@ -81,12 +81,7 @@ const UserSchemas = new mongoose.Schema({
     }
 });
 
- UserSchemas.pre("save", async function(next){
-     this.password = encrypt(this.password)
-     next();
- })
-
- UserSchemas.statics.login = async function(email,password){
+UserSchemas.statics.login = async function(email,password){
      try {
          const user = await this.findOne({email})
          if(user){
