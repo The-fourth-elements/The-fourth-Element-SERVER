@@ -33,7 +33,7 @@ async function forgotPassword(req, res){
             const userExist = await handlerForgotPass(Users, email);
             if (userExist) {
                 const token = createToken(userExist._id);
-                const link = `${ENTRY}:${PORT}/reset-password/${token}`;
+                const link = `${ENTRY}:${PORT}/auth/reset-password/${token}`;
                 transporter.sendMail(mailContent(userExist.email, link), (error, info) => {
                     if (error) {
                         throw new Error('Error sending email');
