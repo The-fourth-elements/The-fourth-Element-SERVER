@@ -74,8 +74,8 @@ describe("Data Base Modules Test", () => {
 })
 
 afterAll(async () => {
-    // await Users.deleteMany({});
-    // await City.deleteMany({});
+    await Users.deleteMany({});
+    await City.deleteMany({});
     await Module.deleteMany({});
     await Nationality.deleteMany({});
     await Role.deleteMany({});
