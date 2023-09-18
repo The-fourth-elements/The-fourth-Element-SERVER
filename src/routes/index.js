@@ -11,7 +11,7 @@ router.get('/user', userGetController);
 router.get('/users', userGetAllController);
 
 //validar información de usuario
-router.post('/auth',requireAuthController);
+router.post('/auth', requireAuthController);
 
 //forgot-password
 router.post('/auth/forgot', forgotPassword);
