@@ -1,7 +1,10 @@
+const { Module } = require('module');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const {isEmail, isURL, isAlpha } = require('validator');
-const {encrypt,compare} = require('../services/crypt');
+const mongooseDelete = require('mongoose-delete');
+const { isEmail, isURL, isAlpha } = require('validator');
+const { encrypt, compare } = require('../services/crypt');
+const City = require('./City');
+const Nationality = require('./Nationality');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
 
@@ -24,15 +27,15 @@ const UserSchemas = new mongoose.Schema({
         validate: [isAlpha, 'Address must be a string']
     },
     city:{
-        type: String,
-        validate: [isAlpha, 'City must be a string']
+        type: mongoose.Types.ObjectId
+        // validate: [isMongoId, 'City must be a ObjectId']
     },
     nationality:{
-        type: String,
-        validate: [isAlpha, 'Nationality must be a string']
+        type: mongoose.Types.ObjectId
+        // validate: [isMongoId, 'Nationality must be a ObjectId']
     },
     module:{
-        type: Array
+        type: Array 
     },
     role:{
         type: Number,
@@ -99,9 +102,11 @@ const UserSchemas = new mongoose.Schema({
      }
  }
 
+UserSchemas.plugin(mongooseDelete, { overrideMethods: 'all'});
 const Users = mongoose.model("Users", UserSchemas);
 
 module.exports = {
     Users,
-    regexPass
+    regexPass,
+    regexNumber
 };
