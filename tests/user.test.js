@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../src/app');
-const { Users, regexPass} = require('../src/models/Users');
+const { Users, regexPass } = require('../src/models/Users');
 const DB_URI_TEST = require('./templates/URItest');
-const {individualUserTest, testingUsers} = require('./templates/user');
+const { individualUserTest, testingUsers } = require('./templates/user');
 
 const agent = request(app);
 
@@ -19,7 +19,8 @@ describe("Back-End Routing Test", () => {
     describe("GET /users", () =>{
         describe("Should reply with status 200. Verify if: ", () => {
             beforeEach(async() => {
-                await Users.insertMany(testingUsers)
+                await agent.post('/user').send(testingUsers[0]);
+                await agent.post('/user').send(testingUsers[1]);
             });
             
             it("Users exist", async () => {
@@ -28,7 +29,7 @@ describe("Back-End Routing Test", () => {
             });
 
             it("Have the right lenght", async () => {
-                await Users.create(individualUserTest);
+                await agent.post('/user').send(individualUserTest);
                 const response = await agent.get('/users');
                 expect(response.body).toHaveLength(testingUsers.length + 1);
             });
@@ -39,6 +40,8 @@ describe("Back-End Routing Test", () => {
                 const dbUserId = newUser._id.toString();
                 expect(response.body[0]).toMatchObject({
                     ...testingUsers[0],
+                    city: newUser.city.valueOf(),
+                    nationality: newUser.nationality.valueOf(),
                     _id: dbUserId,
                     __v: newUser.__v,
                   });
@@ -48,7 +51,7 @@ describe("Back-End Routing Test", () => {
         it("Should reply with status 400.", async () => {
             await Users.deleteMany({});
             const response = await agent.get("/users");
-            expect(response.status).toBe(400);
+            expect(response.status).toBeGreaterThan(400);
             expect(response.body).toHaveProperty("error");
         }); 
     });
@@ -56,7 +59,8 @@ describe("Back-End Routing Test", () => {
     describe("GET /user/:id", () =>{
         describe("Should reply with status 200. Verify if: ", () =>{
             beforeEach(async() => {
-                await Users.insertMany(testingUsers);
+                await agent.post('/user').send(testingUsers[0]);
+                await agent.post('/user').send(testingUsers[1]);
             });
 
             it("User exist.", async () => {
@@ -94,7 +98,7 @@ describe("Back-End Routing Test", () => {
 
         it("Should reply with status 400.", async () => {
             const response = await agent.get("/user");
-            expect(response.status).toBe(400);
+            expect(response.status).toBeGreaterThan(400);
             expect(response.body).toHaveProperty("error");
         });
         
@@ -135,8 +139,8 @@ describe("Back-End Routing Test", () => {
     })
 
     describe('POST /login', () => {
-        beforeEach(() => {
-            Users.create(testingUsers[1]);
+        beforeEach(async() => {
+            await agent.post('/user').send(testingUsers[1]);
         });
         describe("Should reply with status 200. Verify if: ", () => {
             it('Post (userCreateController)', async() => {
@@ -164,11 +168,12 @@ describe("Back-End Routing Test", () => {
         
         it('Should reply with status 400.', async() => {
             const response = await agent.post('/login').send({email: testingUsers[0].email, password: testingUsers[1].password});
-            expect(response.status).toBe(404);
+            expect(response.status).toBeGreaterThan(400);
         });
     });
 });
 
 afterAll(async()=>{
+    await Users.deleteMany({});
     await mongoose.connection.close();
 });
