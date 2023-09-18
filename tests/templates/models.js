@@ -11,7 +11,7 @@ const testModule = {
     video_url: "videoURL.com"
 }
 
-const createUser = async(model, user) =>{
+const createUser = async(user) =>{
     try {
         const city = await findOrCreateCity(user.city)
         const nationality = await findOrCreateNationality(user.nationality)

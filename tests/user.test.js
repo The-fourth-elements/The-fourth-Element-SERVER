@@ -15,7 +15,7 @@ beforeEach(async() => { // Ejecuta antes de cada test
     await Users.deleteMany({}); // Elimina todos los usuarios de la DB
 });
 
-xdescribe("Back-End Routing Test", () => {
+describe("Back-End Routing Test", () => {
     describe("GET /users", () =>{
         describe("Should reply with status 200. Verify if: ", () => {
             beforeEach(async() => {
