@@ -53,7 +53,7 @@ async function resetPassword(req, res, next){
     try {
         const response = handlerResetPass(Users, token, password);
         if (response) {
-            res.status(200).send('Password Update');
+            res.status(200).json({message: 'Access true'});
         } else {
             throw new Error("Can't change the password, review data.");
         }
