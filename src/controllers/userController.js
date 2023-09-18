@@ -51,7 +51,7 @@ async function userCreateController (req,res, next){
 // logeo del usuario
 async function userLoginController(req,res, next){
     try {
-        const {email,password} = req.body;
+        const { email, password } = req.body;
         const user = await Users.login(email,password);
         if(!user?.error){
             const token =  createToken(String(user._id));

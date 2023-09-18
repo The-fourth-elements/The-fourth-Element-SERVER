@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { validateToken, createToken, decriptToken } = require('../services/token');
+const { validateToken, createToken } = require('../services/token');
 const { Users } = require('../models/Users');
 const { transporter, mailContent } = require('../services/nodemailer');
 const { handlerForgotPass, handlerResetPass } = require('../handler/handleUserDB');
