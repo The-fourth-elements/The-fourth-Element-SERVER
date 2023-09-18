@@ -30,9 +30,9 @@ const UserSchemas = new mongoose.Schema({
         type: mongoose.Types.ObjectId
         // validate: [isMongoId, 'Nationality must be a ObjectId']
     },
-    module:[{
-        type: mongoose.Types.ObjectId
-    }],
+    module:{
+        type: Array 
+    },
     role:{
         type: Number,
         validate: {
