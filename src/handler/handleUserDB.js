@@ -60,9 +60,6 @@ async function handlerResetPass(Users, token, password){
     }
 }
 
-
-
-
 module.exports = {
     handleUserDB,
     handleAllUserDB,

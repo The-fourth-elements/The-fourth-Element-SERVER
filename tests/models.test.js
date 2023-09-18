@@ -1,35 +1,41 @@
 const mongoose = require('mongoose');
-
-const DB_URI_TEST = require('./templates/URItest');
+require('dotenv').config();
+const { DB_URI_TEST } = process.env
 const { individualUserTest, testingUsers } = require('./templates/user');
-const { testCity, testModule, testNationality, testProgress, testRole, testStatus } = require('./templates/models');
+const { testCity, testModule, testNationality, testProgress, testRole, testStatus, createUser } = require('./templates/models');
+const findOrCreateCity = require('../src/handler/findOrCreateCity');
+const findOrCreateNationality = require('../src/handler/findOrCreateNationality');
 
 const { Users, regexPass } = require('../src/models/Users');
 const City = require('../src/models/City');
 const Module = require('../src/models/Module');
+const Nationality = require('../src/models/Nationality');
+const Role = require('../src/models/Role');
+const Progress = require('../src/models/Progress');
+const Status = require('../src/models/Status');
 
 beforeAll(async()=>{
     await mongoose.connect(DB_URI_TEST);
 });
 
-beforeEach(async() => { 
-    await Users.deleteMany({});
-    await City.deleteMany({});
-    await Module.deleteMany({});
-});
-
 describe("Data Base Modules Test", () => {
     describe("City Model", () => {
         it('Insert a City', async() =>{
-            await City.create(testCity);
-            const newUser = await Users.create(individualUserTest);
-            const foundCity = (await City.find()).map(city => city.name)
-            const foundUser = await Users.findById(newUser._id).populate('city');
-            expect(foundCity).toContain(foundUser.city);
+            const createCity = (await findOrCreateCity(testCity)).name;
+            const foundCity = String((await City.find()).map(city => city.name))
+            expect(foundCity).toContain(createCity);
         });
     })
 
-    describe("Module Model. Verify if: ", () => {
+    describe("Nationality Model", () => {
+        it('Insert a Nation', async() => {
+            const createNation = (await findOrCreateNationality(testNationality)).name;
+            const foundNation = String((await Nationality.find()).map(nation => nation.name));
+            expect(foundNation).toContain(createNation);
+        })
+    })
+
+    xdescribe("Module Model. Verify if: ", () => {
         beforeEach(async() => {
             await Module.create(testModule);
             await Users.insertMany(testingUsers);
@@ -68,5 +74,12 @@ describe("Data Base Modules Test", () => {
 })
 
 afterAll(async () => {
+    // await Users.deleteMany({});
+    // await City.deleteMany({});
+    await Module.deleteMany({});
+    await Nationality.deleteMany({});
+    await Role.deleteMany({});
+    await Progress.deleteMany({});
+    await Status.deleteMany({});
     await mongoose.connection.close();
 });

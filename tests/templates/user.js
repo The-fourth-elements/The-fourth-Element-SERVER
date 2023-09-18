@@ -1,8 +1,8 @@
 const individualUserTest = {
-    "name":"Ansony",
-    "lastName":"Rojas",
-    "adress":"StOak",
-    "city": "NewYork",
+    "name": "Ansony",
+    "lastName": "Rojas",
+    "adress": "StOak",
+    "city": "New York",
     "nationality": "UnitedState",
     "module":[
         {
@@ -66,21 +66,21 @@ const individualUserTest = {
             video_url: "video13URL.com"
         },
     ],
-    "role":1,
-    "progress":1,
-    "status":true,
-    "profile_img":"testimg1.com",
-    "email":"user1@test.com",
-    "password":"Testpass1"
+    "role": 1,
+    "progress": 1,
+    "status": true,
+    "profile_img": "testimg1.com",
+    "email": "user1@test.com",
+    "password": "Testpass1"
 }
 
 const testingUsers = [
     {
-        "name":"Jonh",
-        "lastName":"Duartes",
-        "adress":"Lemos",
-        "city":"Bogota",
-        "nationality":"Colombia",
+        "name": "Jonh",
+        "lastName": "Duartes",
+        "adress": "Lemos",
+        "city": "Bogota",
+        "nationality": "Colombia",
         "module":[
             {
                 name: "Module 1",
@@ -146,16 +146,16 @@ const testingUsers = [
         "role":2,
         "progress":2,
         "status":true,
-        "profile_img":"testimg2.com",
-        "email":"user2@test.com",
-        "password":"Testpass2"
+        "profile_img": "testimg2.com",
+        "email": "user2@test.com",
+        "password": "Testpass2"
     },
     {
-        "name":"Simon",
-        "lastName":"Leclerc",
-        "adress":"StLoews",
-        "city":"Monaco",
-        "nationality":"Monaco",
+        "name": "Simon",
+        "lastName": "Leclerc",
+        "adress": "StLoews",
+        "city": "Monaco",
+        "nationality": "Monaco",
         "module":[
             {
                 name: "Module 1",
@@ -221,9 +221,9 @@ const testingUsers = [
         "role":3,
         "progress":3,
         "status":true,
-        "profile_img":"testimg3.com",
-        "email":"user3@test.com",
-        "password":"Testpass3"
+        "profile_img": "testimg3.com",
+        "email": "user3@test.com",
+        "password": "Testpass3"
     }
 ];
 
