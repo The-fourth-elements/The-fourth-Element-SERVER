@@ -66,7 +66,7 @@ async function userLoginController(req,res, next){
 
 async function userUpdate(req, res, next){
     try {
-        const { id } = req.body;
+        const { id } = req.params;
         const body = req;
         const data = await Users.findOneAndUpdate(id, body);
         if(data) res.status(200).json(data);
@@ -78,7 +78,7 @@ async function userUpdate(req, res, next){
 
 async function userDelete(req, res, next){
     try {
-        const { id } = req.body;
+        const { id } = req.params;
         const data = await Users.delete({_id:id});
         if(data) return res.status(204).send('User delete');
         throw Error('User not found');
