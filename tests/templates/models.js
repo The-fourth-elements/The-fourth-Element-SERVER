@@ -16,7 +16,7 @@ const createUser = async(user) =>{
         const city = await findOrCreateCity(user.city)
         const nationality = await findOrCreateNationality(user.nationality)
 
-        if(!city && !nationality) throw Error("City or Nationality can't be created or found");
+        if (!city && !nationality) throw Error("City or Nationality can't be created or found");
         
         const newUser = await Users.create({...user, city: city._id, nationality: nationality._id});
         return newUser;

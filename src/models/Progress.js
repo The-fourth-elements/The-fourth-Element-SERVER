@@ -10,7 +10,7 @@ const ProgressMongoose = new mongoose.Schema({
     assistance:{
         type: Number
     }
-})
+});
 
 const Progress = mongoose.model("Progress", ProgressMongoose);
 module.exports = Progress;
