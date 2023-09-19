@@ -12,7 +12,7 @@ const StatusMongoose = new mongoose.Schema({
     ending_date: {
         type: Date
     }
-})
+});
 
 const Status = mongoose.model("Status", StatusMongoose);
 module.exports = Status;

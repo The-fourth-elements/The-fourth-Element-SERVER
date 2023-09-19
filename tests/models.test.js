@@ -5,7 +5,7 @@ const { individualUserTest, testingUsers } = require('./templates/user');
 const { testCity, testModule, testNationality, testProgress, testRole, testStatus, createUser } = require('./templates/models');
 const findOrCreateCity = require('../src/handler/findOrCreateCity');
 const findOrCreateNationality = require('../src/handler/findOrCreateNationality');
-const { isEmail, isURL, isAlpha } = require('validator');
+const { isEmail, isURL, isAscii } = require('validator');
 
 const { Users, regexPass } = require('../src/models/Users');
 const { City, Module, Nationality, Role, Progress, Status} = require('../src/handler/handleModels') 
@@ -76,7 +76,7 @@ describe("Data Base Modules Test", () => {
 
         xit('Module Video URL is right', async() => {
             
-        })
+        });
     })
 })
 

@@ -4,6 +4,7 @@ const app = require('../src/app');
 const { Users, regexPass } = require('../src/models/Users');
 const DB_URI_TEST = require('./templates/URItest');
 const { individualUserTest, testingUsers } = require('./templates/user');
+const { encrypt } = require('../src/services/crypt');
 
 const agent = request(app);
 
@@ -40,6 +41,7 @@ describe("Back-End Routing Test", () => {
                 const dbUserId = newUser._id.toString();
                 expect(response.body[0]).toMatchObject({
                     ...testingUsers[0],
+                    password: newUser.password,
                     city: newUser.city.valueOf(),
                     nationality: newUser.nationality.valueOf(),
                     _id: dbUserId,

@@ -3,7 +3,7 @@ const { validateToken, createToken } = require('../services/token');
 const { Users } = require('../models/Users');
 const { transporter, mailContent } = require('../services/nodemailer');
 const { handlerForgotPass, handlerResetPass } = require('../handler/handleUserDB');
-const { URL } = process.env
+const { URL } = process.env;
 
 //ruta para validar el token.
 function requireAuthController(req,res, next){
@@ -20,16 +20,16 @@ function requireAuthController(req,res, next){
             if(!validate?.error) return res.status(200).json({access:true})
             else return res.status(400).json({acess:false, expirate:validate.error})
         } 
-        throw Error('token is invalid')
+        throw Error('Invalid Token')
     } catch (error) {
         next({message: error.message, statusCode: 400})
     }
-}
+};
 
 async function forgotPassword(req, res, next){
     const { email } = req.body;
     try {
-        if(email){
+        if (email){
             const userExist = await handlerForgotPass(Users, email);
             if (userExist) {
                 const token = createToken(userExist._id);
@@ -61,12 +61,11 @@ async function resetPassword(req, res, next){
         next({message: error.message, statusCode: 404})
     }
         
-}
+};
 
 
 module.exports ={
     requireAuthController,
     forgotPassword,
     resetPassword,
-
 }
