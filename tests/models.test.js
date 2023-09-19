@@ -26,7 +26,13 @@ describe("Data Base Modules Test", () => {
             (await findOrCreateCity(testCity)).name;
             const foundCity = String((await City.find()).map(city => city._id))
             expect(typeof foundCity).toBe('string');    
-        })
+        });
+
+        it('Name must be an ASCII valid', async() =>{
+            const createCity = (await findOrCreateCity(testCity))._id;
+            const foundCity = (await City.findOne({_id: createCity._id})).name;
+            expect(isAscii(foundCity)).toBeTruthy();
+        });
     })
 
     describe("Nationality Model", () => {
@@ -40,7 +46,13 @@ describe("Data Base Modules Test", () => {
             (await findOrCreateNationality(testNationality)).name;
             const foundNation = String((await Nationality.find()).map(nation => nation._id));
             expect(typeof foundNation).toBe('string');
-        })
+        });
+
+        it('Name must be an ASCII valid', async() =>{
+            const createNation = (await findOrCreateNationality(testNationality))._id;
+            const foundCity = (await Nationality.findOne({_id: createNation._id})).name;
+            expect(isAscii(foundCity)).toBeTruthy();
+        });
     })
 
     describe("Module Model. Verify if: ", () => {
