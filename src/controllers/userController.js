@@ -10,7 +10,7 @@ async function userGetController(req, res, next) {
     try {     
         const { id } = req.query
         if (!id) next({message: 'id is invalid', statusCode: 401});
-        const user = await handleUserDB(Users, id);
+        const user = await handleUserDB(id);
         if (!user?.error){
             res.status(200).json(user);
         } else throw Error(user.error);
@@ -22,7 +22,7 @@ async function userGetController(req, res, next) {
 //obtener todos los usuarios
 async function userGetAllController(req, res, next){
     try {     
-        const user = await handleAllUserDB(Users);
+        const user = await handleAllUserDB();
         if (!user?.error){
             res.status(200).json(user);
         } else throw Error(user.error);
@@ -82,7 +82,7 @@ async function userUpdate(req, res, next){
 async function userDelete(req, res, next){
     try {
         const { id } = req.params;
-        const foundUser = await handleUserDB(Users, id);
+        const foundUser = await handleUserDB(id);
         if (foundUser.email) {
             const deleteUser = await Users.delete({_id: id});
             if (deleteUser) return res.status(200).json({message: `${foundUser.name} successful deleted.`});
