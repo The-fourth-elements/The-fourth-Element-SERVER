@@ -18,7 +18,7 @@ function requireAuthController(req,res, next){
         if(token){
             const validate = validateToken(token)
             if(!validate?.error) return res.status(200).json({access:true})
-            else return res.status(400).json({acess:false, expirate:validate.error})
+            else return res.status(400).json({access:false, expirate:validate.error})
         } 
         throw Error('Invalid Token')
     } catch (error) {
@@ -63,7 +63,6 @@ async function resetPassword(req, res, next){
     }
         
 };
-
 
 module.exports ={
     requireAuthController,

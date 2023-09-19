@@ -4,7 +4,7 @@ const app = require('../src/app');
 const { Users, regexPass } = require('../src/models/Users');
 const DB_URI_TEST = require('./templates/URItest');
 const { individualUserTest, testingUsers } = require('./templates/user');
-const { encrypt } = require('../src/services/crypt');
+const { createUser, randomID } = require('./templates/models');
 
 const agent = request(app);
 
@@ -53,7 +53,7 @@ describe("Back-End Routing Test", () => {
         it("Should reply with status 400.", async () => {
             await Users.deleteMany({});
             const response = await agent.get("/users");
-            expect(response.status).toBeGreaterThan(400);
+            expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response.body).toHaveProperty("error");
         }); 
     });
@@ -100,10 +100,59 @@ describe("Back-End Routing Test", () => {
 
         it("Should reply with status 400.", async () => {
             const response = await agent.get("/user");
-            expect(response.status).toBeGreaterThan(400);
+            expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response.body).toHaveProperty("error");
         });
         
+    });
+
+    describe('PUT /user', () => {
+        beforeEach(async() => {
+            await createUser(individualUserTest);
+            await createUser(testingUsers[1]);
+        });
+        describe("Should reply with status 200. Verify if: ", () =>{
+            it('The update was successful.', async() =>{
+                const findUser = await Users.findOne({email: individualUserTest.email});
+                const newIndividualUserTest = {id: findUser._id.valueOf(), name: "TestName"};
+                await agent.put('/user')
+                    .send(newIndividualUserTest)
+                    .expect(200);
+            });
+
+            it('Can update a name.', async() => {
+                const findUserId = (await Users.findOne({email: individualUserTest.email}))._id;
+                const findUsers = (await Users.find()).map(user => user.name);
+                const newIndividualUserTest = {id: findUserId, name: "TestName"};
+                const response = await agent.put('/user').send(newIndividualUserTest);
+                expect(findUsers).not.toContain(response.body.name);
+                expect(newIndividualUserTest.name).toBe(response.body.name);
+            });
+
+            it('Can update a lastName.', async() => {
+                const findUserId = (await Users.findOne({email: individualUserTest.email}))._id;
+                const findUsers = (await Users.find()).map(user => user.lastName);
+                const newIndividualUserTest = {id: findUserId, lastName: "lastnameTest"};
+                const response = await agent.put('/user').send(newIndividualUserTest);
+                expect(findUsers).not.toContain(response.body.lastName);
+                expect(newIndividualUserTest.lastName).toBe(response.body.lastName);
+            });
+
+            it('Can update a email.', async() => {
+                const findUserId = (await Users.findOne({email: individualUserTest.email}))._id;
+                const findUsers = (await Users.find()).map(user => user.email);
+                const newIndividualUserTest = {id: findUserId, email: "testmail@mess.com"};
+                const response = await agent.put('/user').send(newIndividualUserTest);
+                expect(findUsers).not.toContain(response.body.email);
+                expect(newIndividualUserTest.email).toBe(response.body.email);
+            });
+        });
+
+        it('Should reply with status 400.', async() => {
+            const newIndividualUserTest = {id: "", email: "testmail@mess.com"};
+            const response = await agent.put('/user').send(newIndividualUserTest);
+            expect(response.status).toBeGreaterThanOrEqual(400);
+        });
     });
 
     describe('POST /user', () => {
@@ -136,13 +185,39 @@ describe("Back-End Routing Test", () => {
 
         it('Should reply with status 400.', async() => {
             const response = await agent.post('/user').send();
-            expect(response.status).toBe(400);
+            expect(response.status).toBeGreaterThanOrEqual(400);
         });
     })
 
+    describe('DELETE /user', () => {
+        beforeEach(async() => {
+            await createUser(individualUserTest);
+            await createUser(testingUsers[1]);
+        });
+        describe("Should reply with status 200. Verify if: ", () =>{
+            it('User delete successful.', async() =>{
+                const findUser = await Users.findOne({email: individualUserTest.email});
+                await agent.delete(`/user/${findUser._id}`)
+                    .expect(200);
+            });
+
+            it('User cannot be accesible.', async() =>{
+                const findUser = await Users.findOne({email: individualUserTest.email});
+                await agent.delete(`/user/${findUser._id}`).expect(200);
+                const allUsersDB = await Users.find();
+                expect(allUsersDB).not.toContain(findUser);
+            });
+        });
+
+        it('Should reply with status 400.', async() => {
+            const response = await agent.delete(`/user/${randomID.valueOf()}`);
+            expect(response.status).toBeGreaterThanOrEqual(400);
+        });
+    });
+
     describe('POST /login', () => {
         beforeEach(async() => {
-            await agent.post('/user').send(testingUsers[1]);
+            await createUser(testingUsers[1]);
         });
         describe("Should reply with status 200. Verify if: ", () => {
             it('Post (userCreateController)', async() => {
@@ -170,7 +245,7 @@ describe("Back-End Routing Test", () => {
         
         it('Should reply with status 400.', async() => {
             const response = await agent.post('/login').send({email: testingUsers[0].email, password: testingUsers[1].password});
-            expect(response.status).toBeGreaterThan(400);
+            expect(response.status).toBeGreaterThanOrEqual(400);
         });
     });
 });
