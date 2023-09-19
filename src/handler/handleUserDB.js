@@ -1,8 +1,9 @@
 const { isEmail } = require('validator');
 const { encrypt } = require('../services/crypt');
 const { decriptToken } = require('../services/token');
+const { Users } = require('../models/Users')
 
-async function handleUserDB (Users, id){
+async function handleUserDB (id){
     try {
         const foundUser = await Users.findOne({"_id": id});
         if (foundUser) return foundUser;
@@ -12,7 +13,7 @@ async function handleUserDB (Users, id){
     }
 }
 
-async function handleAllUserDB(Users){
+async function handleAllUserDB(){
     try {
         const allUsers = await Users.find({});
         if(Array.isArray(allUsers) && allUsers.length) return allUsers;
@@ -22,7 +23,7 @@ async function handleAllUserDB(Users){
     }
 }
 
-async function handlerForgotPass(Users, email){
+async function handlerForgotPass(email){
     try {
         const userEmail = await Users.findOne({email: email});
         if (!email || !isEmail(email)) {
@@ -39,7 +40,7 @@ async function handlerForgotPass(Users, email){
     }
 }
 
-async function handlerResetPass(Users, token, password){
+async function handlerResetPass(token, password){
     try {
         const userToken = decriptToken(token);
         const matchUser = await Users.findById(userToken.data);
