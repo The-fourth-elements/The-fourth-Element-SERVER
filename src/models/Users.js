@@ -1,14 +1,22 @@
+const { Module } = require('module');
 const mongoose = require('mongoose');
+const mongooseDelete = require('mongoose-delete');
 const { isEmail, isURL, isAlpha } = require('validator');
 const { encrypt, compare } = require('../services/crypt');
+const City = require('./City');
+const Nationality = require('./Nationality');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
+    firebaseID:{
+        type: String,
+        require: true
+    },
     name:{
         type: String,
         require: true,
-        validate: [isAlpha, 'Name must be a string']
+   
     },
     lastName:{
         type: String,
@@ -19,15 +27,15 @@ const UserSchemas = new mongoose.Schema({
         validate: [isAlpha, 'Address must be a string']
     },
     city:{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Types.ObjectId
         // validate: [isMongoId, 'City must be a ObjectId']
     },
     nationality:{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Types.ObjectId
         // validate: [isMongoId, 'Nationality must be a ObjectId']
     },
     module:{
-        type: Array
+        type: Array 
     },
     role:{
         type: Number,
@@ -73,27 +81,23 @@ const UserSchemas = new mongoose.Schema({
     }
 });
 
-UserSchemas.pre("save", async function(next){
-    this.password = encrypt(this.password)
-    next();
-})
-
 UserSchemas.statics.login = async function(email,password){
-    try {
-        const user = await this.findOne({email})
-        if(user){
-          const auth = await compare(password,user.password);
-          if(auth){
-            return user;
-          } 
-          throw Error('password incorrect');
-        }
-        throw Error('email is invalid');
-    } catch (error) {
-        return {"error": error.message};
-    }
-}
+     try {
+         const user = await this.findOne({email})
+         if(user){
+           const auth = await compare(password,user.password);
+           if(auth){
+             return user;
+           } 
+           throw Error('password incorrect');
+         }
+         throw Error('email is invalid');
+     } catch (error) {
+         return {"error": error.message};
+     }
+ }
 
+UserSchemas.plugin(mongooseDelete, { overrideMethods: 'all'});
 const Users = mongoose.model("Users", UserSchemas);
 
 module.exports = {

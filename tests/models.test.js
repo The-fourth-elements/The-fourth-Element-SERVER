@@ -23,7 +23,7 @@ describe("Data Base Modules Test", () => {
         });
 
         it('City saves in DB as ObjectId(string)', async() => {
-            const createCity = (await findOrCreateCity(testCity)).name;
+            (await findOrCreateCity(testCity)).name;
             const foundCity = String((await City.find()).map(city => city._id))
             expect(typeof foundCity).toBe('string');    
         })
@@ -37,7 +37,7 @@ describe("Data Base Modules Test", () => {
         });
 
         it('Nation saves in DB as ObjectId', async() => {
-            const createNation = (await findOrCreateNationality(testNationality)).name;
+            (await findOrCreateNationality(testNationality)).name;
             const foundNation = String((await Nationality.find()).map(nation => nation._id));
             expect(typeof foundNation).toBe('string');
         })

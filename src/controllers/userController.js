@@ -2,6 +2,7 @@ const { Users } = require('../models/Users')
 const { handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
 const { createToken } = require('../services/token')
 const findOrCreateCity = require('../handler/findOrCreateCity');
+const { encrypt } = require('../services/crypt');
 const findOrCreateNationality = require('../handler/findOrCreateNationality')
 
 //obtener usuario por id
@@ -36,10 +37,10 @@ async function userCreateController (req,res, next){
         const user = req.body;
         const city = await findOrCreateCity(user.city)
         const nationality = await findOrCreateNationality(user.nationality)
-
         if(!city && !nationality) throw Error("City or Nationality can't be created or found");
+        const password = await encrypt(user.password);
         
-        const newUser = await Users.create({...user, city: city._id, nationality: nationality._id});
+        const newUser = await Users.create({...user, city: city._id, password: password, nationality: nationality._id});
         const token = createToken(String(newUser._id));
         res.cookie("jwt",token, {httpOnly: true });
         res.status(200).json({ access:true, message:"User created" });
@@ -64,9 +65,34 @@ async function userLoginController(req,res, next){
     }
 }
 
+async function userUpdate(req, res, next){
+    try {
+        const { id } = req.body;
+        const body = req;
+        const data = await Users.findOneAndUpdate(id, body);
+        if(data) res.status(200).json(data);
+        throw Error('An error occurred while updating');
+    } catch (error) {
+        next({message: error.message, statusCode: 404})
+    }
+}
+
+async function userDelete(req, res, next){
+    try {
+        const { id } = req.body;
+        const data = await Users.delete({_id:id});
+        if(data) return res.status(204).send('User delete');
+        throw Error('User not found');
+    } catch (error) {
+        next({message: error.message, statusCode: 400});
+    }
+}
+
 module.exports = {
     userGetController,
     userCreateController,
     userLoginController,
-    userGetAllController
+    userGetAllController,
+    userUpdate,
+    userDelete
 }
