@@ -4,14 +4,11 @@ const { decriptToken } = require('../services/token');
 
 async function handleUserDB (Users, id){
     try {
-        const user = await Users.findOne({
-            "_id":id
-        })
-
-        if(user) return user
-
+        const foundUser = await Users.findOne({"_id": id});
+        if (foundUser) return foundUser;
+        else throw Error('User not found.')
     } catch (error) {
-        return {"error": "user id is empty"}
+        return { error: error.message }
     }
 }
 

@@ -10,7 +10,7 @@ async function userGetController(req, res, next) {
     try {     
         const { id } = req.query
         if (!id) next({message: 'id is invalid', statusCode: 401});
-        const user = await handleUserDB(Users,id);
+        const user = await handleUserDB(Users, id);
         if (!user?.error){
             res.status(200).json(user);
         } else throw Error(user.error);
@@ -70,10 +70,10 @@ async function userLoginController(req, res, next){
 async function userUpdate(req, res, next){
     try {
         const { id } = req.body;
-        const body = req;
-        const data = await Users.findOneAndUpdate(id, body);
-        if (data) res.status(200).json(data);
-        throw Error('An error occurred while updating');
+        const { body } = req;
+        const updateUser = await Users.findByIdAndUpdate(id, body, {new: true});
+        if (updateUser) res.status(200).json(updateUser);
+        else throw Error('An error occurred while updating');
     } catch (error) {
         next({message: error.message, statusCode: 404})
     }
@@ -81,10 +81,12 @@ async function userUpdate(req, res, next){
 
 async function userDelete(req, res, next){
     try {
-        const { id } = req.body;
-        const data = await Users.delete({_id:id});
-        if (data) return res.status(204).send('User delete');
-        throw Error('User not found');
+        const { id } = req.params;
+        const foundUser = await handleUserDB(Users, id);
+        if (foundUser.email) {
+            const deleteUser = await Users.delete({_id: id});
+            if (deleteUser) return res.status(200).json({message: `${foundUser.name} successful deleted.`});
+        } else throw Error('User not found');
     } catch (error) {
         next({message: error.message, statusCode: 400});
     }
