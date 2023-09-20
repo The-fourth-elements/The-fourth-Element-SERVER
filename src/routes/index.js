@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
-
-const {userCreateController,userGetController, userLoginController, userGetAllController, userDelete, userUpdate} = require('../controllers/userController');
-const { requireAuthController, forgotPassword, authResetPassword, resetPassword } = require('../controllers/authController');
+const createGoogleUser = require('../controllers/createGoogleUser.controller');
+const {userCreateController,userGetController, userLoginController, userGetAllController, userDeleteController, userUpdateController} = require('../controllers/userController');
+const { requireAuthController, forgotPassword, resetPassword } = require('../controllers/authController');
  
 //crear y recibir informacion de un usuario.
-router.post('/user', userCreateController);
-router.post('/login', userLoginController);
-router.get('/user', userGetController);
 router.get('/users', userGetAllController);
-router.put('/user', userUpdate);
-router.delete('/user/:id', userDelete);
+router.get('/user', userGetController);
+router.put('/user', userUpdateController);
+router.post('/user', userCreateController);
+router.delete('/user/:id', userDeleteController);
 
 //validar información de usuario
+router.get('/signin', createGoogleUser);
+router.post('/login', userLoginController);
 router.post('/auth', requireAuthController);
 
 //forgot-password
 router.post('/auth/forgot', forgotPassword);
 router.post('/reset-password', resetPassword);
-
 
 module.exports = router;

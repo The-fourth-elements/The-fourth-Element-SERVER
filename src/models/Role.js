@@ -4,7 +4,7 @@ const RoleMongoose = new mongoose.Schema({
     permission:{
         type: Number
     }
-})
+});
 
 const Role = mongoose.model("Role", RoleMongoose);
 module.exports = Role;

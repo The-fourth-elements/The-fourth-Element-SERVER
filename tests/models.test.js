@@ -5,7 +5,7 @@ const { individualUserTest, testingUsers } = require('./templates/user');
 const { testCity, testModule, testNationality, testProgress, testRole, testStatus, createUser } = require('./templates/models');
 const findOrCreateCity = require('../src/handler/findOrCreateCity');
 const findOrCreateNationality = require('../src/handler/findOrCreateNationality');
-const { isEmail, isURL, isAlpha } = require('validator');
+const { isEmail, isURL, isAscii } = require('validator');
 
 const { Users, regexPass } = require('../src/models/Users');
 const { City, Module, Nationality, Role, Progress, Status} = require('../src/handler/handleModels') 
@@ -23,10 +23,16 @@ describe("Data Base Modules Test", () => {
         });
 
         it('City saves in DB as ObjectId(string)', async() => {
-            const createCity = (await findOrCreateCity(testCity)).name;
+            (await findOrCreateCity(testCity)).name;
             const foundCity = String((await City.find()).map(city => city._id))
             expect(typeof foundCity).toBe('string');    
-        })
+        });
+
+        it('Name must be an ASCII valid', async() =>{
+            const createCity = (await findOrCreateCity(testCity))._id;
+            const foundCity = (await City.findOne({_id: createCity._id})).name;
+            expect(isAscii(foundCity)).toBeTruthy();
+        });
     })
 
     describe("Nationality Model", () => {
@@ -37,10 +43,16 @@ describe("Data Base Modules Test", () => {
         });
 
         it('Nation saves in DB as ObjectId', async() => {
-            const createNation = (await findOrCreateNationality(testNationality)).name;
+            (await findOrCreateNationality(testNationality)).name;
             const foundNation = String((await Nationality.find()).map(nation => nation._id));
             expect(typeof foundNation).toBe('string');
-        })
+        });
+
+        it('Name must be an ASCII valid', async() =>{
+            const createNation = (await findOrCreateNationality(testNationality))._id;
+            const foundCity = (await Nationality.findOne({_id: createNation._id})).name;
+            expect(isAscii(foundCity)).toBeTruthy();
+        });
     })
 
     describe("Module Model. Verify if: ", () => {
@@ -76,7 +88,7 @@ describe("Data Base Modules Test", () => {
 
         xit('Module Video URL is right', async() => {
             
-        })
+        });
     })
 })
 

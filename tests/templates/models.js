@@ -1,8 +1,12 @@
 const { Users } = require('../../src/models/Users');
 const findOrCreateCity = require('../../src/handler/findOrCreateCity')
-const findOrCreateNationality = require('../../src/handler/findOrCreateNationality')
+const findOrCreateNationality = require('../../src/handler/findOrCreateNationality');
+const { encrypt } = require('../../src/services/crypt');
+const mongoose = require('mongoose');
 
-const testCity = "NewYork";
+const testCity = "New York";
+
+const randomID = new mongoose.Types.ObjectId();
 
 const testModule = {
     name: "Module 1",
@@ -15,13 +19,15 @@ const createUser = async(user) =>{
     try {
         const city = await findOrCreateCity(user.city)
         const nationality = await findOrCreateNationality(user.nationality)
+        const password = await encrypt(user.password);
 
-        if(!city && !nationality) throw Error("City or Nationality can't be created or found");
-        
-        const newUser = await Users.create({...user, city: city._id, nationality: nationality._id});
-        return newUser;
+        if (!city && !nationality) throw Error("City or Nationality can't be created or found");
+        const newUser = await Users.create({...user, city: city._id, password: password, nationality: nationality._id});
+        if (newUser){
+            return newUser;
+        } else throw Error('Could not create user.')
     } catch (error) {
-        return {error}
+        return ({message: error.message, statusCode: 400})
     }
 }
 
@@ -48,5 +54,6 @@ module.exports = {
     testProgress,
     testRole,
     testStatus,
-    createUser
+    createUser,
+    randomID
 }
