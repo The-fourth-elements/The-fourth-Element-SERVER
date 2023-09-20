@@ -3,7 +3,7 @@ const { encrypt } = require('../services/crypt');
 const { decriptToken } = require('../services/token');
 const { Users } = require('../models/Users')
 
-async function handleUserDB (id){
+async function handleUserDB(id){
     try {
         const foundUser = await Users.findOne({"_id": id});
         if (foundUser) return foundUser;
@@ -58,6 +58,13 @@ async function handlerResetPass(token, password){
         return { error: error.message }
     }
 }
+
+
+
+
+
+
+
 
 module.exports = {
     handleUserDB,

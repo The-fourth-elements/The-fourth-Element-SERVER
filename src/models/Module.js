@@ -4,11 +4,14 @@ const ModuleMongoose = new mongoose.Schema({
     name:{
         type: String
     },
+    theory:{
+        type: String
+    },
     description:{
         type: String
     },
     quiz:{
-        type: Number
+        type: Object
     },
     video_url:{
         type: String

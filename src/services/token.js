@@ -9,13 +9,15 @@ function createToken(content){
 };
 
 
-function validateToken(token){
+function validateToken(req){
+    const token = req.cookies.jwt
+
     return jwt.verify(token,SECRET_WORD,(err,decodedToken)=>{
         if(err){
             console.log(decodedToken)
             return {error:err.expiredAt}
         } else {
-           return true;
+           return decodedToken
         }
     });
 };
