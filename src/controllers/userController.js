@@ -4,6 +4,7 @@ const { createToken } = require('../services/token')
 const findOrCreateCity = require('../handler/findOrCreateCity');
 const { encrypt } = require('../services/crypt');
 const findOrCreateNationality = require('../handler/findOrCreateNationality')
+const Content = require('../models/Content');
 
 //obtener usuario por id
 async function userGetController(req, res, next) {
@@ -92,11 +93,25 @@ async function userDeleteController(req, res, next){
     }
 }
 
+async function updateContentController(req, res, next){
+    try {
+        const { body } = req;
+        console.log(body)
+        if (!body) throw Error('Missing things');
+        const newContent = await Content.create(body);
+        if (newContent) return res.status(201).json(newContent);
+        throw Error ('Error creating content');
+    } catch (error) {
+        next({message: error.message, statusCode: 404});
+    }
+}
+
 module.exports = {
     userGetController,
     userCreateController,
     userLoginController,
     userGetAllController,
     userUpdateController,
-    userDeleteController
+    userDeleteController,
+    updateContentController
 }
