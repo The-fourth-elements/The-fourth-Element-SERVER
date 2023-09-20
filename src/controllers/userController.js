@@ -4,6 +4,7 @@ const { createToken } = require('../services/token')
 const findOrCreateCity = require('../handler/findOrCreateCity');
 const { encrypt } = require('../services/crypt');
 const findOrCreateNationality = require('../handler/findOrCreateNationality')
+const Content = require('../models/Content');
 
 //obtener usuario por id
 async function userGetController(req, res, next) {
@@ -67,7 +68,7 @@ async function userLoginController(req, res, next){
     }
 }
 
-async function userUpdate(req, res, next){
+async function userUpdateController(req, res, next){
     try {
         const { id } = req.body;
         const { body } = req;
@@ -79,7 +80,7 @@ async function userUpdate(req, res, next){
     }
 }
 
-async function userDelete(req, res, next){
+async function userDeleteController(req, res, next){
     try {
         const { id } = req.params;
         const foundUser = await handleUserDB(id);
@@ -92,11 +93,30 @@ async function userDelete(req, res, next){
     }
 }
 
+async function updateContentController(req, res, next){
+    try {
+        const { body } = req;
+        console.log(body)
+        if (!body) throw Error('Missing things');
+        const newContent = await Content.create(body);
+        if (newContent) return res.status(201).json(newContent);
+        throw Error ('Error creating content');
+    } catch (error) {
+        next({message: error.message, statusCode: 404});
+    }
+}
+
+// async function roleAuth (req, res, next){
+//     const algo = req.headers
+//     const userRole = User.findOne(algo.id === User._id, algo.role === User.role )
+// }
+
 module.exports = {
     userGetController,
     userCreateController,
     userLoginController,
     userGetAllController,
-    userUpdate,
-    userDelete
+    userUpdateController,
+    userDeleteController,
+    updateContentController
 }
