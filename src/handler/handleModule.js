@@ -1,34 +1,34 @@
-const Module = require('../models');
+const Module = require('../models/Module');
 
 
-function handleCreateModule(request){
+async function handleCreateModule(request){
+
 if(request){
-    const module = Module.create({request})
+    const module = await Module.create({...request})
     if(module._id) return module._id
 }
     return false
 }
 
 
-function handleGetModule(id){
+async function handleGetModule(id){
     if(id)
-    return Module.findOne({_id:id})
+    return await Module.findOne({_id:id})
     else 
     return false
 }
 
 
-function handleUpdateModule(props){
+async function handleUpdateModule(props){
      const {id} = props
-     const response = Module.findByIdAndUpdate(id,props, {new: true});
-     console.log(response)
-     return true
+     const response = await Module.findByIdAndUpdate(id,props, {new: true});
+     return response
 }
 
 
-function handleGetAllModule(){
+async function handleGetAllModule(){
     try { 
-       const Modules = Module.find({})
+       const Modules = await Module.find({})
        if(Modules) return Modules
        throw Error('Modules not found')
     } catch (error) {
@@ -36,10 +36,10 @@ function handleGetAllModule(){
     }
 }
 
-function handleDeleteModule(id){
+async function handleDeleteModule(id){
     try {
-       const moduleDelete =  Module.delete({_id:id})
-     if(moduleDelete) console.log(moduleDelete)
+       const moduleDelete =  await Module.deleteOne({_id:id})
+     if(moduleDelete) return moduleDelete 
     } catch (error) {
         return error
     }

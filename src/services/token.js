@@ -5,7 +5,7 @@ const { SECRET_WORD } = require('../constantes/auth')
 
 function createToken(content){
     const payload =  {data: content};
-    return jwt.sign(payload, SECRET_WORD, { expiresIn: "5min" });
+    return jwt.sign(payload, SECRET_WORD, { expiresIn: "1d" });
 };
 
 

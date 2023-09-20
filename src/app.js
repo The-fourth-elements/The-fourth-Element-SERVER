@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
-const handlerError = require('./handler/handlerError');
+const handlerError = require('./handler/handlerError.js');
 const cookieParser = require('cookie-parser');
 const { URL } = process.env;
 

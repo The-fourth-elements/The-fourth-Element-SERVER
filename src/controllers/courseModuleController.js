@@ -3,13 +3,15 @@ const { decriptToken } = require('../services/token');
 const { handleUserDB } = require('../handler/handleUserDB')
 const {handleCreateModule, handleGetModule, handleGetAllModule,handleDeleteModule,handleUpdateModule} = require('../handler/handleModule')
 
-function courseModuleController(req,res){
+async function courseModuleController(req,res){
 try {
-     const userId = decriptToken(req.cookies.jwt)
+     const userId = decriptToken(req.cookies.jwt).data
     if(!userId?.error) {
-    const currentUser = handleUserDB(userId);
-     if(currentUser.role === 'administrador'){
-        const newModule = handleCreateModule(req.body)
+    const currentUser = await handleUserDB(userId);
+    console.log(userId)
+     if(currentUser.role === 1){
+        const newModule = await handleCreateModule(req.body)
+        console.log(newModule)
         if(newModule)  return res.status(200).json({action:'successful',message:'module created successfully'});
      }
     } throw Error('token is invalid')
@@ -18,14 +20,16 @@ try {
  }
 }
 
-function getCourseModuleController(req,res){
+async function getCourseModuleController(req,res){
  try {
-    const userId = decriptToken(req.cookies.jwt);
+    const userId = decriptToken(req.cookies.jwt).data;
+    console.log(userId)
     if(!userId?.error){
-        const currentUser = handleUserDB(userId);
-        if(!currentUser.role ==='visitante'){
-            const {id} = req.body;
-            const module = handleGetModule(id)
+        const currentUser = await handleUserDB(userId);
+        if(currentUser.role === 1){
+            const {id} = req.query;
+            console.log(id)
+            const module = await handleGetModule(id)
 
             if(module) return res.status(200).json(module)
             throw Error('module not found')
@@ -36,13 +40,13 @@ function getCourseModuleController(req,res){
  }
 }
 
-function getAllCourseModuleController(req,res){
+async function getAllCourseModuleController(req,res){
     try {
-        const userId = decriptToken(req.cookies.jwt);
+        const userId = decriptToken(req.cookies.jwt).data;
         if(!userId?.error){
-            const currentUser = handleUserDB(userId);
-            if(currentUser.role !== 'visitante'){
-                const modules = handleGetAllModule()
+            const currentUser = await handleUserDB(userId);
+            if(currentUser.role === 1){
+                const modules = await handleGetAllModule()
                 if(modules) return res.status(200).json(modules)
                 throw Error('Module is Empty')
             }
@@ -53,14 +57,14 @@ function getAllCourseModuleController(req,res){
 }
 
 
-function deleteCourseModuleController(req,res){
+async function deleteCourseModuleController(req,res){
     try {
-        const userId = decriptToken(req.cookies.jwt);
+        const userId = decriptToken(req.cookies.jwt).data;
         if(!userId?.error){
-            const currentUser = handleUserDB(userId);
-            if(currentUser.role !=='visitante'){
+            const currentUser = await handleUserDB(userId);
+            if(currentUser.role ===1){
                 const {id} = req.body;
-                const module = handleDeleteModule(id)
+                const module = await handleDeleteModule(id)
     
                 if(module) return res.status(200).json(module)
                 throw Error('module not found')
@@ -71,13 +75,13 @@ function deleteCourseModuleController(req,res){
      }
 }
 
-function updateCourseModuleController(req,res){
+async function updateCourseModuleController(req,res){
     try {
-        const userId = decriptToken(req.cookies.jwt);
+        const userId = decriptToken(req.cookies.jwt).data;
         if(!userId?.error){
-            const currentUser = handleUserDB(userId);
-            if(currentUser.role !=='visitante'){
-                const module = handleUpdateModule(req.body)
+            const currentUser = await handleUserDB(userId);
+            if(currentUser.role ===1){
+                const module = await handleUpdateModule(req.body)
                 if(module) return res.status(200).json(module)
                 throw Error('module not found')
             }
