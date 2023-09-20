@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ContentMongoose = new mongoose.Schema({
-    testimonial: {
+    testimonials: {
         type: String
     },
     image: {

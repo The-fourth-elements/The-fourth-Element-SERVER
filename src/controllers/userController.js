@@ -106,6 +106,11 @@ async function updateContentController(req, res, next){
     }
 }
 
+// async function roleAuth (req, res, next){
+//     const algo = req.headers
+//     const userRole = User.findOne(algo.id === User._id, algo.role === User.role )
+// }
+
 module.exports = {
     userGetController,
     userCreateController,
