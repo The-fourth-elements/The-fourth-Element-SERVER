@@ -2,7 +2,7 @@ const { getAuth } = require('firebase-admin/auth')
 const { Users } = require('../models/Users.js')
 
 async function createGoogleUser(req, res) {
-    const token = req.headers.authorization;
+    const token = req.cookies.Authorization;
     if (!token) {
         return res.status(401).json({access: false, error: "Token de autenticación no proporcionado" });
     }
@@ -10,7 +10,7 @@ async function createGoogleUser(req, res) {
     const { email, uid, name, picture } = decodedToken
     const userOnDB = await Users.findOne({ firebaseID: uid })
     if (userOnDB) {
-        return res.status(200).json({ access: true, userOnDB })
+        return res.status(200).json({message: 'El usuario ya se encuentra registrado'})
     }
     try {
         const user = await Users.create({
@@ -20,9 +20,9 @@ async function createGoogleUser(req, res) {
             profile_img: picture,
             password: 'notAValidPassword123'
         });
-        if (user) return res.status(200).json({ access: true, user })
+        if (user) return res.status(200).json({message: 'Usuario creado con éxito'})
     } catch (error) {
-        return res.status(500).json({ access: true, error: "server error" })
+        return res.status(500).json({ access: false, error: "server error" })
     }
 }
 

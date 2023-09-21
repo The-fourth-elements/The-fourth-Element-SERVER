@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const createGoogleUser = require('../controllers/createGoogleUser.controller');
+const createUserWithEmailAndPassword = require('../controllers/createUserWithEmailAndPassword.controller')
 const {userCreateController,userGetController, userLoginController, userGetAllController, userDelete, userUpdate} = require('../controllers/userController');
 const { requireAuthController, forgotPassword, resetPassword } = require('../controllers/authController');
+const verifyUserRole = require('../middlewares/verifyUserRole');
  
 //crear y recibir informacion de un usuario.
-router.get('/users', userGetAllController);
+router.get('/users', verifyUserRole, userGetAllController);
 router.get('/user', userGetController);
 router.put('/user', userUpdate);
 router.post('/user', userCreateController);
 router.delete('/user/:id', userDelete);
+router.post('/register', createUserWithEmailAndPassword)
 
 //validar información de usuario
 router.get('/signin', createGoogleUser);
