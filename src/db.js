@@ -7,10 +7,10 @@ const dbConnect = () => {
     const connectionString = NODE_ENV === 'test' ? DB_URI_TEST : DB_URI
     mongoose.connect(connectionString, { useNewUrlParser: true })
     .then(() => {
-        console.log('Conexión exitosa a MongoDB');
+        console.log('MongoDB connected successfully!');
     })
     .catch((error) => {
-        console.error('Error de conexión a MongoDB:', error);
+        console.error('Error conecting MongoDB: ', error);
     });
 }
 

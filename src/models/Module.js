@@ -13,7 +13,7 @@ const ModuleMongoose = new mongoose.Schema({
     video_url:{
         type: String
     }
-})
+});
 
 const Module = mongoose.model("Module", ModuleMongoose);
 module.exports = Module;

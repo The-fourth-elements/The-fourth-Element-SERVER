@@ -1,9 +1,9 @@
 const individualUserTest = {
     "name": "Ansony",
     "lastName": "Rojas",
-    "adress": "StOak",
+    "adress": "St Oak. 155",
     "city": "New York",
-    "nationality": "UnitedState",
+    "nationality": "United State",
     "module":[
         {
             name: "Module 1",
@@ -78,7 +78,7 @@ const testingUsers = [
     {
         "name": "Jonh",
         "lastName": "Duartes",
-        "adress": "Lemos",
+        "adress": "Lemos 1690",
         "city": "Bogota",
         "nationality": "Colombia",
         "module":[
@@ -153,9 +153,9 @@ const testingUsers = [
     {
         "name": "Simon",
         "lastName": "Leclerc",
-        "adress": "StLoews",
+        "adress": "St. Loews 1772",
         "city": "Monaco",
-        "nationality": "Monaco",
+        "nationality": "Principate of Monaco",
         "module":[
             {
                 name: "Module 1",
@@ -230,9 +230,9 @@ const testingUsers = [
 const JSONUser = {
     "name":"Ansony",
     "lastName":"Rojas",
-    "adress":"StOak",
-    "city": "NewYork",
-    "nationality": "UnitedState",
+    "adress":"St Oak. 155",
+    "city": "New York",
+    "nationality": "United State",
     "module":[{
             "name": "Module 1",
             "description": "It's a module 1 of the course.",

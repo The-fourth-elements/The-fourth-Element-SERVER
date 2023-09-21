@@ -2,9 +2,9 @@ const admin = require("firebase-admin");
 
 const firebase = admin.initializeApp({
     credential: admin.credential.applicationDefault()
-  });
+});
 
-  module.exports = {
+module.exports = {
     auth: firebase.auth()
-  };
+};
 
