@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const createGoogleUser = require('../controllers/createGoogleUser.controller');
-const {userCreateController,userGetController, userLoginController, userGetAllController, userDeleteController, userUpdateController, updateContentController} = require('../controllers/userController');
+const createGoogleUser = require('../controllers/createGoogleUserController');
+const createUserWithEmailAndPassword = require('../controllers/createUserWithEmailAndPasswordController')
+const { userCreateController, userGetController, userLoginController, userGetAllController, userDeleteController, userUpdateController, updateContentController} = require('../controllers/userController');
 const { requireAuthController, forgotPassword, resetPassword } = require('../controllers/authController');
+const verifyUserRole = require('../middlewares/verifyUserRole');
  
 //crear y recibir informacion de un usuario.
-router.get('/users', userGetAllController);
+router.get('/users', verifyUserRole, userGetAllController);
 router.get('/user', userGetController);
 router.put('/user', userUpdateController);
 router.post('/user', userCreateController);
+router.post('/register', createUserWithEmailAndPassword)
 router.delete('/user/:id', userDeleteController);
 router.post('/content', updateContentController);
 
