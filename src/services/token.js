@@ -10,9 +10,8 @@ function createToken(content){
 
 
 function validateToken(token){
-    return jwt.verify(token,SECRET_WORD,(err,decodedToken)=>{
+    return jwt.verify(token, SECRET_WORD, (err, decodedToken)=>{
         if(err){
-            console.log(decodedToken)
             return {error:err.expiredAt}
         } else {
            return true;
@@ -21,10 +20,14 @@ function validateToken(token){
 };
 
 function decriptToken(token){
-    return jwt.verify(token,SECRET_WORD,(err,decodedToken)=>{
-        if(err) return {error:err.expiredAt};
-        else return decodedToken;
-    });
+    try {
+        return jwt.verify(token, SECRET_WORD, (err, decodedToken)=>{
+            if (err) throw Error(err);
+            else return decodedToken;
+        });
+    } catch (error) {
+        return {error: error.message}
+    }
 };
 
 module.exports = {
