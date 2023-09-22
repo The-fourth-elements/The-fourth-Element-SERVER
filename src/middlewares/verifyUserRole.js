@@ -1,5 +1,5 @@
 const firebaseAdmin = require('../services/firebase')
-const {Users} = require('../models/Users')
+const { Users } = require('../models/Users')
 
 async function verifyUserRole(req, res, next){
     const token = req.cookies.Authorization
