@@ -9,7 +9,7 @@ async function verifyUserRole(req, res, next){
         const user = await Users.findOne({"firebaseID": result.uid});
 
         //cambiar por cualquiera que sea el valor del admin
-        if(user && user.role === 1){
+        if(user && user.role >= 2){
             next();
         }else{
             res.status(403).json({ error: 'Acceso no autorizado' });

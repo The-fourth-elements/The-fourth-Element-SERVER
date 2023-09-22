@@ -17,7 +17,8 @@ async function createUserWithEmailAndPassword(req, res) {
                 name,
                 firebaseID: newFirebaseUser.uid,
                 email,
-                password
+                password,
+                role: 0
             })
 
             return res.status(200).json({success: "cuenta creada correctamente"})
