@@ -7,4 +7,3 @@ const firebase = admin.initializeApp({
 module.exports = {
     auth: firebase.auth()
 };
-

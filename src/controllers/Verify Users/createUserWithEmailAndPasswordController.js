@@ -1,5 +1,5 @@
-const firebaseAdmin = require('../services/firebase.js')
-const { Users } = require('../models/Users.js')
+const firebaseAdmin = require('../../services/firebase.js')
+const { Users } = require('../../models/Users.js')
 
 async function createUserWithEmailAndPassword(req, res) {
     const { email, password, name } = req.body
@@ -17,7 +17,8 @@ async function createUserWithEmailAndPassword(req, res) {
                 name,
                 firebaseID: newFirebaseUser.uid,
                 email,
-                password
+                password,
+                role: 0
             })
 
             return res.status(200).json({success: "cuenta creada correctamente"})

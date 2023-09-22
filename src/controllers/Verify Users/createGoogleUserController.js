@@ -1,5 +1,5 @@
 const { getAuth } = require('firebase-admin/auth')
-const { Users } = require('../models/Users.js')
+const { Users } = require('../../models/Users.js')
 
 async function createGoogleUser(req, res) {
     const token = req.cookies.Authorization;
