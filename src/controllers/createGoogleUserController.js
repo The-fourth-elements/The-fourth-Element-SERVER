@@ -18,6 +18,7 @@ async function createGoogleUser(req, res) {
             email,
             name,
             profile_img: picture,
+            role: 0,
             password: 'notAValidPassword123'
         });
         if (user) return res.status(200).json({message: 'Usuario creado con éxito'})

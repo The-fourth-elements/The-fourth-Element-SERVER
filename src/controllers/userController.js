@@ -41,7 +41,7 @@ async function userCreateController (req, res, next){
         const password = await encrypt(user.password);
 
         if (!city && !nationality) throw Error("City or Nationality can't be created or found");
-        const newUser = await Users.create({...user, city: city._id, password: password, nationality: nationality._id});
+        const newUser = await Users.create({...user, role: 0, city: city._id, password: password, nationality: nationality._id});
         if (newUser){
             const token = createToken(String(newUser._id));
             res.cookie("jwt",token, {httpOnly: true });
