@@ -7,11 +7,25 @@ const ModuleMongoose = new mongoose.Schema({
     description:{
         type: String
     },
+    class:[{
+        type: mongoose.Types.ObjectId,
+        ref: "Class"
+    }],
+    state:{
+        type: Boolean
+    },
     quiz:{
         type: Number
     },
-    video_url:{
-        type: String
+    startingDate:{
+        type: Date,
+        default: Date.now
+    },
+    endingDate:{
+        type: Date,
+    },
+    payd: {
+        type: Boolean
     }
 });
 
