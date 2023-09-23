@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
+const { isURL } = require('validator');
 
 const ContentMongoose = new mongoose.Schema({
     testimonials: {
         type: String
     },
     image: {
-        type: String
+        type: String,
+        validate: [isURL, "Must be and URL"]
     },
     video: {
-        type: String
+        type: String,
+        validate: [isURL, "Must be and URL"]
     }
 })
 

@@ -1,6 +1,6 @@
-const CityMongoose = require("../models/City");
+const CityMongoose = require("../../models/City");
 
-module.exports = async(city) => {
+async function findOrCreateCity(city) {
     try {
         const cityDB = await CityMongoose.findOne({ name: city });
         if (cityDB) return cityDB;
@@ -11,3 +11,5 @@ module.exports = async(city) => {
         return error;
     }
 };
+
+module.exports = findOrCreateCity;

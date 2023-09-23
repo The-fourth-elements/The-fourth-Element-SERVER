@@ -10,12 +10,16 @@ const UserSchemas = new mongoose.Schema({
         type: String,
         require: true
     },
+    username:{
+        type: String,
+        require: true,
+        validate: [isAscii, 'Last name must be a string']
+    },
     name:{
         type: String,
-        require: true
-   
+        validate: [isAscii, 'Last name must be a string']
     },
-    lastName:{
+    lastname:{
         type: String,
         validate: [isAscii, 'Last name must be a string']
     },
@@ -26,7 +30,7 @@ const UserSchemas = new mongoose.Schema({
     city:{
         type: mongoose.Types.ObjectId
     },
-    nationality:{
+    nation:{
         type: mongoose.Types.ObjectId
     },
     module:{

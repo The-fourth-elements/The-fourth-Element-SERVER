@@ -3,26 +3,6 @@ const { encrypt } = require('../services/crypt');
 const { decriptToken } = require('../services/token');
 const { Users } = require('../models/Users')
 
-async function handleUserDB (id){
-    try {
-        const foundUser = await Users.findOne({"_id": id});
-        if (foundUser) return foundUser;
-        else throw Error('User not found.')
-    } catch (error) {
-        return { error: error.message }
-    }
-}
-
-async function handleAllUserDB(){
-    try {
-        const allUsers = await Users.find({});
-        if(Array.isArray(allUsers) && allUsers.length) return allUsers;
-        throw Error('Users is empty');
-    } catch (error) {
-        return { error: error.message }
-    }
-}
-
 // async function handlerForgotPass(email){
 //     try {
 //         const userEmail = await Users.findOne({email: email});
@@ -58,10 +38,3 @@ async function handleAllUserDB(){
 //         return { error: error.message }
 //     }
 // }
-
-module.exports = {
-    handleUserDB,
-    handleAllUserDB,
-    handlerForgotPass,
-    handlerResetPass
-}
