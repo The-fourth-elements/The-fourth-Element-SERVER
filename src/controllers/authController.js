@@ -61,9 +61,3 @@ const { URL } = process.env;
 //         next({message: error.message, statusCode: 404})
 //     }
 // };
-
-module.exports ={
-    requireAuthController,
-    forgotPassword,
-    resetPassword,
-}
