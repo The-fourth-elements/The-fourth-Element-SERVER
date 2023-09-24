@@ -1,10 +1,10 @@
 const { Users } = require('../models/Users')
-const { handleUserDB, handleAllUserDB }= require('../handler/handleUserDB')
+const { handleUserDB, handleAllUserDB } = require('../handler/handleUserDB')
 const { createToken } = require('../services/token')
-const findOrCreateCity = require('../handler/findOrCreateCity');
+// const findOrCreateCity = require('../handler/findOrCreateCity');
 const { encrypt } = require('../services/crypt');
-const findOrCreateNation = require('../handler/findOrCreateNation')
-const Content = require('../models/Content');
+// const findOrCreateNation = require('../handler/findOrCreateNation')
+// const Content = require('../models/Content');
 
 //obtener usuario por id
 
@@ -31,22 +31,27 @@ const Content = require('../models/Content');
 // }
 
 // logeo del usuario
-// async function userLoginController(req, res, next){
-//     try {
-//         const { email, password } = req.body;
-//         const user = await Users.login(email,password);
-//         if (!user?.error){
-//             const token =  createToken(String(user._id));
-//             res.cookie("jwt",token,{ httpOnly: true });
-//             res.status(200).json({ success: true, message: "Login successful" });        
-//         }
-//         else throw Error("The email or password is invalid")
-//     } catch (error) {
-//         next({message: error.message, statusCode: 404})
-//     }
+async function userLoginController(req, res, next) {
+    try {
+        const { email, password } = req.body;
+        console.log(req.body);
+        const user = await Users.login(email, password);
+        console.log(user);
+        if (!user?.error) {
+            const token = createToken(String(user._id));
+            res.cookie("jwt", token, { httpOnly: true });
+            res.status(200).json({ success: true, message: "Login successful" });
+        }
+        else throw Error("The email or password is invalid")
+    } catch (error) {
+        next({ message: error.message, statusCode: 404 })
+    }
+}
+
+// async function roleAuth(req, res, next) {
+//     const algo = req.headers
+//     const userRole = User.findOne(algo.id === User._id, algo.role === User.role)
 // }
 
-// async function roleAuth (req, res, next){
-//     const algo = req.headers
-//     const userRole = User.findOne(algo.id === User._id, algo.role === User.role )
-// }
+
+module.exports = userLoginController
