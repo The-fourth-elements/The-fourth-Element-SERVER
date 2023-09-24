@@ -31,7 +31,7 @@ async function createUserWithBody(req, res) {
             }
         } catch (error) {
             if (error) {
-                return res.status(400).json(error.message);
+                return res.status(400).json(error.message); // enviar role al loguear
             }
             return res.status(500).json({ error: "server error" });
         }
