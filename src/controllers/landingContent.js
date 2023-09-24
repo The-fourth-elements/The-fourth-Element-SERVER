@@ -1,6 +1,6 @@
 const LandingContent = require("../models/LandingContent");
 
-async function createContent(req, res, next){
+async function landingContent(req, res, next){
     try {
         const { body } = req;
         if (!body) throw Error('Missing things');
@@ -12,4 +12,4 @@ async function createContent(req, res, next){
     }
 }
 
-module.exports = createContent;
+module.exports = landingContent;
