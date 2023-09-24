@@ -5,24 +5,29 @@ const findOrCreateCity = require('../../handler/dataBase/findOrCreateCity.js');
 
 async function createUserWithBody(req, res) {
     const { email, password, username } = req.body
-    console.log(req.body);
-    console.log('holi');
-    if (!email || !username || !password ) {
-        return res.status(400).json({error:"Faltan datos del usuario"});
+    if (!email || !username || !password) {
+        return res.status(400).json({ error: "Faltan datos del usuario" });
     } else {
         console.log(email, username, password);
         try {
-        
-                await Users.create({
-                    
-                    username,
-                    role: 0,
-                    email,
-                    password,
-                });
-                return res.status(200).json({success: "Cuenta creada correctamente"})
-            }
-         catch (error) {
+            // const newFirebaseUser = await firebaseAdmin.auth.createUser({
+            //     email,
+            //     password,
+            // });
+
+            // if (newFirebaseUser) {
+            // const newCity = await findOrCreateCity(city);
+            // const newNation = await findOrCreateNation(nation);
+            await Users.create({
+                // firebaseID: newFirebaseUser.uid,
+                username,
+                role: 0,
+                email,
+                password,
+            });
+            return res.status(200).json({ success: "Cuenta creada correctamente" })
+            // }
+        } catch (error) {
             if (error) {
                 return res.status(400).json(error.message); // enviar role al loguear
             }
