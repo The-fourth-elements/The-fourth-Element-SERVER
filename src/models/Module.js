@@ -7,13 +7,10 @@ const ModuleMongoose = new mongoose.Schema({
     description:{
         type: String
     },
-    class:[{
+    classModule:[{
         type: mongoose.Types.ObjectId,
         ref: "Class"
     }],
-    state:{
-        type: Boolean
-    },
     quiz:{
         type: Number
     },
@@ -24,7 +21,7 @@ const ModuleMongoose = new mongoose.Schema({
     endingDate:{
         type: Date,
     },
-    payd: {
+    paid: {
         type: Boolean
     }
 });

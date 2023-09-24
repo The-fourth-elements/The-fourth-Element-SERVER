@@ -43,13 +43,8 @@ const UserSchemas = new mongoose.Schema({
         }
     },
     progress:{
-        type: Number,
-        validate: {
-            validator: function(value){
-                return regexNumber.test(value)
-            },
-            message: 'Progress must be a number'
-        }
+        type: mongoose.Types.ObjectId,
+        ref: "Progress"
     },
     profile_img:{
         type: String,
