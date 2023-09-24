@@ -7,14 +7,14 @@ const ClassMongoose = new mongoose.Schema({
     description: {
         type: String
     },
-    videos: [{
+    videos: {
         type: mongoose.Types.ObjectId,
         ref: "Videos"
-    }],
-    powerPoint:[{
+    },
+    powerPoint:{
         type: mongoose.Types.ObjectId,
         ref: "PowerPoint"
-    }]
+    }
 });
 
 const Class = mongoose.model("Class", ClassMongoose);

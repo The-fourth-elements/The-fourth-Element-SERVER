@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
+const { isURL } = require('validator');
 
 const PowePointMongoose = new mongoose.Schema({
+    id: {
+        type: String 
+    },
     url: {
-        type: String
+        type: String,
+        validate: [isURL, 'Profile image must be a valid URL']
     },
 });
 
