@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const { isURL } = require('validator');
 
-const PowePointMongoose = new mongoose.Schema({
+const PowerPointMongoose = new mongoose.Schema({
     id: {
         type: String 
     },
     url: {
         type: String,
-        validate: [isURL, 'Profile image must be a valid URL']
+        validate: [isURL, 'the URL must be a valid URL']
     },
 });
 
-const PowePoint = mongoose.model("PowePoint", PowePointMongoose);
-module.exports = PowePoint;
+const PowerPoint = mongoose.model("PowerPoint", PowerPointMongoose);
+module.exports = PowerPoint;
