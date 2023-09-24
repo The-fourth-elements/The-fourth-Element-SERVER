@@ -7,9 +7,9 @@ const ClassMongoose = new mongoose.Schema({
     description: {
         type: String
     },
-    videos: {
+    video: {
         type: mongoose.Types.ObjectId,
-        ref: "Videos"
+        ref: "Video"
     },
     powerPoint:{
         type: mongoose.Types.ObjectId,
