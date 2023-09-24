@@ -3,7 +3,7 @@ const individualUserTest = {
     "lastName": "Rojas",
     "adress": "St Oak. 155",
     "city": "New York",
-    "nationality": "United State",
+    "nation": "United State",
     "module":[
         {
             name: "Module 1",
@@ -80,7 +80,7 @@ const testingUsers = [
         "lastName": "Duartes",
         "adress": "Lemos 1690",
         "city": "Bogota",
-        "nationality": "Colombia",
+        "nation": "Colombia",
         "module":[
             {
                 name: "Module 1",
@@ -155,7 +155,7 @@ const testingUsers = [
         "lastName": "Leclerc",
         "adress": "St. Loews 1772",
         "city": "Monaco",
-        "nationality": "Principate of Monaco",
+        "nation": "Principate of Monaco",
         "module":[
             {
                 name: "Module 1",
@@ -232,7 +232,7 @@ const JSONUser = {
     "lastName":"Rojas",
     "adress":"St Oak. 155",
     "city": "New York",
-    "nationality": "United State",
+    "nation": "United State",
     "module":[{
             "name": "Module 1",
             "description": "It's a module 1 of the course.",

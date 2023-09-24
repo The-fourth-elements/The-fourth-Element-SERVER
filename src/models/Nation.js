@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {isAscii} = require('validator');
 
-const NationalityMongoose = new mongoose.Schema({
+const nationMongoose = new mongoose.Schema({
     name:{
         type: String,
         unique:true,
@@ -10,5 +10,5 @@ const NationalityMongoose = new mongoose.Schema({
     }
 });
 
-const Nationality = mongoose.model("Nationality", NationalityMongoose);
-module.exports = Nationality;
+const Nation = mongoose.model("nation", nationMongoose);
+module.exports = Nation;

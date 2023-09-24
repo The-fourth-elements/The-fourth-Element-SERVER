@@ -43,7 +43,7 @@ describe("Back-End Routing Test", () => {
                     ...testingUsers[0],
                     password: newUser.password,
                     city: newUser.city.valueOf(),
-                    nationality: newUser.nationality.valueOf(),
+                    nation: newUser.nation.valueOf(),
                     _id: dbUserId,
                     __v: newUser.__v,
                   });

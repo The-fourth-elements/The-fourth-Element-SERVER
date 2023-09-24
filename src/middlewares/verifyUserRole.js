@@ -1,5 +1,5 @@
 const firebaseAdmin = require('../services/firebase')
-const {Users} = require('../models/Users')
+const { Users } = require('../models/Users')
 
 async function verifyUserRole(req, res, next){
     const token = req.cookies.Authorization
@@ -9,7 +9,7 @@ async function verifyUserRole(req, res, next){
         const user = await Users.findOne({"firebaseID": result.uid});
 
         //cambiar por cualquiera que sea el valor del admin
-        if(user && user.role === 1){
+        if(user && user.role >= 2){
             next();
         }else{
             res.status(403).json({ error: 'Acceso no autorizado' });
