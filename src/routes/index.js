@@ -15,6 +15,11 @@ const createGoogleUser = require('../controllers/createUsers/createUserWithGoogl
 // Create Content Import
 const createContent = require('../controllers/createContent');
 
+// Payment Gategway Imports
+const createOrder = require('../controllers/paymentGateway/createOrder');
+const feedback = require('../controllers/paymentGateway/feedback');
+const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
+
 // Middleware Role Import
 const verifyUserRole = require('../middlewares/verifyUserRole');
  
@@ -34,8 +39,13 @@ router.post('/auth', createUserWithBody);
 // Faltan
 // router.post('/create', nada); //Crea y modifica el clase de cada módulo
 // router.post('/create', nada); //Crea y modifica el módulo
-// router.get('/create', nada); //Pasarela de pago
-// router.post('/create', nada); //Pasarela de pago
+
+//Pasarela de pagos
+router.post('/create-order', createOrder) //Pasarela de pago
+// router.post('/webhook', reciveWebhook); //Pasarela de pago
+router.get('/feedback', feedback); //Pasarela de pago
+// router.get('/success', success); //Pasarela de pago
+// router.get('/failure', failure); //Pasarela de pago
 
 // Revisar con Edu
 // router.post('/auth/forgot', forgotPassword);

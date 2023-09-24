@@ -4,10 +4,14 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const handlerError = require('./handler/handlerError');
 const cookieParser = require('cookie-parser');
-const { URL } = process.env;
+const mercadopago = require('mercadopago');
+const { URL, MP_TOKEN } = process.env;
+
+mercadopago.configure({
+	access_token: MP_TOKEN,
+});
 
 const server = express();
-
 server.use(express.json());
 
 server.use(morgan('dev'));
