@@ -10,6 +10,8 @@ const deleteUser = require('../controllers/controllUsers/deleteUser');
 const { createController, uppdateController, deleteController } = require('../controllers/modulsController');
 // Create User Imports
 const createUserWithBody = require('../controllers/createUsers/createUserWithBody');
+const loginUser = require('../controllers/userController')
+
 const createGoogleUser = require('../controllers/createUsers/createUserWithGoogle');
 
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index')
@@ -30,6 +32,7 @@ const verifyUserRole = require('../middlewares/verifyUserRole');
 //crear y recibir informacion de un usuario.
 router.get('/users', verifyUserRole, getAllUsers);
 //router.get('/user', getUserById); 
+router.get('/user', getUserById);
 router.put('/user', updateUser);
 router.delete('/user/:id', deleteUser);
 
@@ -39,6 +42,7 @@ router.post('/content', landingContent);
 //validar información de usuario
 router.get('/signin', createGoogleUser); //Modificar Ruta
 router.post('/auth', createUserWithBody);
+router.post('/login', loginUser)
 
 // creacio, actualizacion y eliminacion de modulos
 router.post('/moduls', createController);
@@ -62,9 +66,11 @@ router.get('/powerpoint/:id',getPowerPointById) // get by id
 router.post('/powerpoint', createPowerPoint)
 router.put('/powerpoint/:id', updatePowerPoint)
 
+
+//Pasarela de pagos
 router.post('/create-order', createOrder) //Pasarela de pago
 // router.post('/webhook', reciveWebhook); //Pasarela de pago
-router.get('/feedback', feedback); //Pasarela de pago
+// router.get('/feedback', feedback); //Pasarela de pago
 // router.get('/success', success); //Pasarela de pago
 // router.get('/failure', failure); //Pasarela de pago
 
