@@ -24,7 +24,7 @@ const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 const verifyUserRole = require('../middlewares/verifyUserRole');
  
 //crear y recibir informacion de un usuario.
-router.get('/users', verifyUserRole, getAllUsers);
+router.get('/users', getAllUsers);
 router.get('/user', getUserById);
 router.put('/user', updateUser);
 router.delete('/user/:id', deleteUser);
