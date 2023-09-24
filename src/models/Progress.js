@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
+const Module = require('./Module');
 
 const ProgressMongoose = new mongoose.Schema({
     certificated:{
         type: Boolean
     },
-    module_state:{
-        type: String
-    },
+    module:[{
+        type: mongoose.Types.ObjectId,
+        ref: "Module"
+    }],
     assistance:{
         type: Number
     }

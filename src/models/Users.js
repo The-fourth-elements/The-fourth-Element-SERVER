@@ -33,9 +33,6 @@ const UserSchemas = new mongoose.Schema({
     nation:{
         type: mongoose.Types.ObjectId
     },
-    module:{
-        type: Array 
-    },
     role:{
         type: Number,
         validate: {
@@ -46,16 +43,8 @@ const UserSchemas = new mongoose.Schema({
         }
     },
     progress:{
-        type: Number,
-        validate: {
-            validator: function(value){
-                return regexNumber.test(value)
-            },
-            message: 'Progress must be a number'
-        }
-    },
-    status:{
-        type: Boolean,
+        type: mongoose.Types.ObjectId,
+        ref: "Progress"
     },
     profile_img:{
         type: String,

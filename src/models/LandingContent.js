@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { isURL } = require('validator');
 
-const ContentMongoose = new mongoose.Schema({
+const LandingContentMongoose = new mongoose.Schema({
     testimonials: {
         type: String
     },
@@ -15,5 +15,5 @@ const ContentMongoose = new mongoose.Schema({
     }
 })
 
-const Content = mongoose.model("Content", ContentMongoose);
-module.exports = Content;
+const LandingContent = mongoose.model("LandingContent", LandingContentMongoose);
+module.exports = LandingContent;
