@@ -69,11 +69,12 @@ const UserSchemas = new mongoose.Schema({
     }
 });
 
-UserSchemas.statics.login = async function(email,password){
+UserSchemas.statics.login = async function(email, password){
     try {
         const user = await this.findOne({email})
+        
         if(user){
-            const auth = await compare(password,user.password);
+            const auth = compare(password, user.password);
             if(auth){
                 return user;
             } else throw Error('Incorrect Password');

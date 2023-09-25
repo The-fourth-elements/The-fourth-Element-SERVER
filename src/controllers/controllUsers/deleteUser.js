@@ -8,7 +8,7 @@ async function deleteUser(req, res, next){
         const foundUser = await handleUserDB(id);
         if (foundUser.email) {
             const deleteUser = await Users.delete({_id: id});
-            if (deleteUser) return res.status(200).json({message: `${foundUser.name} successful deleted.`});
+            if (deleteUser) return res.status(200).json({message: "User successful deleted."});
         } else throw Error('User not found');
     } catch (error) {
         next({message: error.message, statusCode: 400});

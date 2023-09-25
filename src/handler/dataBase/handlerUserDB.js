@@ -1,4 +1,4 @@
-const { Users } = require('../../models/Users')
+const { Users } = require("../../models/Users");
 
 async function handleUserDB (id){
     try {

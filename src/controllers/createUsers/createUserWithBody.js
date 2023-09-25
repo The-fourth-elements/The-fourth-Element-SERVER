@@ -1,38 +1,32 @@
 const firebaseAdmin = require('../../services/firebase.js')
 const { Users } = require('../../models/Users.js');
-const findOrCreateNation = require('../../handler/dataBase/findOrCreateNation.js');
-const findOrCreateCity = require('../../handler/dataBase/findOrCreateCity.js');
+const { encrypt } = require('../../services/crypt.js');
 
 async function createUserWithBody(req, res) {
-    const { email, password, username } = req.body
-    if (!email || !username || !password) {
-        return res.status(400).json({ error: "Faltan datos del usuario" });
-    } else {
-        console.log(email, username, password);
-        try {
-            // const newFirebaseUser = await firebaseAdmin.auth.createUser({
-            //     email,
-            //     password,
-            // });
+    const { email, password, username, provider } = req.body;
+    console.log(email, username, password, provider);
+    try{
+        if(provider){
 
-            // if (newFirebaseUser) {
-            // const newCity = await findOrCreateCity(city);
-            // const newNation = await findOrCreateNation(nation);
-            await Users.create({
-                // firebaseID: newFirebaseUser.uid,
-                username,
-                role: 0,
-                email,
-                password,
-            });
-            return res.status(200).json({ success: "Cuenta creada correctamente" })
-            // }
-        } catch (error) {
-            if (error) {
-                return res.status(400).json(error.message);
+        } else {
+            if (!email || !username || !password) {
+                return res.status(400).json({ error: "Faltan datos del usuario" });
+            } else {
+                const passwordEncrypt = await encrypt(password)
+                await Users.create({
+                    username,
+                    role: 0,
+                    email,
+                    password: passwordEncrypt,
+                });
+                return res.status(200).json({ success: "Cuenta creada correctamente" })
             }
-            return res.status(500).json({ error: "server error" });
         }
+    } catch (error) {
+        if (error) {
+            return res.status(400).json(error.message); // enviar role al loguear
+        }
+        return res.status(500).json({ error: "server error" });
     }
 }
 
