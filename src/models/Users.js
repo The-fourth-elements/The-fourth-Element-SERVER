@@ -74,15 +74,15 @@ UserSchemas.statics.login = async function(email, password){
         const user = await this.findOne({email});
         
         if(user){
-            const authPass = await compare(password, user.password);
-            console.log(authPass);
-            if(authPass === true){
-                return user;
-            } else throw Error('Incorrect Password');
-            // const auth = compare(password, user.password);
-            // if(auth){
+            // const authPass = await compare(password, user.password);
+            // console.log(authPass);
+            // if(authPass === true){
             //     return user;
             // } else throw Error('Incorrect Password');
+            const auth = compare(password, user.password);
+            if(auth){
+                return user;
+            } else throw Error('Incorrect Password');
         } else throw Error('Invalid Email');
     } catch (error) {
         return {"error": error.message};

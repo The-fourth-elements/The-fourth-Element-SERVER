@@ -11,8 +11,8 @@ async function createUserWithBody(req, res) {
             if (!email) {
                 return res.status(400).json({ error: "Falta el email del usuario" });
             } else {
-                // const passwordEncrypt = await encrypt("password")
-                const passwordEncrypt = "password"
+                const passwordEncrypt = await encrypt("password")
+                // const passwordEncrypt = "password"
                 await Users.create({
                     username,
                     role: 0,
@@ -27,15 +27,14 @@ async function createUserWithBody(req, res) {
             if (!email || !username || !password || !city || !nationality) {
                 return res.status(400).json({ error: "Faltan datos del usuario" });
             } else {
-
                 const newCity = await findOrCreateCity(city)
                 const newNation = await findOrCreateNation(nationality)
-                // const passwordEncrypt = await encrypt(password)
+                const passwordEncrypt = await encrypt(password)
                 await Users.create({
                     username,
                     role: 0,
                     email,
-                    password,
+                    password: passwordEncrypt,
                     city: newCity,
                     nation: newNation
                 });
