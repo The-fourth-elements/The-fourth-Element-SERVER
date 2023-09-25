@@ -13,12 +13,12 @@ const createGoogleUser = require('../controllers/createUsers/createUserWithGoogl
 const loginUser = require('../controllers/userController')
 
 
-const { createVideo, updateVideo, getAllVideos, getVideoById} = require('../controllers/videoControllers/index')
-const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById} = require('../controllers/powerPointControllers/index');
+const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
+const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint} = require('../controllers/powerPointControllers/index');
 
 // Landing content Import
 const getLandingContent = require('../controllers/landingContent/getLandingContent');
-const createLandingContent = require('../controllers/landingContent/createlandingContent');
+const createLandingContent = require('../controllers/landingContent/createLandingContent');
 
 
 // Payment Gategway Imports
@@ -63,11 +63,13 @@ router.get('/videos', getAllVideos) //get all
 router.get('/video/:id', getVideoById) //get by id
 router.post('/video', createVideo)
 router.put('/video/:id', updateVideo)
+router.delete('/video/:id', deleteVideo)
 //crea power points
 router.get('/powerpoints',getAllPowerPoints) //get all
 router.get('/powerpoint/:id',getPowerPointById) // get by id
 router.post('/powerpoint', createPowerPoint)
 router.put('/powerpoint/:id', updatePowerPoint)
+router.delete('/powerpoint/:id', deletePowerPoint)
 
 
 //Pasarela de pagos
