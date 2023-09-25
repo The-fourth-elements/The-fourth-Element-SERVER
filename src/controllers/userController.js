@@ -1,4 +1,7 @@
+
+
 const { createToken } = require('../services/token')
+
 const { encrypt } = require('../services/crypt');
 const { Users } = require('../models/Users');
 
@@ -19,5 +22,11 @@ async function userLoginController(req, res, next) {
         next({ message: error.message, statusCode: 404 })
     }
 }
+
+// async function roleAuth(req, res, next) {
+//     const algo = req.headers
+//     const userRole = User.findOne(algo.id === User._id, algo.role === User.role)
+// }
+
 
 module.exports = userLoginController

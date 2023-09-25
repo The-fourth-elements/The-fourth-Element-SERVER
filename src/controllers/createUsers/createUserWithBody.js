@@ -7,7 +7,18 @@ async function createUserWithBody(req, res) {
     console.log(email, username, password, provider);
     try{
         if(provider){
-
+            if (!email) {
+                return res.status(400).json({ error: "Falta el email del usuario" });
+            } else {
+                const passwordEncrypt = await encrypt("password")
+                await Users.create({
+                    username,
+                    role: 0,
+                    email,
+                    password: passwordEncrypt,
+                });
+                return res.status(200).json({ success: "Cuenta creada correctamente" })
+            }
         } else {
             if (!email || !username || !password) {
                 return res.status(400).json({ error: "Faltan datos del usuario" });

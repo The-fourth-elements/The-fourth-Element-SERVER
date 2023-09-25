@@ -9,9 +9,7 @@ const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getCl
 
 // Create User Imports
 const createUserWithBody = require('../controllers/createUsers/createUserWithBody');
-const createGoogleUser = require('../controllers/createUsers/createUserWithGoogle');
 const loginUser = require('../controllers/userController')
-
 
 const { createVideo, updateVideo, getAllVideos, getVideoById} = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById} = require('../controllers/powerPointControllers/index');
@@ -28,6 +26,7 @@ const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Middleware Role Import
 const verifyUserRole = require('../middlewares/verifyUserRole');
+const { forgotPassword, resetPassword } = require('../controllers/authController');
 
 //crear y recibir informacion de un usuario.
 router.get('/users', getAllUsers); // Funciona
@@ -40,7 +39,6 @@ router.get('/content', getLandingContent); // Funciona
 router.post('/content', createLandingContent); // Funciona
 
 //validar información de usuario
-router.get('/signin', createGoogleUser); //Modificar Ruta
 router.post('/auth', createUserWithBody); // Funciona
 router.post('/login', loginUser); // Funciona
 
@@ -78,7 +76,7 @@ router.post('/create-order', createOrder) //Pasarela de pago
 // router.get('/failure', failure); //Pasarela de pago
 
 // Revisar con Edu
-// router.post('/auth/forgot', forgotPassword);
-// router.post('/reset-password', resetPassword);
+router.post('/auth/forgot', forgotPassword);
+router.post('/reset-password', resetPassword);
 
 module.exports = router;
