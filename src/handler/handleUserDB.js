@@ -23,11 +23,12 @@ async function handlerForgotPass(email){
 async function handlerResetPass(token, password){
     try {
         const userToken = decriptToken(token);
+        console.log( userToken);
         const matchUser = await Users.findById(userToken.data);
         if (matchUser) {
             if (password) {
-                const newPass = await encrypt(password);
-                await matchUser.updateOne({password: newPass});
+                // const newPass = await encrypt(password);
+                await matchUser.updateOne({password});
             }else {
                 throw new Error('Not matching.');
             }

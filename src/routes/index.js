@@ -18,7 +18,6 @@ const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById
 const getLandingContent = require('../controllers/landingContent/getLandingContent');
 const createLandingContent = require('../controllers/landingContent/createlandingContent');
 
-
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
