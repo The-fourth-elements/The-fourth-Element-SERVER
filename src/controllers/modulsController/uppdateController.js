@@ -1,6 +1,6 @@
 const Module = require('../../models/Module');
 
-const uppdateContent = async (req, res, next) => {
+const updateContent = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { body } = req;
@@ -15,4 +15,4 @@ const uppdateContent = async (req, res, next) => {
     }
 };
 
-module.exports = uppdateContent;
+module.exports = updateContent;

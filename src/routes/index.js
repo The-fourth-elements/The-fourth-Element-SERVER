@@ -2,24 +2,24 @@ const express = require('express');
 const router = express.Router();
 // const { forgotPassword, resetPassword } = require('../controllers/authController');
 
-// Controll Users Imports
-//const getUserById = require('../controllers/ControllUsers/getUserById');
-const getAllUsers = require('../controllers/controllUsers/getAllUsers');
-const updateUser = require('../controllers/controllUsers/updateUser');
-const deleteUser = require('../controllers/controllUsers/deleteUser');
-const { createController, uppdateController, deleteController } = require('../controllers/modulsController');
+// Probar
+const { getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
+const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
+const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
+
 // Create User Imports
 const createUserWithBody = require('../controllers/createUsers/createUserWithBody');
+const createGoogleUser = require('../controllers/createUsers/createUserWithGoogle');
 const loginUser = require('../controllers/userController')
 
-const createGoogleUser = require('../controllers/createUsers/createUserWithGoogle');
 
-const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index')
 const { createVideo, updateVideo, getAllVideos, getVideoById} = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById} = require('../controllers/powerPointControllers/index');
 
-// Create Landing content Import
-const landingContent = require('../controllers/landingContent');
+// Landing content Import
+const getLandingContent = require('../controllers/landingContent/getLandingContent');
+const createLandingContent = require('../controllers/landingContent/createlandingContent');
+
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
@@ -30,24 +30,27 @@ const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 const verifyUserRole = require('../middlewares/verifyUserRole');
 
 //crear y recibir informacion de un usuario.
-router.get('/users', verifyUserRole, getAllUsers);
-//router.get('/user', getUserById); 
-router.get('/user', getUserById);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
+router.get('/users', getAllUsers); // Funciona
+router.get('/user', getUserById); // Funciona
+router.put('/user', updateUser); // Funciona, reveer el delete
+router.delete('/user/:id', deleteUser); // Funciona
 
 // Landing Content Testimonies
-router.post('/content', landingContent);
+router.get('/content', getLandingContent); // Funciona
+router.post('/content', createLandingContent); // Funciona
 
 //validar información de usuario
 router.get('/signin', createGoogleUser); //Modificar Ruta
-router.post('/auth', createUserWithBody);
-router.post('/login', loginUser)
+router.post('/auth', createUserWithBody); // Funciona
+router.post('/login', loginUser); // Funciona
 
 // creacio, actualizacion y eliminacion de modulos
-router.post('/moduls', createController);
-router.put('/moduls/:id', uppdateController);
-router.delete('/moduls/:id', deleteController);
+router.get('/moduls', getAllModules); //
+router.get('/moduls/:id', getModuleById); //
+router.post('/moduls', createController); // Funciona
+router.put('/moduls/:id', updateController); // Funciona
+router.delete('/moduls/:id', deleteController); // Funciona
+router.put('/module/:moduleId/class/:classId', addClassToModule); //
 
 // router.post('/create', nada); //Crea y modifica el clase de cada módulo
 router.get('/class', getAllClasses) // busca todas las classes

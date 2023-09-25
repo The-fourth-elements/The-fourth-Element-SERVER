@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-// // hash para password
+// hash para password
 async function encrypt(content) {
     if (content) {
         const salt = await bcrypt.genSalt();
