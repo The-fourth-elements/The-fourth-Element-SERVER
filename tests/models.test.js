@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const { DB_URI_TEST } = process.env
 const { individualUserTest, testingUsers } = require('./templates/user');
-const { testCity, testModule, testNationality, testProgress, testRole, testStatus, createUser } = require('./templates/models');
+const { testCity, testModule, testnation, testProgress, testRole, testStatus, createUser } = require('./templates/models');
 const findOrCreateCity = require('../src/handler/findOrCreateCity');
-const findOrCreateNationality = require('../src/handler/findOrCreateNationality');
-const { isEmail, isURL, isAlpha } = require('validator');
+const findOrCreateNation = require('../src/handler/findOrCreateNation');
+const { isEmail, isURL, isAscii } = require('validator');
 
 const { Users, regexPass } = require('../src/models/Users');
-const { City, Module, Nationality, Role, Progress, Status} = require('../src/handler/handleModels') 
+const { City, Module, nation, Role, Progress, Status} = require('../src/handler/handleModels') 
 
 beforeAll(async()=>{
     await mongoose.connect(DB_URI_TEST);
@@ -26,21 +26,33 @@ describe("Data Base Modules Test", () => {
             (await findOrCreateCity(testCity)).name;
             const foundCity = String((await City.find()).map(city => city._id))
             expect(typeof foundCity).toBe('string');    
-        })
+        });
+
+        it('Name must be an ASCII valid', async() =>{
+            const createCity = (await findOrCreateCity(testCity))._id;
+            const foundCity = (await City.findOne({_id: createCity._id})).name;
+            expect(isAscii(foundCity)).toBeTruthy();
+        });
     })
 
-    describe("Nationality Model", () => {
+    describe("nation Model", () => {
         it('Insert a Nation', async() => {
-            const createNation = (await findOrCreateNationality(testNationality)).name;
-            const foundNation = String((await Nationality.find()).map(nation => nation.name));
+            const createNation = (await findOrCreateNation(testnation)).name;
+            const foundNation = String((await nation.find()).map(nation => nation.name));
             expect(foundNation).toContain(createNation);
         });
 
         it('Nation saves in DB as ObjectId', async() => {
-            (await findOrCreateNationality(testNationality)).name;
-            const foundNation = String((await Nationality.find()).map(nation => nation._id));
+            (await findOrCreateNation(testnation)).name;
+            const foundNation = String((await nation.find()).map(nation => nation._id));
             expect(typeof foundNation).toBe('string');
-        })
+        });
+
+        it('Name must be an ASCII valid', async() =>{
+            const createNation = (await findOrCreateNation(testnation))._id;
+            const foundCity = (await nation.findOne({_id: createNation._id})).name;
+            expect(isAscii(foundCity)).toBeTruthy();
+        });
     })
 
     describe("Module Model. Verify if: ", () => {
@@ -76,7 +88,7 @@ describe("Data Base Modules Test", () => {
 
         xit('Module Video URL is right', async() => {
             
-        })
+        });
     })
 })
 
@@ -84,7 +96,7 @@ afterAll(async () => {
     await Users.deleteMany({});
     await City.deleteMany({});
     await Module.deleteMany({});
-    await Nationality.deleteMany({});
+    await nation.deleteMany({});
     await Role.deleteMany({});
     await Progress.deleteMany({});
     await Status.deleteMany({});

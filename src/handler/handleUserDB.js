@@ -1,31 +1,9 @@
 const { isEmail } = require('validator');
 const { encrypt } = require('../services/crypt');
 const { decriptToken } = require('../services/token');
+const { Users } = require('../models/Users')
 
-async function handleUserDB (Users, id){
-    try {
-        const user = await Users.findOne({
-            "_id":id
-        })
-
-        if(user) return user
-
-    } catch (error) {
-        return {"error": "user id is empty"}
-    }
-}
-
-async function handleAllUserDB(Users){
-    try {
-        const allUsers = await Users.find({});
-        if(Array.isArray(allUsers) && allUsers.length) return allUsers;
-        throw Error('Users is empty');
-    } catch (error) {
-        return { error: error.message }
-    }
-}
-
-async function handlerForgotPass(Users, email){
+async function handlerForgotPass(email){
     try {
         const userEmail = await Users.findOne({email: email});
         if (!email || !isEmail(email)) {
@@ -42,14 +20,15 @@ async function handlerForgotPass(Users, email){
     }
 }
 
-async function handlerResetPass(Users, token, password){
+async function handlerResetPass(token, password){
     try {
         const userToken = decriptToken(token);
+        console.log( userToken);
         const matchUser = await Users.findById(userToken.data);
         if (matchUser) {
             if (password) {
-                const newPass = await encrypt(password);
-                await matchUser.updateOne({password: newPass});
+                // const newPass = await encrypt(password);
+                await matchUser.updateOne({password});
             }else {
                 throw new Error('Not matching.');
             }
@@ -62,8 +41,6 @@ async function handlerResetPass(Users, token, password){
 }
 
 module.exports = {
-    handleUserDB,
-    handleAllUserDB,
     handlerForgotPass,
     handlerResetPass
 }

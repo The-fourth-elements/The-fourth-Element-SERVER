@@ -7,13 +7,24 @@ const ModuleMongoose = new mongoose.Schema({
     description:{
         type: String
     },
+    classModule:[{
+        type: mongoose.Types.ObjectId,
+        ref: "Class"
+    }],
     quiz:{
         type: Number
     },
-    video_url:{
-        type: String
+    startingDate:{
+        type: Date,
+        default: Date.now
+    },
+    endingDate:{
+        type: Date,
+    },
+    paid: {
+        type: Boolean
     }
-})
+});
 
 const Module = mongoose.model("Module", ModuleMongoose);
 module.exports = Module;

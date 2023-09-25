@@ -1,10 +1,7 @@
-const { Module } = require('module');
 const mongoose = require('mongoose');
 const mongooseDelete = require('mongoose-delete');
-const { isEmail, isURL, isAlpha } = require('validator');
-const { encrypt, compare } = require('../services/crypt');
-const City = require('./City');
-const Nationality = require('./Nationality');
+const { isEmail, isURL, isAscii } = require('validator');
+const { compare } = require('../services/crypt');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
 
@@ -13,29 +10,28 @@ const UserSchemas = new mongoose.Schema({
         type: String,
         require: true
     },
-    name:{
+    username:{
         type: String,
         require: true,
-   
+        validate: [isAscii, 'Last name must be a string']
     },
-    lastName:{
+    name:{
         type: String,
-        validate: [isAlpha, 'Last name must be a string']
+        validate: [isAscii, 'Last name must be a string']
+    },
+    lastname:{
+        type: String,
+        validate: [isAscii, 'Last name must be a string']
     },
     adress:{
         type: String,
-        validate: [isAlpha, 'Address must be a string']
+        validate: [isAscii, 'Address must be a string']
     },
     city:{
         type: mongoose.Types.ObjectId
-        // validate: [isMongoId, 'City must be a ObjectId']
     },
-    nationality:{
+    nation:{
         type: mongoose.Types.ObjectId
-        // validate: [isMongoId, 'Nationality must be a ObjectId']
-    },
-    module:{
-        type: Array 
     },
     role:{
         type: Number,
@@ -47,16 +43,8 @@ const UserSchemas = new mongoose.Schema({
         }
     },
     progress:{
-        type: Number,
-        validate: {
-            validator: function(value){
-                return regexNumber.test(value)
-            },
-            message: 'Progress must be a number'
-        }
-    },
-    status:{
-        type: Boolean,
+        type: mongoose.Types.ObjectId,
+        ref: "Progress"
     },
     profile_img:{
         type: String,
@@ -81,20 +69,24 @@ const UserSchemas = new mongoose.Schema({
     }
 });
 
-UserSchemas.statics.login = async function(email,password){
-     try {
-         const user = await this.findOne({email})
-         if(user){
-           const auth = await compare(password,user.password);
-           if(auth){
-             return user;
-           } 
-           throw Error('password incorrect');
-         }
-         throw Error('email is invalid');
-     } catch (error) {
-         return {"error": error.message};
-     }
+UserSchemas.statics.login = async function(email, password){
+    try {
+        const user = await this.findOne({email});
+        
+        if(user){
+            // const authPass = await compare(password, user.password);
+            // console.log(authPass);
+            // if(authPass === true){
+            //     return user;
+            // } else throw Error('Incorrect Password');
+            const auth = compare(password, user.password);
+            if(auth){
+                return user;
+            } else throw Error('Incorrect Password');
+        } else throw Error('Invalid Email');
+    } catch (error) {
+        return {"error": error.message};
+    }
  }
 
 UserSchemas.plugin(mongooseDelete, { overrideMethods: 'all'});
