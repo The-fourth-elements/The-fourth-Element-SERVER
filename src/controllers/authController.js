@@ -49,9 +49,9 @@ async function forgotPassword(req, res, next){
 };
 
 async function resetPassword(req, res, next){
-    const { token, password } = req.body;
+    const { token, newPassword } = req.body;
     try {
-        const response = handlerResetPass(token, password);
+        const response = handlerResetPass(token, newPassword);
         if (response) {
             res.status(200).json({message: 'Access true'});
         } else {

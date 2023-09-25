@@ -9,9 +9,15 @@ async function encrypt(content) {
     throw Error('content is empty');
 };
 
-function compare(content, localContent) {
-    if (content) return async () => await bcrypt.compare(content, localContent);
-    else throw Error('content is empty');
+async function compare(content, localContent) {
+    console.log(content, localContent);
+    if (content == localContent) {
+        return true;
+    } else {
+        return false;
+    }
+    // if (content) return async () => await bcrypt.compare(content, localContent);
+    // else throw Error('content is empty');
 };
 
 module.exports = {

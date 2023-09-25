@@ -10,7 +10,8 @@ async function createUserWithBody(req, res) {
             if (!email) {
                 return res.status(400).json({ error: "Falta el email del usuario" });
             } else {
-                const passwordEncrypt = await encrypt("password")
+                // const passwordEncrypt = await encrypt("password")
+                const passwordEncrypt = "password"
                 await Users.create({
                     username,
                     role: 0,
@@ -23,12 +24,12 @@ async function createUserWithBody(req, res) {
             if (!email || !username || !password) {
                 return res.status(400).json({ error: "Faltan datos del usuario" });
             } else {
-                const passwordEncrypt = await encrypt(password)
+                // const passwordEncrypt = await encrypt(password)
                 await Users.create({
                     username,
                     role: 0,
                     email,
-                    password: passwordEncrypt,
+                    password
                 });
                 return res.status(200).json({ success: "Cuenta creada correctamente" })
             }
