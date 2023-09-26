@@ -3,13 +3,9 @@ const router = express.Router();
 // const { forgotPassword, resetPassword } = require('../controllers/authController');
 
 // Probar
-const { getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
-
-// Create User Imports
-const createUserWithBody = require('../controllers/createUsers/createUserWithBody');
-const loginUser = require('../controllers/userController')
 
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint} = require('../controllers/powerPointControllers/index');
@@ -28,25 +24,25 @@ const verifyUserRole = require('../middlewares/verifyUserRole');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
 
 //crear y recibir informacion de un usuario.
-router.get('/users', getAllUsers); // Funciona
-router.get('/user', getUserById); // Funciona
-router.put('/user', updateUser); // Funciona, reveer el delete
-router.delete('/user/:id', deleteUser); // Funciona
+router.get('/users', getAllUsers);  
+router.get('/user', getUserById);  
+router.put('/user', updateUser);
+router.delete('/user/:id', deleteUser);  
 
 // Landing Content Testimonies
-router.get('/content', getLandingContent); // Funciona
-router.post('/content', createLandingContent); // Funciona
+router.get('/content', getLandingContent);  
+router.post('/content', createLandingContent);
 
 //validar información de usuario
-router.post('/auth', createUserWithBody); // Funciona
-router.post('/login', loginUser); // Funciona
+router.post('/auth', createUserWithBody);
+router.post('/login', loginUser);
 
 // creacio, actualizacion y eliminacion de modulos
 router.get('/moduls', getAllModules); //
 router.get('/moduls/:id', getModuleById); //
-router.post('/moduls', createController); // Funciona
-router.put('/moduls/:id', updateController); // Funciona
-router.delete('/moduls/:id', deleteController); // Funciona
+router.post('/moduls', createController);  
+router.put('/moduls/:id', updateController);  
+router.delete('/moduls/:id', deleteController);  
 router.put('/module/:moduleId/class/:classId', addClassToModule); //
 
 // router.post('/create', nada); //Crea y modifica el clase de cada módulo
@@ -55,19 +51,20 @@ router.get('/class/:id', getClassById) //busca por id
 router.post('/class', createClass) //crea la clase
 router.put('/class/:classId/video/:videoId', addVideoToClass) //agrega el video a la clase
 router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass) //agrega el powerpoint a la clase
+
 //crea Videos
 router.get('/videos', getAllVideos) //get all
 router.get('/video/:id', getVideoById) //get by id
 router.post('/video', createVideo)
 router.put('/video/:id', updateVideo)
 router.delete('/video/:id', deleteVideo)
+
 //crea power points
 router.get('/powerpoints',getAllPowerPoints) //get all
 router.get('/powerpoint/:id',getPowerPointById) // get by id
 router.post('/powerpoint', createPowerPoint)
 router.put('/powerpoint/:id', updatePowerPoint)
 router.delete('/powerpoint/:id', deletePowerPoint)
-
 
 //Pasarela de pagos
 router.post('/create-order', createOrder) //Pasarela de pago
@@ -76,7 +73,7 @@ router.post('/create-order', createOrder) //Pasarela de pago
 // router.get('/success', success); //Pasarela de pago
 // router.get('/failure', failure); //Pasarela de pago
 
-// Revisar con Edu
+// Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
 router.post('/reset-password', resetPassword);
 
