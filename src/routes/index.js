@@ -22,28 +22,30 @@ const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 // Middleware Role Import
 const verifyUserRole = require('../middlewares/verifyUserRole');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
+const { getCityById, getAllCities } = require('../controllers/cityControllers/index');
+const { getAllCountries, getCountryById } = require('../controllers/countryControllers/index');
 
 //crear y recibir informacion de un usuario.
-router.get('/users', getAllUsers);  
-router.get('/user', getUserById);  
+router.get('/users', getAllUsers);
+router.get('/user', getUserById);
 router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);  
-
-// Landing Content Testimonies
-router.get('/content', getLandingContent);  
-router.post('/content', createLandingContent);
+router.delete('/user/:id', deleteUser);
 
 //validar información de usuario
 router.post('/auth', createUserWithBody);
 router.post('/login', loginUser);
 
+// Landing Content Testimonies
+router.get('/content', getLandingContent);
+router.post('/content', createLandingContent);
+
 // creacio, actualizacion y eliminacion de modulos
-router.get('/moduls', getAllModules); //
-router.get('/moduls/:id', getModuleById); //
-router.post('/moduls', createController);  
-router.put('/moduls/:id', updateController);  
-router.delete('/moduls/:id', deleteController);  
-router.put('/module/:moduleId/class/:classId', addClassToModule); //
+router.get('/moduls', getAllModules);
+router.get('/moduls/:id', getModuleById);
+router.post('/moduls', createController);
+router.put('/moduls/:id', updateController);
+router.delete('/moduls/:id', deleteController);
+router.put('/module/:moduleId/class/:classId', addClassToModule);
 
 // router.post('/create', nada); //Crea y modifica el clase de cada módulo
 router.get('/class', getAllClasses) // busca todas las classes
@@ -65,6 +67,14 @@ router.get('/powerpoint/:id',getPowerPointById) // get by id
 router.post('/powerpoint', createPowerPoint)
 router.put('/powerpoint/:id', updatePowerPoint)
 router.delete('/powerpoint/:id', deletePowerPoint)
+
+//City
+router.get('/cities', getAllCities);
+router.get('/city/:id', getCityById);
+
+//Country / Nation / Nationality
+router.get('/countries', getAllCountries);
+router.get('/country/:id', getCountryById);
 
 //Pasarela de pagos
 router.post('/create-order', createOrder) //Pasarela de pago
