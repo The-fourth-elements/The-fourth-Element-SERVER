@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
-// Probar
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
@@ -32,11 +30,6 @@ router.delete('/user/:id', deleteUser);
 // Landing Content Testimonies
 router.get('/content', getLandingContent); // Funciona
 router.post('/content', createLandingContent); // Funciona
-router.get('/users', getAllUsers);
-router.get('/user', getUserById);
-router.get('/user/email', getUserByMail);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
 
 //validar información de usuario
 router.post('/auth', createUserWithBody);
@@ -45,6 +38,11 @@ router.post('/login', loginUser);
 // Landing Content Testimonies
 router.get('/content', getLandingContent);
 router.post('/content', createLandingContent);
+router.get('/users', getAllUsers);
+router.get('/user', getUserById);
+router.get('/user/email', getUserByMail);
+router.put('/user', updateUser);
+router.delete('/user/:id', deleteUser);
 
 // creacio, actualizacion y eliminacion de modulos
 router.get('/moduls', getAllModules);
