@@ -3,7 +3,7 @@ require('dotenv').config();
 const { DB_URI_TEST } = process.env
 const { individualUserTest, testingUsers } = require('./templates/user');
 const { testCity, testModule, testnation, testProgress, testRole, testStatus, createUser } = require('./templates/models');
-const findOrCreateCity = require('../src/handler/findOrCreateCity');
+const findOrCreateCity = require('../src/handler/dataBase/findOrCreateCity');
 const findOrCreateNation = require('../src/handler/findOrCreateNation');
 const { isEmail, isURL, isAscii } = require('validator');
 
