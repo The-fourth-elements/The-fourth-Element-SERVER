@@ -4,26 +4,28 @@ const PowerPoint = require('../../models/PowerPoint')
 
 async function createClass(req, res, next) {
     try {
-        const { name, description, videoURL, powerPointURL } = req.body
+        const { name, description, video, powerPoint } = req.body
         if (!name || !description) throw Error("Faltan datos")
 
-        let videoId, powerPointId
+        let videoId, powerPointId;
 
-        if (videoURL) {
+        if (video) {
             const newVideo = new Video({
-                url: videoURL
+                id: video.id,
+                url: video.url
             })
             await newVideo.save()
             videoId = newVideo._id
-        }
+        } else throw('Falta el video.')
 
-        if (powerPointURL) {
+        if (powerPoint) {
             const newPresentacion = new PowerPoint({
-                url: powerPointURL
+                id: powerPoint.id,
+                url: powerPoint.url
             })
             await newPresentacion.save()
             powerPointId = newPresentacion._id
-        }
+        } else throw('Falta el Power Point.')
 
         const newClass = new Class({
             name,
