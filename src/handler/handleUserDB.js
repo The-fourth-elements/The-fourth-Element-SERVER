@@ -27,8 +27,8 @@ async function handlerResetPass(token, password){
         const matchUser = await Users.findById(userToken.data);
         if (matchUser) {
             if (password) {
-                // const newPass = await encrypt(password);
-                await matchUser.updateOne({password});
+                const newPass = await encrypt(password);
+                await matchUser.updateOne({password: newPass});
             }else {
                 throw new Error('Not matching.');
             }

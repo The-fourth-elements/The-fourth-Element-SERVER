@@ -4,27 +4,6 @@ const { transporter, mailContent } = require('../services/nodemailer');
 const { handlerForgotPass, handlerResetPass } = require('../handler/handleUserDB');
 const { URL } = process.env;
 
-//ruta para validar el token.
-// function requireAuthController(req,res, next){
-//     try {
-//         let token;
-//         if(req.cookies.jwt){
-//             token = req.cookies.jwt
-//         }else if(req.body.token){
-//             token = req.body.token;
-//         } else return res.status(400).json({access:false})
-        
-//         if(token){
-//             const validate = validateToken(token)
-//             if(!validate?.error) return res.status(200).json({access:true})
-//             else return res.status(400).json({access:false, expirate:validate.error})
-//         } 
-//         throw Error('Invalid Token')
-//     } catch (error) {
-//         next({message: error.message, statusCode: 400})
-//     }
-// };
-
 async function forgotPassword(req, res, next){
     const { email } = req.body;
     try {
