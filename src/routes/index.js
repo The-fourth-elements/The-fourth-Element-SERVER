@@ -35,13 +35,11 @@ router.delete('/user/:id', deleteUser); // Funciona
 // Landing Content Testimonies
 router.get('/content', getLandingContent); // Funciona
 router.post('/content', createLandingContent); // Funciona
-=========
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
 router.get('/user/email', getUserByMail);
 router.put('/user', updateUser);
 router.delete('/user/:id', deleteUser);
->>>>>>>>> Temporary merge branch 2
 
 //validar información de usuario
 router.post('/auth', createUserWithBody);
