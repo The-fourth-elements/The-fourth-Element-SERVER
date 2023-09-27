@@ -7,8 +7,8 @@ async function getAllUsers(req, res, next){
             res.status(200).json(user);
         } else throw Error(user.error);
     } catch (error) {
-        next(error)
+        next({ message: error.message, statusCode: 404});
     }
-}
+};
 
 module.exports = getAllUsers;

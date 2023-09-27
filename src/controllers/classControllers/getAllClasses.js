@@ -11,7 +11,7 @@ async function getAllClasses(req, res, next) {
             res.status(200).json(classes)
 
     } catch (error) {
-        next({ message: error.message, statusCode: 400 });
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

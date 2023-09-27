@@ -13,7 +13,7 @@ async function getClassById(req, res, next) {
             res.status(200).json(foundClass);
 
     } catch (error) {
-        next({ message: error.message, statusCode: 400 });
+        next({ message: error.message, statusCode: 404 });
     }
 }
 
