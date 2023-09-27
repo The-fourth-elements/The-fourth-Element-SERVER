@@ -7,7 +7,7 @@ async function getUserById(req, res, next) {
             throw Error('Id es invalido.')
         } else {
             const user = await handleUserDB(id);
-            if (user){
+            if (!user?.error){
                 res.status(200).json(user);
             } else {
                 throw Error(user.error);
