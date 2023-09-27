@@ -3,10 +3,7 @@ const router = express.Router();
 // const { forgotPassword, resetPassword } = require('../controllers/authController');
 
 // Probar
-const { getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
-=========
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
->>>>>>>>> Temporary merge branch 2
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
