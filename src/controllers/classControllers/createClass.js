@@ -37,7 +37,7 @@ async function createClass(req, res, next) {
 
         if (newClass) res.status(201).json(newClass)
     } catch (error) {
-        next({ message: error.message, statusCode: 400 });
+        next({ message: error.message, statusCode: 204 });
     }
 }
 
