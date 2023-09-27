@@ -2,7 +2,7 @@ const { Users } = require('../models/Users');
 
 async function getUserByMail(req, res, next){
     try {
-        const { email } = req.body;
+        const {email} = req.query;
         if(!email) throw Error('Missing email');
         const user = await Users.findOne({email});
         if(!user) throw Error('Not matching email');
