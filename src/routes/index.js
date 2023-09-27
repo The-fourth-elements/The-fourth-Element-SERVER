@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
+// const { forgotPassword, resetPassword } = require('../controllers/authController');
+
+// Probar
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
@@ -21,6 +24,14 @@ const { getAllCountries, getCountryById } = require('../controllers/countryContr
 const getUserByMail = require('../controllers/getUserByEmail');
 
 //crear y recibir informacion de un usuario.
+router.get('/users', getAllUsers); // Funciona
+router.get('/user', getUserById); // Funciona
+router.put('/user', updateUser); // Funciona, reveer el delete
+router.delete('/user/:id', deleteUser); // Funciona
+
+// Landing Content Testimonies
+router.get('/content', getLandingContent); // Funciona
+router.post('/content', createLandingContent); // Funciona
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
 router.get('/user/email', getUserByMail);

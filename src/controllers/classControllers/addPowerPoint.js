@@ -15,7 +15,7 @@ async function addPowerPointToClass(req, res, next) {
 
         return res.status(200).json({ message: 'Presentación agregada a la clase con éxito' })
     } catch (error) {
-        next(error);
+        next({ message: error.message, statusCode: 404});
     }
 }
 

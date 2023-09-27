@@ -4,7 +4,7 @@ async function getUserById(req, res, next) {
     try {     
         const { id } = req.query;
         if (!id) {
-            next({message: 'id is invalid', statusCode: 401});
+            throw Error('Id es invalido.')
         } else {
             const user = await handleUserDB(id);
             if (user){
@@ -14,7 +14,7 @@ async function getUserById(req, res, next) {
             }
         }
     } catch (error) {
-        next(error);
+        next({ message: error.message, statusCode: 400});
     }
 }
 
