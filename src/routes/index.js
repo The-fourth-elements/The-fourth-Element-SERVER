@@ -3,7 +3,7 @@ const router = express.Router();
 // const { forgotPassword, resetPassword } = require('../controllers/authController');
 
 // Probar
-const { getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
+const { getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
 
@@ -32,6 +32,8 @@ router.get('/users', getAllUsers); // Funciona
 router.get('/user', getUserById); // Funciona
 router.put('/user', updateUser); // Funciona, reveer el delete
 router.delete('/user/:id', deleteUser); // Funciona
+router.get('/user/deleted', getAllUsersDeleted); // ruta que trae los usuarios eliminados
+router.get('/user/reset', getUserReset); // ruta que trae usuario (eliminado) por su mail
 
 // Landing Content Testimonies
 router.get('/content', getLandingContent); // Funciona
