@@ -8,7 +8,7 @@ const individualUserTest = {
 
 const testingUsers = [
     {   
-        username: "HolaMonaco",
+        username: "HolaBogota",
         city: "Bogota",
         nationality: "Colombia",       
         email: "user2@test.com",
