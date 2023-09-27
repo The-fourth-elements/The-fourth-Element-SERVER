@@ -1,16 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// const { forgotPassword, resetPassword } = require('../controllers/authController');
-
-// Probar
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
-
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint} = require('../controllers/powerPointControllers/index');
-
-// Landing content Import
 const getLandingContent = require('../controllers/landingContent/getLandingContent');
 const createLandingContent = require('../controllers/landingContent/createLandingContent');
 
@@ -24,10 +18,12 @@ const verifyUserRole = require('../middlewares/verifyUserRole');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
 const { getCityById, getAllCities } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById } = require('../controllers/countryControllers/index');
+const getUserByMail = require('../controllers/getUserByEmail');
 
 //crear y recibir informacion de un usuario.
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
+router.get('/user/email', getUserByMail);
 router.put('/user', updateUser);
 router.delete('/user/:id', deleteUser);
 

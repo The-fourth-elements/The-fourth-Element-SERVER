@@ -6,13 +6,13 @@ const findOrCreateCity = require('../../handler/dataBase/findOrCreateCity.js');
 
 async function createUserWithBody(req, res) {
     const { email, password, username, provider, city, nationality } = req.body;
+    console.log(req.body);
     try{
         if(provider){
             if (!email) {
                 return res.status(400).json({ error: "Falta el email del usuario" });
             } else {
-                const passwordEncrypt = await encrypt("password")
-                // const passwordEncrypt = "password"
+                const passwordEncrypt = await encrypt("password");
                 await Users.create({
                     username,
                     role: 0,
