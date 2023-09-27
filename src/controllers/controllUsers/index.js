@@ -4,6 +4,8 @@ const getUserById = require('./getUserById');
 const updateUser = require('./updateUser');
 const getAllUsersDeleted = require('./getAllUsersDeleted');
 const getUserReset = require('./getUserReset');
+const createUserWithBody = require('./createUserWithBody')
+const loginUser = require('./loginUser')
 
 module.exports = {
     deleteUser,
@@ -11,5 +13,7 @@ module.exports = {
     getUserById,
     updateUser,
     getAllUsersDeleted,
-    getUserReset
+    getUserReset,
+    createUserWithBody,
+    loginUser
 }

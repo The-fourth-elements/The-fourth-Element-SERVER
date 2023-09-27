@@ -1,12 +1,17 @@
-const firebaseAdmin = require('../services/firebase')
-const { Users } = require('../models/Users')
+const { Users } = require('../models/Users');
+const { decriptToken } = require('../services/token');
 
 async function verifyUserRole(req, res, next){
-    const token = req.cookies.Authorization
     
+    const token = req.cookies.jwt;
+    console.log(token);
+
     try {
-        const result = await firebaseAdmin.auth.verifyIdToken(token);
-        const user = await Users.findOne({"firebaseID": result.uid});
+        if (token) {
+            //verify the user role
+            const verifyToken = decriptToken(token);
+
+        }
 
         //cambiar por cualquiera que sea el valor del admin
         if(user && user.role >= 2){

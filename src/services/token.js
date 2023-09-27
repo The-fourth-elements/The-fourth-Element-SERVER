@@ -1,22 +1,9 @@
 const jwt = require('jsonwebtoken')
-
-const { SECRET_WORD } = require('../constantes/auth')
-
+const { SECRET_WORD } = require('../utils/auth')
 
 function createToken(content) {
     const payload = { data: content };
     return jwt.sign(payload, SECRET_WORD, { expiresIn: "100min" });
-};
-
-
-function validateToken(token) {
-    return jwt.verify(token, SECRET_WORD, (err, decodedToken) => {
-        if (err) {
-            return { error: err.expiredAt }
-        } else {
-            return true;
-        }
-    });
 };
 
 function decriptToken(token) {
@@ -31,9 +18,6 @@ function decriptToken(token) {
 };
 
 module.exports = {
-    validateToken,
     createToken,
     decriptToken
 }
-
-
