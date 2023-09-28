@@ -1,6 +1,6 @@
 const { Users } = require('../../src/models/Users');
-const findOrCreateCity = require('../../src/handler/findOrCreateCity')
-const findOrCreateNation = require('../../src/handler/findOrCreateNation');
+const findOrCreateCity = require('../../src/handler/dataBase/findOrCreateCity')
+const findOrCreateNation = require('../../src/handler/dataBase/findOrCreateNation');
 const { encrypt } = require('../../src/services/crypt');
 const mongoose = require('mongoose');
 
@@ -31,7 +31,7 @@ const createUser = async(user) =>{
     }
 }
 
-const testnation = "UnitedState";
+const testnation = "United State";
 
 const testProgress = {
     certificated: false,

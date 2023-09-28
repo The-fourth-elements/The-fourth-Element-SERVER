@@ -6,10 +6,6 @@ const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
-    firebaseID:{
-        type: String,
-        require: true
-    },
     username:{
         type: String,
         require: true,
@@ -74,12 +70,7 @@ UserSchemas.statics.login = async function(email, password){
         const user = await this.findOne({email});
         
         if(user){
-            // const authPass = await compare(password, user.password);
-            // console.log(authPass);
-            // if(authPass === true){
-            //     return user;
-            // } else throw Error('Incorrect Password');
-            const auth = compare(password, user.password);
+            const auth = await compare(password, user.password);
             if(auth){
                 return user;
             } else throw Error('Incorrect Password');
@@ -87,7 +78,7 @@ UserSchemas.statics.login = async function(email, password){
     } catch (error) {
         return {"error": error.message};
     }
- }
+}
 
 UserSchemas.plugin(mongooseDelete, { overrideMethods: 'all'});
 const Users = mongoose.model("Users", UserSchemas);

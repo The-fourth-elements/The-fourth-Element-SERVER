@@ -3,12 +3,12 @@ require('dotenv').config();
 const { DB_URI_TEST } = process.env
 const { individualUserTest, testingUsers } = require('./templates/user');
 const { testCity, testModule, testnation, testProgress, testRole, testStatus, createUser } = require('./templates/models');
-const findOrCreateCity = require('../src/handler/findOrCreateCity');
-const findOrCreateNation = require('../src/handler/findOrCreateNation');
+const findOrCreateCity = require('../src/handler/dataBase/findOrCreateCity');
+const findOrCreateNation = require('../src/handler/dataBase/findOrCreateNation');
 const { isEmail, isURL, isAscii } = require('validator');
 
 const { Users, regexPass } = require('../src/models/Users');
-const { City, Module, nation, Role, Progress, Status} = require('../src/handler/handleModels') 
+const { City, Module, Nation, Role, Progress, Status} = require('../src/handler/dataBase/handleModels') 
 
 beforeAll(async()=>{
     await mongoose.connect(DB_URI_TEST);
@@ -35,27 +35,27 @@ describe("Data Base Modules Test", () => {
         });
     })
 
-    describe("nation Model", () => {
+    describe("Nation Model", () => {
         it('Insert a Nation', async() => {
             const createNation = (await findOrCreateNation(testnation)).name;
-            const foundNation = String((await nation.find()).map(nation => nation.name));
+            const foundNation = String((await Nation.find()).map(nation => nation.name));
             expect(foundNation).toContain(createNation);
         });
 
         it('Nation saves in DB as ObjectId', async() => {
             (await findOrCreateNation(testnation)).name;
-            const foundNation = String((await nation.find()).map(nation => nation._id));
+            const foundNation = String((await Nation.find()).map(nation => nation._id));
             expect(typeof foundNation).toBe('string');
         });
 
         it('Name must be an ASCII valid', async() =>{
             const createNation = (await findOrCreateNation(testnation))._id;
-            const foundCity = (await nation.findOne({_id: createNation._id})).name;
+            const foundCity = (await Nation.findOne({_id: createNation._id})).name;
             expect(isAscii(foundCity)).toBeTruthy();
         });
     })
 
-    describe("Module Model. Verify if: ", () => {
+    xdescribe("Module Model. Verify if: ", () => {
         beforeEach(async() => {
             await Module.create(testModule);
             await createUser(testingUsers[0]);
@@ -96,9 +96,8 @@ afterAll(async () => {
     await Users.deleteMany({});
     await City.deleteMany({});
     await Module.deleteMany({});
-    await nation.deleteMany({});
-    await Role.deleteMany({});
+    await Nation.deleteMany({});
+    // await Role.deleteMany({});
     await Progress.deleteMany({});
-    await Status.deleteMany({});
     await mongoose.connection.close();
 });

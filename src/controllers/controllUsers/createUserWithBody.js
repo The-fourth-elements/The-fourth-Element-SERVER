@@ -11,15 +11,12 @@ async function createUserWithBody(req, res) {
             if (!email) {
                 return res.status(400).json({ error: "Falta el email del usuario" });
             } else {
-                const passwordEncrypt = await encrypt("password")
-                // const passwordEncrypt = "password"
+                const passwordEncrypt = await encrypt("password");
                 await Users.create({
                     username,
                     role: 0,
                     email,
-                    password: passwordEncrypt,
-                    city: "none",
-                    nation: "none"
+                    password: passwordEncrypt
                 });
                 return res.status(200).json({ success: "Cuenta creada correctamente" })
             }
