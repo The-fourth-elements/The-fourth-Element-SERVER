@@ -16,16 +16,15 @@ async function createClass(req, res, next) {
             })
             await newVideo.save()
             videoId = newVideo._id
-        } else throw('Falta el video.')
+        } else throw ('Falta el video.')
 
         if (powerPoint) {
             const newPresentacion = new PowerPoint({
-                id: powerPoint.id,
-                url: powerPoint.url
+                url: powerPoint
             })
             await newPresentacion.save()
             powerPointId = newPresentacion._id
-        } else throw('Falta el Power Point.')
+        } else throw ('Falta el Power Point.')
 
         const newClass = new Class({
             name,
