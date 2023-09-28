@@ -8,6 +8,7 @@ async function loginUser(req, res, next) {
         if (email) {
             const user = await Users.findOne({email});
             if(user) {
+                console.log(user);
                 const payload = {
                     id: user._id,
                     username: user.username,
