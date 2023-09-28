@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
-const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
+const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass} = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint} = require('../controllers/powerPointControllers/index');
 const getLandingContent = require('../controllers/landingContent/getLandingContent');
@@ -52,12 +52,13 @@ router.put('/moduls/:id', updateController);
 router.delete('/moduls/:id', deleteController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
 
-// router.post('/create', nada); //Crea y modifica el clase de cada módulo
+// Clases
 router.get('/class', getAllClasses) // busca todas las classes
 router.get('/class/:id', getClassById) //busca por id
 router.post('/class', createClass) //crea la clase
 router.put('/class/:classId/video/:videoId', addVideoToClass) //agrega el video a la clase
 router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass) //agrega el powerpoint a la clase
+router.delete('/class/:id', deleteClass) //Elimina una clase 
 
 //crea Videos
 router.get('/videos', getAllVideos) //get all
