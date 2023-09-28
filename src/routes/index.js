@@ -16,8 +16,8 @@ const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 // Middleware Role Import
 const verifyUserRole = require('../middlewares/verifyUserRole');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
-const { getCityById, getAllCities } = require('../controllers/cityControllers/index');
-const { getAllCountries, getCountryById } = require('../controllers/countryControllers/index');
+const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
+const { getAllCountries, getCountryById, getCountryByName } = require('../controllers/countryControllers/index');
 const getUserByMail = require('../controllers/getUserByEmail');
 
 //crear y recibir informacion de un usuario.
@@ -77,10 +77,12 @@ router.delete('/powerpoint/:id', deletePowerPoint)
 //City
 router.get('/cities', getAllCities);
 router.get('/city/:id', getCityById);
+router.get('/city', getCityByName);
 
 //Country / Nation / Nationality
 router.get('/countries', getAllCountries);
 router.get('/country/:id', getCountryById);
+router.get('/country', getCountryByName);
 
 //Pasarela de pagos
 router.post('/create-order', createOrder) //Pasarela de pago
