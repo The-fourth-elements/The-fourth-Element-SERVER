@@ -1,41 +1,37 @@
 const express = require('express');
 const router = express.Router();
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
-const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass} = require('../controllers/classControllers/index');
-const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
-const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint} = require('../controllers/powerPointControllers/index');
-const getLandingContent = require('../controllers/landingContent/getLandingContent');
-const createLandingContent = require('../controllers/landingContent/createLandingContent');
+const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass } = require('../controllers/classControllers/index');
+const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
+const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
+const { forgotPassword, resetPassword } = require('../controllers/authController');
+const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
+const { getAllCountries, getCountryById, getCountryByName } = require('../controllers/countryControllers/index');
+const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
+const { getLandingContent, createLandingContent } = require('../controllers/landingContent/index');
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
-const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
+// const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
-// Middleware Role Import
-const verifyUserRole = require('../middlewares/verifyUserRole');
-const { forgotPassword, resetPassword } = require('../controllers/authController');
-const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
-const { getAllCountries, getCountryById, getCountryByName } = require('../controllers/countryControllers/index');
-const getUserByMail = require('../controllers/getUserByEmail');
-
-//crear y recibir informacion de un usuario.
+// Usuarios
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
-router.get('/user/email', getUserByMail);
+router.get('/user/email', getUserByEmail);
 router.put('/user', updateUser);
 router.delete('/user/:id', deleteUser);
 
-// Landing Content Testimonies
-router.get('/content', getLandingContent); // Funciona
-router.post('/content', createLandingContent); // Funciona
+// Testimonios de Landing Content 
+router.get('/content', getLandingContent);
+router.post('/content', createLandingContent);
 
-//validar información de usuario
+// Validaciones y Registro
 router.post('/auth', createUserWithBody);
 router.post('/login', loginUser);
 
-// creacio, actualizacion y eliminacion de modulos
+// Modulos
 router.get('/moduls', getAllModules);
 router.get('/moduls/:id', getModuleById);
 router.post('/moduls', createController);
@@ -44,43 +40,46 @@ router.delete('/moduls/:id', deleteController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
 
 // Clases
-router.get('/class', getAllClasses) // busca todas las classes
-router.get('/class/:id', getClassById) //busca por id
-router.post('/class', createClass) //crea la clase
-router.put('/class/:classId/video/:videoId', addVideoToClass) //agrega el video a la clase
-router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass) //agrega el powerpoint a la clase
-router.delete('/class/:id', deleteClass) //Elimina una clase 
+router.get('/class', getAllClasses);
+router.get('/class/:id', getClassById);
+router.post('/class', createClass);
+router.put('/class/:classId/video/:videoId', addVideoToClass);
+router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass);
+router.delete('/class/:id', deleteClass);
 
-//crea Videos
-router.get('/videos', getAllVideos) //get all
-router.get('/video/:id', getVideoById) //get by id
-router.post('/video', createVideo)
-router.put('/video/:id', updateVideo)
-router.delete('/video/:id', deleteVideo)
+// Videos
+router.get('/videos', getAllVideos);
+router.get('/video/:id', getVideoById);
+router.post('/video', createVideo);
+router.put('/video/:id', updateVideo);
+router.delete('/video/:id', deleteVideo);
 
-//crea power points
-router.get('/powerpoints',getAllPowerPoints) //get all
-router.get('/powerpoint/:id',getPowerPointById) // get by id
-router.post('/powerpoint', createPowerPoint)
-router.put('/powerpoint/:id', updatePowerPoint)
-router.delete('/powerpoint/:id', deletePowerPoint)
+// Power Points
+router.get('/powerpoints',getAllPowerPoints);
+router.get('/powerpoint/:id',getPowerPointById);
+router.post('/powerpoint', createPowerPoint);
+router.put('/powerpoint/:id', updatePowerPoint);
+router.delete('/powerpoint/:id', deletePowerPoint);
 
-//City
+// Ciudad
 router.get('/cities', getAllCities);
 router.get('/city/:id', getCityById);
 router.get('/city', getCityByName);
 
-//Country / Nation / Nationality
+// Pais
 router.get('/countries', getAllCountries);
 router.get('/country/:id', getCountryById);
 router.get('/country', getCountryByName);
 
-//Pasarela de pagos
-router.post('/create-order', createOrder) //Pasarela de pago
-router.get('/feedback', feedback); //Pasarela de pago
-// router.post('/webhook', reciveWebhook); //Pasarela de pago
-// router.get('/success', success); //Pasarela de pago
-// router.get('/failure', failure); //Pasarela de pago
+// Deportes
+router.get('/sports', getAllSports);
+router.get('/sport/:id', getSportById);
+router.get('/sport', getSportByName);
+
+// Pasarela de pagos
+router.post('/create-order', createOrder);
+router.get('/feedback', feedback);
+// router.post('/webhook', reciveWebhook);
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
