@@ -29,6 +29,9 @@ const UserSchemas = new mongoose.Schema({
     nation:{
         type: mongoose.Types.ObjectId
     },
+    sport:{
+        type: mongoose.Types.ObjectId
+    },
     role:{
         type: Number,
         validate: {
