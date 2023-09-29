@@ -1,4 +1,3 @@
-const firebaseAdmin = require('../../services/firebase.js')
 const { Users } = require('../../models/Users.js');
 const { encrypt } = require('../../services/crypt.js');
 const findOrCreateNation = require('../../handler/dataBase/findOrCreateNation.js');

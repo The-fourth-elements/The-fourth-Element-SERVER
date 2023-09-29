@@ -35,15 +35,6 @@ router.post('/content', createLandingContent); // Funciona
 router.post('/auth', createUserWithBody);
 router.post('/login', loginUser);
 
-// Landing Content Testimonies
-router.get('/content', getLandingContent);
-router.post('/content', createLandingContent);
-router.get('/users', getAllUsers);
-router.get('/user', getUserById);
-router.get('/user/email', getUserByMail);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
-
 // creacio, actualizacion y eliminacion de modulos
 router.get('/moduls', getAllModules);
 router.get('/moduls/:id', getModuleById);
@@ -86,8 +77,8 @@ router.get('/country', getCountryByName);
 
 //Pasarela de pagos
 router.post('/create-order', createOrder) //Pasarela de pago
+router.get('/feedback', feedback); //Pasarela de pago
 // router.post('/webhook', reciveWebhook); //Pasarela de pago
-// router.get('/feedback', feedback); //Pasarela de pago
 // router.get('/success', success); //Pasarela de pago
 // router.get('/failure', failure); //Pasarela de pago
 
