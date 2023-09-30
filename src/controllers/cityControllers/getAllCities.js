@@ -2,8 +2,8 @@ const City = require("../../models/City");
 
 async function getAllCities(req, res, next){
     try {
-        const cities = await City.find({});
-        if (cities) {
+        const cities = await City.find();
+        if (!cities.length < 0) {
             res.status(200).json(cities)
         } else throw Error('Ciudades esta vacio.')
     } catch (error) {

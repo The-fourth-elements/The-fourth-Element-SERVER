@@ -1,13 +1,13 @@
 const handleUserDB = require("../../handler/dataBase/handlerUserDB");
 
 async function getUserById(req, res, next) {
-    try {     
+    try {
         const { id } = req.query;
         if (!id) {
-            throw Error('Id es invalido.')
+            throw Error('Id es invalido.');
         } else {
             const user = await handleUserDB(id);
-            if (user){
+            if (!user?.error){
                 res.status(200).json(user);
             } else {
                 throw Error(user.error);

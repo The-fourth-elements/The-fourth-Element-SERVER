@@ -1,12 +1,11 @@
-const firebaseAdmin = require('../../services/firebase.js')
 const { Users } = require('../../models/Users.js');
 const { encrypt } = require('../../services/crypt.js');
 const findOrCreateNation = require('../../handler/dataBase/findOrCreateNation.js');
 const findOrCreateCity = require('../../handler/dataBase/findOrCreateCity.js');
+const findOrCreateSport = require('../../handler/dataBase/findOrCreateSport.js');
 
 async function createUserWithBody(req, res) {
-    const { email, password, username, provider, city, nationality } = req.body;
-    console.log(req.body);
+    const { email, password, username, provider, city, nationality, sport } = req.body;
     try{
         if(provider){
             if (!email) {
@@ -17,9 +16,7 @@ async function createUserWithBody(req, res) {
                     username,
                     role: 0,
                     email,
-                    password: passwordEncrypt,
-                    city: "none",
-                    nation: "none"
+                    password: passwordEncrypt
                 });
                 return res.status(200).json({ success: "Cuenta creada correctamente" });
             }
@@ -27,6 +24,7 @@ async function createUserWithBody(req, res) {
             if (!email || !username || !password || !city || !nationality) {
                 throw Error("Faltan datos del usuario");
             } else {
+                const newSport = await findOrCreateSport(sport);
                 const newCity = await findOrCreateCity(city)
                 const newNation = await findOrCreateNation(nationality)
                 const passwordEncrypt = await encrypt(password)
@@ -35,6 +33,7 @@ async function createUserWithBody(req, res) {
                     role: 0,
                     email,
                     password: passwordEncrypt,
+                    sport: newSport,
                     city: newCity,
                     nation: newNation
                 });
