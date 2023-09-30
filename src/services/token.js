@@ -13,7 +13,7 @@ function decriptToken(token) {
             else return decodedToken;
         });
     } catch (error) {
-        return error;
+        return { error: error.message }
     }
 };
 
