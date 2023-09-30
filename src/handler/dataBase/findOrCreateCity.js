@@ -8,7 +8,7 @@ async function findOrCreateCity(city) {
         if (newCity) return newCity;
         throw Error("Error found creating City DB.");
     } catch (error) {
-        return error;
+        return { error: error.message }
     }
 };
 

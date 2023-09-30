@@ -8,7 +8,7 @@ async function getAllSports(req, res){
             res.status(200).json(sports);
         } else throw Error('No hay deportes');
     } catch (error) {
-        return res.status(404).json({error: error.message});
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

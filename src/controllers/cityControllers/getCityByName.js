@@ -10,7 +10,7 @@ async function getCityByName(req, res) {
             } else throw Error('Ciudad no encontrada');
         } else throw Error('Debe brindar un nombre');
     } catch (error) {
-        res.status(400).json({error: error.message});
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

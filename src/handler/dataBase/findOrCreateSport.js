@@ -8,7 +8,7 @@ async function findOrCreateSport(sport){
         if (newSport) return newSport;
         else throw Error("Error al intentar crear el deporte");
     } catch (error) {
-        return {error: error.message};
+        return { error: error.message }
     }
 }
 

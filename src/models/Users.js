@@ -24,16 +24,20 @@ const UserSchemas = new mongoose.Schema({
         validate: [isAscii, 'Address must be a string']
     },
     city:{
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        require: true
     },
     nation:{
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        require: true
     },
     sport:{
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        require: true
     },
     role:{
         type: Number,
+        require: true,
         validate: {
             validator: function(value){
                 return regexNumber.test(value)
@@ -79,7 +83,7 @@ UserSchemas.statics.login = async function(email, password){
             } else throw Error('Incorrect Password');
         } else throw Error('Invalid Email');
     } catch (error) {
-        return {"error": error.message};
+        return {error: error.message};
     }
 }
 
