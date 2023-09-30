@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {isAscii} = require('validator');
+const { isAscii } = require('validator');
 
 const nationMongoose = new mongoose.Schema({
     name:{

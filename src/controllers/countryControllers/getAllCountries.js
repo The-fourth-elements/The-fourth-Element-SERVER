@@ -3,7 +3,7 @@ const Nation = require("../../models/Nation")
 async function getAllCountries(req, res){
     try {
         const countries = await Nation.find({});
-        if (countries) {
+        if (!countries.length < 1) {
             res.status(200).json(countries);
         } else throw Error('Countries is empty.');
     } catch (error) {

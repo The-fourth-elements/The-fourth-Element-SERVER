@@ -1,8 +1,8 @@
-const { Users } = require('../models/Users');
+const { Users } = require('../../models/Users');
 
-async function getUserByMail(req, res, next){
+async function getUserByEmail(req, res, next){
+    const { email } = req.query;
     try {
-        const {email} = req.query;
         if(!email) throw Error('Missing email');
         const user = await Users.findOne({email});
         if(!user) throw Error('Not matching email');
@@ -12,4 +12,4 @@ async function getUserByMail(req, res, next){
     }
 };
 
-module.exports = getUserByMail;
+module.exports = getUserByEmail;
