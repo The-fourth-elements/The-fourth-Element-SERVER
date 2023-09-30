@@ -1,6 +1,6 @@
 const mercadopago = require("mercadopago");
 
-async function createOrder(req, res) {
+async function createOrder(req, res, next) {
     try {
         const response = await mercadopago.preferences.create({
             items:[
@@ -22,10 +22,12 @@ async function createOrder(req, res) {
         console.log(response.init_point);
         if (response) {
             res.status(200).json({ status: "Success", url: response.body.init_point, id: response.body.id });
-        } else throw Error("Can't create an order.");
+        } else {
+            throw Error("No se pudo crear un pedido.");
+        }
     } catch (error) {
-        return {error: error.message};
+        next({ message: error.message, statusCode: 404 });
     }
-}
+};
 
 module.exports = createOrder;

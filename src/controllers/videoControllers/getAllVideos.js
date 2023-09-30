@@ -7,7 +7,7 @@ async function getAllVideos(req, res, next) {
             res.status(200).json(videos) :
             res.status(404).json({ message: 'No se encontraron videos' });
     } catch (error) {
-        next({ message: error.message, statusCode: 400 })
+        next({ message: error.message, statusCode: 404 })
     }
 }
 

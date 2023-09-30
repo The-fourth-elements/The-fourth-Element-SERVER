@@ -2,7 +2,7 @@ const Class = require("../../models/Class");
 const Module = require("../../models/Module");
 
 
-async function addClassToModule(req, res){
+async function addClassToModule(req, res, next){
     try {
         const { moduleId, classId } = req.params
         const existingModule= await Module.findById(moduleId)
@@ -17,7 +17,7 @@ async function addClassToModule(req, res){
         return res.status(200).json({ message: 'Clase agregada al modulo con éxito' })
 
     } catch (error) {
-        res.status(404).json({error: error.message});
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

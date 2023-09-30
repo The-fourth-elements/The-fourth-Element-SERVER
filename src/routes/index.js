@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+
+const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass } = require('../controllers/classControllers/index');
@@ -9,7 +11,6 @@ const { forgotPassword, resetPassword } = require('../controllers/authController
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
-const { getLandingContent, createLandingContent } = require('../controllers/landingContent/index');
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
@@ -17,6 +18,8 @@ const feedback = require('../controllers/paymentGateway/feedback');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
+router.get('/users/deleted', getAllUsersDeleted);
+router.get('/user/reset', getUserReset);
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
 router.get('/user/email', getUserByEmail);
@@ -24,8 +27,11 @@ router.put('/user', updateUser);
 router.delete('/user/:id', deleteUser);
 
 // Testimonios de Landing Content 
-router.get('/content', getLandingContent);
+router.delete('/content/:id', deleteLandingContent);
+router.put('/content/:id', uppdateLandingContent);
+router.get('/content/:id', getOneLandingContent);
 router.post('/content', createLandingContent);
+router.get('/content', getAllLandingContent);
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);

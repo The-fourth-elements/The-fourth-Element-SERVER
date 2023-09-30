@@ -20,17 +20,17 @@ async function loginUser(req, res, next) {
                 if(provider){
                     const token = createToken(payload);
                     res.cookie("jwt", token, { httpOnly: true });
-                    res.status(200).json({ token: token, success: true, message: "Login successful" });
+                    res.status(200).json({ token: token, success: true, message: "Inicio de sesion exitosa" });
                 } else {
                     const normalUser = await Users.login(email, password);
                     if (!normalUser?.error) {
                         const token = createToken(payload);
                         res.cookie("jwt", token, { httpOnly: true });
-                        res.status(200).json({ token: token, success: true, message: "Login successful" });
-                    } else throw Error("The email or password is invalid");
+                        res.status(200).json({ token: token, success: true, message: "Inicio de sesion exitosa" });
+                    } else throw Error("El email o contraseña son invalidos");
                 }
-            } else throw Error("User not registered");
-        } else throw Error("Email not registered")
+            } else throw Error("Usuario no registrado");
+        } else throw Error("Email no registrado");
     } catch (error) {
         next({ message: error.message, statusCode: 404 })
     }

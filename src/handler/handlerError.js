@@ -1,7 +1,6 @@
 function handlerError(err, req, res, next) {
     let statusCode = 500;
-    let message = 'Internal Server Error';
-    console.log('->>>>>',err);
+    let message = 'Error en el servidor';
     if (err.statusCode) {
       statusCode = err.statusCode;
     }
