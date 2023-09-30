@@ -3,7 +3,7 @@ const { SECRET_WORD } = require('../utils/auth')
 
 function createToken(content) {
     const payload = { data: content };
-    return jwt.sign(payload, SECRET_WORD, { expiresIn: "100min" });
+    return jwt.sign(payload, SECRET_WORD, { expiresIn: "5min" });
 };
 
 function decriptToken(token) {

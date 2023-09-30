@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
+const {isAscii} = require('validator');
 
 const ClassMongoose = new mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        required: [true, 'Por favor ingrese un nombre.'],
+        validate: [isAscii, 'El nombre debe ser un ASCII valido.']
     },
     description: {
-        type: String
+        type: String,
+        required: [true, 'Por favor ingrese un nombre.'],
+        validate: [isAscii, 'La descripción debe ser un ASCII valido.']
     },
     video: {
         type: mongoose.Types.ObjectId,

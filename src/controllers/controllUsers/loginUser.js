@@ -8,14 +8,16 @@ async function loginUser(req, res, next) {
         if (email) {
             const user = await Users.findOne({email});
             if(user) {
-                console.log(user);
                 const payload = {
                     id: user._id,
                     username: user.username,
                     city: user.city, 
                     country: user.nation, 
                     role: user.role, 
-                    email: user.email
+                    email: user.email,
+                    sport: user.sport,
+                    // age: user.age,
+                    // expYearsSports: user.expYearsSports
                 }
                 if(provider){
                     const token = createToken(payload);
