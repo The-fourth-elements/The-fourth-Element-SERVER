@@ -1,21 +1,21 @@
 const LandingContent = require('../../models/LandingContent');
 
-async function getLandingContent(req, res, next) {
+async function getOneLandingContent(req, res, next) {
     try {
-        const { id } = req.body;
+        const { id } = req.params;
         if (!id) {
-            next({message: 'id is invalid', statusCode: 401});
+            throw Error('Ingrese un ID');
         } else {
             const content = await LandingContent.findOne({"_id": id});
             if (content){
                 res.status(200).json(content);
             } else {
-                throw Error(content.error);
+                throw Error('No se encontro el contenido');
             }
         }
     } catch (error) {
-        next({message: error.message, statusCode: 404});
+        next({ message: error.message, statusCode: 404 });
     }
 }
 
-module.exports = getLandingContent;
+module.exports = getOneLandingContent;

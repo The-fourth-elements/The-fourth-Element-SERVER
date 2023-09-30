@@ -1,14 +1,14 @@
 const Nation = require("../../models/Nation")
 
-async function getAllCountries(req, res){
+async function getAllCountries(req, res, next){
     try {
         const countries = await Nation.find({});
         if (!countries.length < 1) {
             res.status(200).json(countries);
-        } else throw Error('Countries is empty.');
+        } else throw Error('Paises esta vacio.');
     } catch (error) {
-        res.status(400).json({error: error.message})
+        next({ message: error.message, statusCode: 400 });
     }
-}
+};
 
 module.exports = getAllCountries;

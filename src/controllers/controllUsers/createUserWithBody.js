@@ -9,7 +9,7 @@ async function createUserWithBody(req, res) {
     try{
         if(provider){
             if (!email) {
-                return res.status(400).json({ error: "Falta el email del usuario" });
+                throw Error("Falta el email del usuario");
             } else {
                 const passwordEncrypt = await encrypt("password");
                 await Users.create({
@@ -18,11 +18,11 @@ async function createUserWithBody(req, res) {
                     email,
                     password: passwordEncrypt
                 });
-                return res.status(200).json({ success: "Cuenta creada correctamente" })
+                return res.status(200).json({ success: "Cuenta creada correctamente" });
             }
         } else {
             if (!email || !username || !password || !city || !nationality) {
-                return res.status(400).json({ error: "Faltan datos del usuario" });
+                throw Error("Faltan datos del usuario");
             } else {
                 const newSport = await findOrCreateSport(sport);
                 const newCity = await findOrCreateCity(city)
@@ -41,11 +41,7 @@ async function createUserWithBody(req, res) {
             }
         }
     } catch (error) {
-        if (error) {
-            return res.status(400).json(error.message); // enviar role al loguear
-        }
-        return res.status(500).json({ error: "server error" });
+        next({ message: error.message, statusCode: 404});
     }
 }
-
 module.exports = createUserWithBody;

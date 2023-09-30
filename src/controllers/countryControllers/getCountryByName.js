@@ -1,7 +1,7 @@
 const Nation = require("../../models/Nation");
 
 async function getCountryByName(req, res) {
-    const { name } = req.body; 
+    const { name } = req.query; 
     try {
         if (name) {
             const country = await Nation.findOne({name});

@@ -1,7 +1,14 @@
 const createLandingContent = require('./createLandingContent');
-const getLandingContent = require('./getLandingContent');
+const deleteLandingContent = require('./deleteLandingContent');
+const getOneLandingContent = require('./getOneLandingContent');
+const uppdateLandingContent = require('./uppdateLandingContent');
+const getAllLandingContent = require("./getAllLandingContent");
 
 module.exports = {
     createLandingContent,
-    getLandingContent
-}
+    deleteLandingContent,
+    getOneLandingContent,
+    uppdateLandingContent,
+    getAllLandingContent
+};
+
