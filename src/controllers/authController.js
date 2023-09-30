@@ -15,7 +15,7 @@ async function forgotPassword(req, res, next){
                 transporter.sendMail(mailContent(userExist.email, link),
                 (error, info) => {
                     if (error) {
-                        throw new Error('Error sending email');
+                        throw new Error('Error al enviar el email');
                     } else {
                         res.status(200).json({successful: info.response});
                     }
@@ -23,7 +23,7 @@ async function forgotPassword(req, res, next){
             };
         };
     } catch (error) {
-        next({message: error.message, statusCode: 400})
+        next({ message: error.message, statusCode: 400 })
     }
 };
 
@@ -34,10 +34,10 @@ async function resetPassword(req, res, next){
         if (response) {
             res.status(200).json({message: 'Access true'});
         } else {
-            throw new Error("Can't change the password, review data.");
+            throw new Error("No se pudo cambiar la contraseña, revisar datos.");
         }
     } catch (error) {
-        next({message: error.message, statusCode: 404})
+        next({ message: error.message, statusCode: 404 })
     }
 };
 

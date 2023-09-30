@@ -7,12 +7,12 @@ async function handlerForgotPass(email){
     try {
         const userEmail = await Users.findOne({email: email});
         if (!email || !isEmail(email)) {
-            throw Error('Not a valid Email');
+            throw Error('No es un email valido');
         } else {
             if (userEmail) {
                 return userEmail;
             } else {
-                throw new Error("Didn't exist an account with this e-mail.");
+                throw new Error("No existe una cuenta con este email.");
             }
         }
     } catch (error) {

@@ -3,16 +3,12 @@ const router = express.Router();
 // const { forgotPassword, resetPassword } = require('../controllers/authController');
 
 // Probar
-const { getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset } = require('../controllers/controllUsers/index');
-=========
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById } = require('../controllers/controllUsers/index');
->>>>>>>>> Temporary merge branch 2
+const { getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, loginUser, createUserWithBody } = require('../controllers/controllUsers');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById} = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo} = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint} = require('../controllers/powerPointControllers/index');
-const getLandingContent = require('../controllers/landingContent/getLandingContent');
-const createLandingContent = require('../controllers/landingContent/createLandingContent');
+const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
@@ -31,23 +27,20 @@ router.get('/users', getAllUsers); // Funciona
 router.get('/user', getUserById); // Funciona
 router.put('/user', updateUser); // Funciona, reveer el delete
 router.delete('/user/:id', deleteUser); // Funciona
-
-// Landing Content Testimonies
-router.get('/content', getLandingContent); // Funciona
-router.post('/content', createLandingContent); // Funciona
-router.get('/users', getAllUsers);
-router.get('/user', getUserById);
+router.get('/user/reset', getUserReset);
+router.get('/users/deleted', getAllUsersDeleted);
 router.get('/user/email', getUserByMail);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
 
 //validar información de usuario
 router.post('/auth', createUserWithBody);
 router.post('/login', loginUser);
 
 // Landing Content Testimonies
-router.get('/content', getLandingContent);
+router.get('/content/:id', getOneLandingContent);
 router.post('/content', createLandingContent);
+router.delete('/content/:id', deleteLandingContent);
+router.put('/content/:id', uppdateLandingContent);
+router.get('/content', getAllLandingContent);
 
 // creacio, actualizacion y eliminacion de modulos
 router.get('/moduls', getAllModules);
