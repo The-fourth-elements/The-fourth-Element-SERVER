@@ -6,7 +6,7 @@ const findOrCreateSport = require('../../handler/dataBase/findOrCreateSport.js')
 const { createToken } = require('../../services/token.js');
 
 async function createUserWithBody(req, res, next) {
-    const { email, password, username, provider, city, nationality, sport } = req.body;
+    const { email, password, username, provider, city, nationality, sport, age, yearsOfExperience } = req.body;
     try{
         if(provider){
             if (!email) {
@@ -28,8 +28,8 @@ async function createUserWithBody(req, res, next) {
             } else {
                 const newSport = await findOrCreateSport(sport);
                 const newCity = await findOrCreateCity(city);
-                const newNation = await findOrCreateNation(nationality)
-                const passwordEncrypt = await encrypt(password)
+                const newNation = await findOrCreateNation(nationality);
+                const passwordEncrypt = await encrypt(password);
                 await Users.create({
                     username,
                     role: 0,
@@ -37,7 +37,9 @@ async function createUserWithBody(req, res, next) {
                     password: passwordEncrypt,
                     sport: newSport,
                     city: newCity,
-                    nation: newNation
+                    nation: newNation,
+                    age,
+                    yearsOfExperience
                 });
                 return res.status(200).json({ success: "Cuenta creada correctamente" })
             }
