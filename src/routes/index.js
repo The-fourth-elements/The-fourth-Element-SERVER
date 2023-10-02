@@ -15,6 +15,7 @@ const { getAllSports, getSportById, getSportByName } = require('../controllers/s
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
+const inviteUser = require('../controllers/controllUsers/inviteUser');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
@@ -25,6 +26,9 @@ router.get('/user', getUserById);
 router.get('/user/email', getUserByEmail);
 router.put('/user', updateUser);
 router.delete('/user/:id', deleteUser);
+
+// Invitado
+router.post('/invite', inviteUser)
 
 // Testimonios de Landing Content 
 router.delete('/content/:id', deleteLandingContent);
