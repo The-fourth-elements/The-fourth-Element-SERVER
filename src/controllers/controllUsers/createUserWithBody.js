@@ -5,7 +5,7 @@ const findOrCreateCity = require('../../handler/dataBase/findOrCreateCity.js');
 const findOrCreateSport = require('../../handler/dataBase/findOrCreateSport.js');
 
 async function createUserWithBody(req, res) {
-    const { email, password, username, provider, city, nationality, sport } = req.body;
+    const { email, password, username, provider, city, nationality, sport, expYearsSports, age } = req.body;
     try{
         if(provider){
             if (!email) {
@@ -21,13 +21,13 @@ async function createUserWithBody(req, res) {
                 return res.status(200).json({ success: "Cuenta creada correctamente" });
             }
         } else {
-            if (!email || !username || !password || !city || !nationality) {
+            if (!email || !username || !password || !city || !nationality || !sport || !expYearsSports || !age) {
                 throw Error("Faltan datos del usuario");
             } else {
                 const newSport = await findOrCreateSport(sport);
-                const newCity = await findOrCreateCity(city)
-                const newNation = await findOrCreateNation(nationality)
-                const passwordEncrypt = await encrypt(password)
+                const newCity = await findOrCreateCity(city);
+                const newNation = await findOrCreateNation(nationality);
+                const passwordEncrypt = await encrypt(password);
                 await Users.create({
                     username,
                     role: 0,
@@ -35,7 +35,9 @@ async function createUserWithBody(req, res) {
                     password: passwordEncrypt,
                     sport: newSport,
                     city: newCity,
-                    nation: newNation
+                    nation: newNation,
+                    age,
+                    expYearsSports
                 });
                 return res.status(200).json({ success: "Cuenta creada correctamente" })
             }
