@@ -1,8 +1,12 @@
 const { Users } = require("../../models/Users");
 
-async function handleUserDB (id){
+async function handleUserDB(id) {
     try {
-        const foundUser = await Users.findOne({"_id": id});
+        const foundUser = await Users.findById(id)
+        .populate('city')
+        .populate('nation')
+        .populate('sport')
+
         if (foundUser) return foundUser;
         else throw Error('User not found.')
     } catch (error) {
