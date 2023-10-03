@@ -3,7 +3,8 @@ const Module = require("../../models/Module");
 
 async function getAllModules(req, res, next){
     try {
-        const modules = await Module.find();
+        const modules = await Module.find()
+        .populate('classModule')
 
         modules.length === 0 ?
         res.status(404).json({ message: 'No se encontraron modulos' }) :

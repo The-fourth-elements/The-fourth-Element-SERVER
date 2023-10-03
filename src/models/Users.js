@@ -31,14 +31,17 @@ const UserSchemas = new mongoose.Schema({
     },
     city:{
         type: mongoose.Types.ObjectId,
+        ref: "City",
         require: true
     },
     nation:{
         type: mongoose.Types.ObjectId,
+        ref: "Nation",
         require: true
     },
     sport:{
         type: mongoose.Types.ObjectId,
+        ref: "Sport",
         require: true
     },
     age:{
@@ -58,8 +61,9 @@ const UserSchemas = new mongoose.Schema({
         }
     },
     progress:{
-        type: mongoose.Types.ObjectId,
-        ref: "Progress"
+        //type: mongoose.Types.ObjectId,
+        //ref: "Progress"
+        type: Array
     },
     profile_img:{
         public_id: String,
