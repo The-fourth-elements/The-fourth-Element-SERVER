@@ -1,7 +1,7 @@
 const Nation = require("../../models/Nation");
 
 async function getCountryByName(req, res) {
-    const { name } = req.body; 
+    const { name } = req.query; 
     try {
         if (name) {
             const country = await Nation.findOne({name});
@@ -10,7 +10,7 @@ async function getCountryByName(req, res) {
             } else throw Error('Pais no encontrado');
         } else throw Error('Debe brindar un nombre');
     } catch (error) {
-        res.status(400).json({error: error.message});
+        next({ message: error.message, statusCode: 400 });
     }
 }
 

@@ -1,7 +1,7 @@
 const City = require("../../models/City");
 
 async function getCityByName(req, res) {
-    const { name } = req.body;
+    const { name } = req.query;
     try {
         if (name) {
             const city = await City.findOne({name});
@@ -10,7 +10,7 @@ async function getCityByName(req, res) {
             } else throw Error('Ciudad no encontrada');
         } else throw Error('Debe brindar un nombre');
     } catch (error) {
-        res.status(400).json({error: error.message});
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

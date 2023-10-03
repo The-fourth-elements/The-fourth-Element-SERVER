@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const { isURL } = require('validator');
+const { isURL, isAscii } = require('validator');
 
 const LandingContentMongoose = new mongoose.Schema({
     testimonials: {
-        type: String
+        type: String,
+        validate: [isAscii, 'El testimonio debe ser un ASCII valido.']
     },
     image: {
         type: String,

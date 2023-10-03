@@ -3,15 +3,17 @@ const { encrypt } = require('../../services/crypt.js');
 const findOrCreateNation = require('../../handler/dataBase/findOrCreateNation.js');
 const findOrCreateCity = require('../../handler/dataBase/findOrCreateCity.js');
 const findOrCreateSport = require('../../handler/dataBase/findOrCreateSport.js');
+const { createToken } = require('../../services/token.js');
 
-async function createUserWithBody(req, res) {
-    const { email, password, username, provider, city, nationality, sport, expYearsSports, age } = req.body;
+async function createUserWithBody(req, res, next) {
+    const { email, password, username, provider, city, nationality, sport, expYearsSports, age } = req.body
     try{
         if(provider){
             if (!email) {
                 throw Error("Falta el email del usuario");
             } else {
-                const passwordEncrypt = await encrypt("password");
+                const token = createToken(provider);
+                const passwordEncrypt = await encrypt(token);
                 await Users.create({
                     username,
                     role: 0,

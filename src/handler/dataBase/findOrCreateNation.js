@@ -8,7 +8,7 @@ async function findOrCreateNation(country) {
         if (newCountry) return newCountry;
         throw Error('Error found creating Country DB.');
     } catch (error) {
-        return error;
+        return { error: error.message }
     }
 }
 
