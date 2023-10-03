@@ -1,11 +1,12 @@
 const Module = require("../../models/Module");
 
-async function getModuleById(req, res, next){
+async function getModuleById(req, res, next) {
     try {
         const { id } = req.params;
 
         if (id) {
-            const module = await Module.findById(id);
+            const module = await Module.findById(id)
+                .populate('classModule')
             if (module) {
                 res.status(200).json({ message: "Modulo encontrado", module: module });
             } else throw Error("No se pudo encontrar un modulo con ese ID");
