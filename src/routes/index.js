@@ -20,7 +20,7 @@ const inviteUser = require('../controllers/controllUsers/inviteUser');
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);
-router.get('/user/reset', getUserReset);
+router.put('/user/reset', getUserReset);
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
 router.get('/user/email', getUserByEmail);
