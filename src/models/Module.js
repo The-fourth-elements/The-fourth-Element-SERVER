@@ -11,9 +11,10 @@ const ModuleMongoose = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "Class"
     }],
-    quiz:{
-        type: Number
-    },
+    quiz:[{
+        type: mongoose.Types.ObjectId,
+        ref: "Questions"
+    }],
     startingDate:{
         type: Date,
         default: Date.now

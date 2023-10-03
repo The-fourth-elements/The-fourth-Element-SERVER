@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
     debug: true
 });
 
-// Email content
-const mailContent = (email, link) => {
+// Email Forgot Pass
+const mailForgotPass = (email, link) => {
     return mailOptions = {
         from: MAILER_EMAIL,
         to: email,
@@ -24,8 +24,21 @@ const mailContent = (email, link) => {
     }
 }
 
+// Email Invite
+const mailInvite = (email, link) => {
+    return mailOptions = {
+        from: MAILER_EMAIL,
+        to: email,
+        subject: "You're invited to Fourth Element",
+        text: `This is an email inviting you to be part of The Fourth Element. To start enjoying the content in the platform click in the link below. 
+        ${link}
+        This link only works for this mail, and only one time. Enjoy the content :D`
+    }
+}
+
 
 module.exports = {
     transporter,
-    mailContent
+    mailForgotPass,
+    mailInvite
 }

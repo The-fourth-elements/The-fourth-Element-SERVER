@@ -3,7 +3,10 @@ const { isAscii } = require('validator');
 
 const SportMongoose = new mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        unique: true,
+        required: [true, 'Please enter an city name'],
+        validate: [isAscii, 'Name must be a string']
     }
 });
 

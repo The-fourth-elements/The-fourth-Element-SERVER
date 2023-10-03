@@ -4,6 +4,7 @@ const addPowerPointToClass = require('./addPowerPoint');
 const getAllClasses = require('./getAllClasses');
 const getClassById = require('./getClassById');
 const deleteClass = require('./deleteClass')
+const updateClass = require('./updateClass')
 
 module.exports = {
     createClass,
@@ -11,5 +12,6 @@ module.exports = {
     addPowerPointToClass,
     getAllClasses,
     getClassById,
-    deleteClass
+    deleteClass,
+    updateClass
 }
