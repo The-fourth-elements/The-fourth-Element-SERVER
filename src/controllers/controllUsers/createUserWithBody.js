@@ -6,7 +6,7 @@ const findOrCreateSport = require('../../handler/dataBase/findOrCreateSport.js')
 const { createToken } = require('../../services/token.js');
 
 async function createUserWithBody(req, res, next) {
-    const { email, password, username, provider, city, nationality, sport, age, yearsOfExperience } = req.body;
+    const { email, password, username, provider, city, nationality, sport, expYearsSports, age } = req.body
     try{
         if(provider){
             if (!email) {
@@ -23,7 +23,7 @@ async function createUserWithBody(req, res, next) {
                 return res.status(200).json({ success: "Cuenta creada correctamente" });
             }
         } else {
-            if (!email || !username || !password || !city || !nationality) {
+            if (!email || !username || !password || !city || !nationality || !sport || !expYearsSports || !age) {
                 throw Error("Faltan datos del usuario");
             } else {
                 const newSport = await findOrCreateSport(sport);
@@ -39,7 +39,7 @@ async function createUserWithBody(req, res, next) {
                     city: newCity,
                     nation: newNation,
                     age,
-                    yearsOfExperience
+                    expYearsSports
                 });
                 return res.status(200).json({ success: "Cuenta creada correctamente" })
             }

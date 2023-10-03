@@ -23,6 +23,12 @@ const UserSchemas = new mongoose.Schema({
         type: String,
         validate: [isAscii, 'Address must be a string']
     },
+    expYearsSports:{
+        type: Number
+    },
+    age:{
+        type: Number
+    },
     city:{
         type: mongoose.Types.ObjectId,
         require: true
@@ -56,8 +62,8 @@ const UserSchemas = new mongoose.Schema({
         ref: "Progress"
     },
     profile_img:{
-        type: String,
-        validate: [isURL, 'Profile image must be a valid URL']
+        public_id: String,
+        secure_url: String
     },
     email:{
         type: String,
@@ -76,6 +82,9 @@ const UserSchemas = new mongoose.Schema({
             message: 'Please enter a minimun six characters, one number and one capital letter'
         }
     }
+},
+{
+    timestamps: true
 });
 
 UserSchemas.statics.login = async function(email, password){
