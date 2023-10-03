@@ -23,12 +23,6 @@ const UserSchemas = new mongoose.Schema({
         type: String,
         validate: [isAscii, 'Address must be a string']
     },
-    expYearsSports:{
-        type: Number
-    },
-    age:{
-        type: Number
-    },
     city:{
         type: mongoose.Types.ObjectId,
         ref: "City",
@@ -44,7 +38,7 @@ const UserSchemas = new mongoose.Schema({
     age:{
         type: Number
     },
-    yearsOfExperience:{
+    expYearsSports:{
         type: Number
     },
     role:{
