@@ -31,21 +31,12 @@ const UserSchemas = new mongoose.Schema({
     },
     city:{
         type: mongoose.Types.ObjectId,
-        require: true
     },
     nation:{
         type: mongoose.Types.ObjectId,
-        require: true
     },
     sport:{
         type: mongoose.Types.ObjectId,
-        require: true
-    },
-    age:{
-        type: Number
-    },
-    yearsOfExperience:{
-        type: Number
     },
     role:{
         type: Number,
@@ -63,7 +54,10 @@ const UserSchemas = new mongoose.Schema({
     },
     profile_img:{
         public_id: String,
-        secure_url: String
+        secure_url: {
+            type: String,
+            validate: [isURL, 'Please enter an URL valid']
+        }
     },
     email:{
         type: String,

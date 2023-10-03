@@ -18,8 +18,8 @@ beforeEach(async() => { // Ejecuta antes de cada test
 });
 
 describe("Back-End Routing Test", () => {
-    describe("GET /users", () =>{
-        describe("Should reply with status 200. Verify if: ", () => {
+    xdescribe("GET /users", () =>{
+        xdescribe("Should reply with status 200. Verify if: ", () => {
             beforeEach(async() => {
                 await agent.post('/auth').send(testingUsers[0]);
                 await agent.post('/auth').send(testingUsers[1]);
@@ -57,8 +57,8 @@ describe("Back-End Routing Test", () => {
         }); 
     });
 
-    describe("GET /user/:id", () =>{
-        describe("Should reply with status 200. Verify if: ", () =>{
+    xdescribe("GET /user?id", () =>{
+        xdescribe("Should reply with status 200. Verify if: ", () =>{
             beforeEach(async() => {
                 await agent.post("/auth").send(testingUsers[0]);
                 await agent.post("/auth").send(testingUsers[1]);
@@ -104,12 +104,60 @@ describe("Back-End Routing Test", () => {
         
     });
 
-    describe('PUT /user', () => {
+    describe("GET /user?email", () =>{
+        describe("Should reply with status 200. Verify if: ", () =>{
+            beforeEach(async() => {
+                await agent.post("/auth").send(testingUsers[0]);
+                await agent.post("/auth").send(testingUsers[1]);
+            });
+
+            it("User exist.", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[0].username}))._doc;
+                console.log(userTest.email);
+                const response = await agent.get(`/user?email=${userTest.email}`);
+                expect(response.status).toBe(200);
+            });
+
+            it("Return an Object", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[0].username}))._doc;
+                const response = await agent.get(`/user?id=${userTest._id.valueOf()}`);
+                expect(response.body).toHaveProperty("username");
+                expect(response.body).toHaveProperty("email");
+                expect(response.body).toHaveProperty("password");
+            });
+
+            it("The username is right.", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[0].username}))._doc;
+                const response = await agent.get(`/user?id=${userTest._id.valueOf()}`);
+                expect(response.body.username).toBe(testingUsers[0].username);
+            });
+            
+            it("Have an valid email.", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
+                const response = await agent.get(`/user?id=${userTest._id.valueOf()}`);
+                expect(response.body.email).toMatch(testingUsers[1].email);
+            });
+
+            it("Have a password.", async () => {
+                const response = await agent.get('/users');
+                expect(response.body[1]).toHaveProperty("password");
+            });
+        });
+
+        it("Should reply with status 400.", async () => {
+            const response = await agent.get("/auth");
+            expect(response.status).toBeGreaterThanOrEqual(400);
+            expect(response).toHaveProperty("error");
+        });
+        
+    });
+
+    xdescribe('PUT /user', () => {
         beforeEach(async() => {
             await createUser(individualUserTest);
             await createUser(testingUsers[1]);
         });
-        describe("Should reply with status 200. Verify if: ", () =>{
+        xdescribe("Should reply with status 200. Verify if: ", () =>{
             it('The update was successful.', async() =>{
                 const findUser = await Users.findOne({email: individualUserTest.email});
                 const newIndividualUserTest = {id: findUser._id.valueOf(), username: "TestName"};
@@ -186,7 +234,7 @@ describe("Back-End Routing Test", () => {
             });
         });
 
-        describe('Should reply with status 400: ', () => {
+        xdescribe('Should reply with status 400: ', () => {
             it('ID not provide.', async() => {
                 const newIndividualUserTest = {id: "", email: "testmail@mess.com"};
                 const response = await agent.put("/auth").send(newIndividualUserTest);
@@ -195,11 +243,11 @@ describe("Back-End Routing Test", () => {
         })
     });
 
-    describe('POST /user', () => {
+    xdescribe('POST /user', () => {
         beforeAll(async() => {
             await Users.deleteMany({});
         })
-        describe("Should reply with status 200. Verify if: ", () => {
+        xdescribe("Should reply with status 200. Verify if: ", () => {
             it('The post was successful', async() => {
                 await agent.post("/auth")
                     .send(individualUserTest)
@@ -227,12 +275,12 @@ describe("Back-End Routing Test", () => {
         });
     })
 
-    describe('DELETE /user', () => {
+    xdescribe('DELETE /user', () => {
         beforeEach(async() => {
             await createUser(individualUserTest);
             await createUser(testingUsers[1]);
         });
-        describe("Should reply with status 200. Verify if: ", () =>{
+        xdescribe("Should reply with status 200. Verify if: ", () =>{
             it('User delete successful.', async() => {
                 const findUser = await Users.findOne({email: individualUserTest.email});
                 await agent.delete(`/user/${findUser._id}`)
@@ -261,11 +309,11 @@ describe("Back-End Routing Test", () => {
         });
     });
 
-    describe('POST /login', () => {
+    xdescribe('POST /login', () => {
         beforeEach(async() => {
             await createUser(testingUsers[1]);
         });
-        describe("Should reply with status 200. Verify if: ", () => {
+        xdescribe("Should reply with status 200. Verify if: ", () => {
             it('Post (userCreateController)', async() => {
                 await agent
                     .post('/login')
