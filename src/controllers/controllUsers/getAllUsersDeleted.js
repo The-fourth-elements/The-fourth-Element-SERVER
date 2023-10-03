@@ -3,6 +3,7 @@ const { Users } = require('../../models/Users');
 const getAllUsersDeleted = async (req, res, next) => {
     try {
         const users = await Users.findWithDeleted({ deleted: true });
+        console.log(users);
         if(!users) throw Error('No hay usuarios eliminados.');
         return res.status(200).json(users);
     } catch (error) {

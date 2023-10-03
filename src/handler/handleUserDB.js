@@ -23,7 +23,6 @@ async function handlerForgotPass(email){
 async function handlerResetPass(token, password){
     try {
         const userToken = decriptToken(token);
-        console.log( userToken);
         const matchUser = await Users.findById(userToken.data);
         if (matchUser) {
             if (password) {

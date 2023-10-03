@@ -11,7 +11,6 @@ async function createUserWithBody(req, res, next) {
     const { email, password, username, provider, city, nationality, sport, expYearsSports, age } = req.body
     try{
         const emailInvite = await handleUserInvite(email);
-        console.log(emailInvite);
         if (!emailInvite?.error) {
             if (!email || !username || !password || !city || !nationality || !sport || !expYearsSports || !age) {
                 throw Error("Faltan datos del usuario");

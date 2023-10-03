@@ -11,7 +11,7 @@ async function updateUser(req, res, next){
         const { body } = req;
         if(!body) throw Error('Faltan datos.');
         if(body.hasOwnProperty("sport")){
-            body.password = await findOrCreateSport(body.sport);
+            body.sport = await findOrCreateSport(body.sport);
         }
         if (body.hasOwnProperty("nation")) {
             body.nation = await findOrCreateNation(body.nation);
