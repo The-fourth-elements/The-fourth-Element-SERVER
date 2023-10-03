@@ -41,6 +41,12 @@ const UserSchemas = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         require: true
     },
+    age:{
+        type: Number
+    },
+    yearsOfExperience:{
+        type: Number
+    },
     role:{
         type: Number,
         require: true,
