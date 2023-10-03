@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { createToken } = require('../services/token');
-const { transporter, mailContent } = require('../services/nodemailer');
+const { transporter, mailForgotPass } = require('../services/nodemailer');
 const { handlerForgotPass, handlerResetPass } = require('../handler/handleUserDB');
 const { URL } = process.env;
 
@@ -12,7 +12,7 @@ async function forgotPassword(req, res, next){
             if (userExist) {
                 const token = createToken(userExist._id);
                 const link = `${URL}/auth/reset-password/${token}`;
-                transporter.sendMail(mailContent(userExist.email, link),
+                transporter.sendMail(mailForgotPass(userExist.email, link),
                 (error, info) => {
                     if (error) {
                         throw new Error('Error al enviar el email');
@@ -21,7 +21,7 @@ async function forgotPassword(req, res, next){
                     }
                 });
             };
-        };
+        } else throw Error('Debe ingresar un email');
     } catch (error) {
         next({ message: error.message, statusCode: 400 })
     }
