@@ -1,7 +1,7 @@
 const mercadopago = require('mercadopago');
 const Users = require('../../models/Users');
 
-async function reciveWebhook(req, res) {
+async function reciveWebhook(req, res, next) {
     try {
         const payment = req.query;
 
@@ -11,11 +11,11 @@ async function reciveWebhook(req, res) {
             if(response === "aproved"){
                 res.status(200).send('Success.');
             } else if(response === "rejected"){
-                throw Error("Te payment was rejected.");
+                throw Error("El pago fue rechazado.");
             }
         }
     } catch (error) {
-        res.status(400).json({error: error.message});
+        next({ message: error.message, statusCode: 400 });
     }
 }
 

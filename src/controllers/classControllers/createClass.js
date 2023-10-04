@@ -1,3 +1,4 @@
+ 
 const Class = require("../../models/Class");
 const Video = require('../../models/Videos')
 const PowerPoint = require('../../models/PowerPoint')
@@ -10,7 +11,8 @@ async function createClass(req, res, next) {
         if (!name || !description) {
             const error = new Error("Faltan datos")
             error.statusCode = 400
-            throw error}
+            throw error
+        }
 
         session = await mongoose.startSession();
         session.startTransaction();
@@ -32,6 +34,7 @@ async function createClass(req, res, next) {
 
         if (powerPoint) {
             const newPresentacion = new PowerPoint({
+                id: powerPoint.id,
                 url: powerPoint.url
             })
             await newPresentacion.save()

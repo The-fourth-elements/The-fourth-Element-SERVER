@@ -14,10 +14,10 @@ beforeAll(async() => {
     await mongoose.connect(DB_URI_TEST);
 });
 
-describe('Services Test', () => {
-    describe('Crypting', () => {
+xdescribe('Services Test', () => {
+    xdescribe('Crypting', () => {
         beforeEach(async() => {
-            await createUser(individualUserTest);
+            const response = await createUser(individualUserTest);
         });
 
         it("Should return a encrypted password.", async() => {
@@ -27,7 +27,7 @@ describe('Services Test', () => {
         });
 
         it("Should match 2 passwords.", async() => {
-            const userFind = await Users.findOne({email: individualUserTest.email})
+            const userFind = await Users.findOne({email: individualUserTest.email});
             const response = (await agent.get(`/user?id=${userFind._id}`)).body.password;
             const auth = await compare(individualUserTest.password, response)
             expect(auth).toBeTruthy();

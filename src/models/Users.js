@@ -24,13 +24,26 @@ const UserSchemas = new mongoose.Schema({
         validate: [isAscii, 'Address must be a string']
     },
     city:{
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        ref: "City",
     },
     nation:{
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        ref: "Nation",
+    },
+    sport:{
+        type: mongoose.Types.ObjectId,
+        ref: "Sport",
+    },
+    age:{
+        type: Number
+    },
+    expYearsSports:{
+        type: Number
     },
     role:{
         type: Number,
+        require: true,
         validate: {
             validator: function(value){
                 return regexNumber.test(value)
@@ -43,8 +56,11 @@ const UserSchemas = new mongoose.Schema({
         ref: "Progress"
     },
     profile_img:{
-        type: String,
-        validate: [isURL, 'Profile image must be a valid URL']
+        public_id: String,
+        secure_url: {
+            type: String,
+            validate: [isURL, 'Please enter an URL valid']
+        }
     },
     email:{
         type: String,
@@ -63,6 +79,9 @@ const UserSchemas = new mongoose.Schema({
             message: 'Please enter a minimun six characters, one number and one capital letter'
         }
     }
+},
+{
+    timestamps: true
 });
 
 UserSchemas.statics.login = async function(email, password){
@@ -76,7 +95,7 @@ UserSchemas.statics.login = async function(email, password){
             } else throw Error('Incorrect Password');
         } else throw Error('Invalid Email');
     } catch (error) {
-        return {"error": error.message};
+        return {error: error.message};
     }
 }
 

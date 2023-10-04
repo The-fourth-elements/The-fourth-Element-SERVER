@@ -1,4 +1,5 @@
 const Videos = require('../../models/Videos');
+const cloudinary = require('../../utils/cloudinary');
 
 async function deleteVideo(req, res, next) {
     try {
@@ -14,10 +15,12 @@ async function deleteVideo(req, res, next) {
         
         if (!deletedVideo) throw Error('Ocurrió un error al eliminar el video');
 
+        cloudinary.uploader.destroy(video.public_id, {resource_type: "Video", folder: "Video"});
+
         res.status(200).json({ message: 'Video eliminado exitosamente' });
 
     } catch (error) {
-        next({ message: error.message, statusCode: 400 });
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

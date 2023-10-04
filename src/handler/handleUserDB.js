@@ -5,14 +5,14 @@ const { Users } = require('../models/Users')
 
 async function handlerForgotPass(email){
     try {
-        const userEmail = await Users.findOne({email: email});
+        const userEmail = await Users.findOne({email});
         if (!email || !isEmail(email)) {
-            throw Error('Not a valid Email');
+            throw Error('No es un email valido');
         } else {
             if (userEmail) {
                 return userEmail;
             } else {
-                throw new Error("Didn't exist an account with this e-mail.");
+                throw new Error("No existe una cuenta con este email.");
             }
         }
     } catch (error) {
@@ -23,7 +23,6 @@ async function handlerForgotPass(email){
 async function handlerResetPass(token, password){
     try {
         const userToken = decriptToken(token);
-        console.log( userToken);
         const matchUser = await Users.findById(userToken.data);
         if (matchUser) {
             if (password) {

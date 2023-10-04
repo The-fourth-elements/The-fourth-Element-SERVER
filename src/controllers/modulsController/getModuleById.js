@@ -1,18 +1,19 @@
 const Module = require("../../models/Module");
 
-async function getModuleById(req, res){
+async function getModuleById(req, res, next) {
     try {
         const { id } = req.params;
 
         if (id) {
-            const module = await Module.findById(id);
+            const module = await Module.findById(id)
+                .populate('classModule')
             if (module) {
-                res.status(200).json({ message: "Module find", module: module });
-            } else throw Error("Can't find a module with that id");
+                res.status(200).json({ message: "Modulo encontrado", module: module });
+            } else throw Error("No se pudo encontrar un modulo con ese ID");
         }
 
     } catch (error) {
-        res.status(404).json({error: error.message});
+        next({ message: error.message, statusCode: 400 });
     }
 }
 

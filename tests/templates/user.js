@@ -3,7 +3,10 @@ const individualUserTest = {
     city: "New York",
     nationality: "United State",
     email: "user1@test.com",
-    password: "Testpass1"
+    password: "Testpass1",
+    sport: "Futbol",
+    age: 24,
+    expYearsSports: 13
 }
 
 const testingUsers = [
@@ -12,14 +15,20 @@ const testingUsers = [
         city: "Bogota",
         nationality: "Colombia",       
         email: "user2@test.com",
-        password: "Testpass2"
+        password: "Testpass2",
+        sport: "Handball",
+        age: 34,
+        expYearsSports: 20
     },
     {
         username: "HolaMonaco",
         city: "Monaco",
         nationality: "Principate of Monaco",    
         email: "user3@test.com",
-        password: "Testpass3"
+        password: "Testpass3",
+        sport: "Voleyball",
+        age: 28,
+        expYearsSports: 12
     }
 ];
 
