@@ -7,6 +7,8 @@ const findOrCreateSport = require('../../src/handler/dataBase/findOrCreateSport'
 
 const testCity = "New York";
 
+const testSport = "Futbol";
+
 const randomID = new mongoose.Types.ObjectId();
 
 const testModule = {
@@ -39,7 +41,7 @@ const createUser = async(user) =>{
     }
 }
 
-const testnation = "United State";
+const testNation = "United State";
 
 const testProgress = {
     certificated: false,
@@ -58,10 +60,11 @@ const testStatus = {
 module.exports = {
     testCity,
     testModule,
-    testnation,
+    testNation,
     testProgress,
     testRole,
     testStatus,
     createUser,
-    randomID
+    randomID,
+    testSport
 }
