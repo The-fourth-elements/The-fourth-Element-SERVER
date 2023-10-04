@@ -11,11 +11,12 @@ const { forgotPassword, resetPassword } = require('../controllers/authController
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
+const {startCourse, approveClass} = require('../controllers/progressControllers/index')
+const inviteUser = require('../controllers/controllUsers/inviteUser');
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
-const inviteUser = require('../controllers/controllUsers/inviteUser');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
@@ -96,5 +97,9 @@ router.get('/feedback', feedback);
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
 router.post('/reset-password', resetPassword);
+
+//progreso
+router.post('/startCourse/:userId', startCourse)
+router.put('/approve/user/:userId/module/:moduleId/classe/:classId', approveClass)
 
 module.exports = router;

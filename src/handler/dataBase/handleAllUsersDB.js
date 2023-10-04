@@ -6,6 +6,7 @@ async function handleAllUserDB() {
             .populate('city')
             .populate('nation')
             .populate('sport')
+            .populate('progress')
         if (Array.isArray(allUsers) && allUsers.length) {
             return allUsers;
         }
