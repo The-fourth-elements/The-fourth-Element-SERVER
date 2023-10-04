@@ -9,23 +9,24 @@ const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = re
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
-const { getAllCountries, getCountryById, getCountryByName } = require('../controllers/countryControllers/index');
+const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
+const {startCourse, approveClass} = require('../controllers/progressControllers/index')
+const inviteUser = require('../controllers/controllUsers/inviteUser');
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
-const inviteUser = require('../controllers/controllUsers/inviteUser');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);
 router.put('/user/reset', getUserReset);
-router.get('/users', getAllUsers); //x
-router.get('/user', getUserById); //x
-router.get('/user/:email', getUserByEmail); //x
-router.put('/user', updateUser); //x
-router.delete('/user/:id', deleteUser); //x
+router.get('/users', getAllUsers);
+router.get('/user', getUserById);
+router.get('/user/email', getUserByEmail);
+router.put('/user', updateUser);
+router.delete('/user/:id', deleteUser);
 
 // Invitado
 router.post('/invite', inviteUser)
@@ -66,8 +67,8 @@ router.put('/video/:id', updateVideo);
 router.delete('/video/:id', deleteVideo);
 
 // Power Points
-router.get('/powerpoints',getAllPowerPoints);
-router.get('/powerpoint/:id',getPowerPointById);
+router.get('/powerpoints', getAllPowerPoints);
+router.get('/powerpoint/:id', getPowerPointById);
 router.post('/powerpoint', createPowerPoint);
 router.put('/powerpoint/:id', updatePowerPoint);
 router.delete('/powerpoint/:id', deletePowerPoint);
@@ -81,6 +82,7 @@ router.get('/city', getCityByName);
 router.get('/countries', getAllCountries);
 router.get('/country/:id', getCountryById);
 router.get('/country', getCountryByName);
+router.get('/countriesC', getCountersCountries)
 
 // Deportes
 router.get('/sports', getAllSports);
@@ -95,5 +97,9 @@ router.get('/feedback', feedback);
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
 router.post('/reset-password', resetPassword);
+
+//progreso
+router.post('/startCourse/:userId', startCourse)
+router.put('/approve/user/:userId/module/:moduleId/classe/:classId', approveClass)
 
 module.exports = router;

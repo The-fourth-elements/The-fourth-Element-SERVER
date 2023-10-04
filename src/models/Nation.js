@@ -10,5 +10,5 @@ const nationMongoose = new mongoose.Schema({
     }
 });
 
-const Nation = mongoose.model("nation", nationMongoose);
+const Nation = mongoose.model("Nation", nationMongoose);
 module.exports = Nation;
