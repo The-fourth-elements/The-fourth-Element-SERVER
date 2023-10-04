@@ -1,44 +1,58 @@
-const Video = require('../../models/Videos');
-const PowerPoint = require('../../models/PowerPoint');
+const Video = require("../../models/Videos");
+const PowerPoint = require("../../models/PowerPoint");
 const cloudinary = require("../../utils/cloudinary");
 const Class = require("../../models/Class");
 
-async function updateClass (req, res, next){
+async function updateClass(req, res, next) {
     try {
         const { id } = req.params;
         const { name, description, video, powerPoint } = req.body;
-        if(!video || !name || !description || !powerPoint) throw Error('Faltan datos');
-        const newVideo = await Video.create({
-            id: video.public_id,
-            url: video.url
-        })
-        await newVideo.save();
+        if (!name || !description || !powerPoint) {
+            throw Error("Faltan datos");
+        }
+        const searchClass = await Class.findById(id)
+            .populate("video")
+            .populate("powerPoint");
+
+        let newVideoId;
+        if (video && Object.keys(video).length > 0) {
+            // Se proporciona un nuevo video en la solicitud
+            const newVideo = await Video.create({
+                id: video.id,
+                url: video.url,
+            });
+            await newVideo.save();
+            newVideoId = newVideo._id;
+
+            if (searchClass.video) {
+                const deleteVideo = await Video.findByIdAndDelete(
+                    searchClass.video._id
+                );
+                await cloudinary.uploader.destroy(searchClass?.video?.id, {
+                    resource_type: "video",
+                });
+            }
+        }
+        await PowerPoint.findByIdAndDelete(searchClass.powerPoint._id);
         const newPowerPoint = await PowerPoint.create({
-            id: powerPoint.public_id, 
-            url: powerPoint.url
+            url: powerPoint,
         });
-        cloudinary.uploader.upload(newVideo.public_id, {resource_type: "Video", folder: "Video"});
         await newPowerPoint.save();
-        const searchClass = await Class.findById(id).populate('video').populate('powerPoint');
-        if(searchClass.video){
-            const deleteVideo = await Video.findByIdAndDelete(searchClass.video._id);
-            cloudinary.uploader.destroy(newVideo.public_id, {resource_type: "Video", folder: "Video"});
-        };
-        if(searchClass.powerPoint){
-            const deletePowerPoint = await PowerPoint.findByIdAndDelete(searchClass.powerPoint.id);
-        };
-        const newClass = await Class.findByIdAndUpdate(id, {
+        const updateData = {
             name,
             description,
-            video: newVideo._id,
-            powerPoint: newPowerPoint._id
-        });
-        res.status(200).json(newClass);
-        
-    } catch (error) {
-        next({ message: error.message, statusCode: 400});
-    }
-};
+            powerPoint: newPowerPoint._id,
+        };
 
+        if (newVideoId) {
+            updateData.video = newVideoId;
+        }
+
+        const newClass = await Class.findByIdAndUpdate(id, updateData);
+        res.status(200).json(newClass);
+    } catch (error) {
+        next({ message: error.message, statusCode: 400 });
+    }
+}
 
 module.exports = updateClass;
