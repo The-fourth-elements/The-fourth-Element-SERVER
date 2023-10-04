@@ -36,7 +36,6 @@ const mailInvite = (email, link) => {
     }
 }
 
-
 module.exports = {
     transporter,
     mailForgotPass,

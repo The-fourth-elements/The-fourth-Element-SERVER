@@ -1,6 +1,7 @@
 const Module = require('../../models/Module');
 const Quiz = require('../../models/Quiz');
 const Repsonses = require('../../models/Repsonses');
+const Quest = require('../../models/Quest');
 
 async function createQuiz(req, res, next){
     try {

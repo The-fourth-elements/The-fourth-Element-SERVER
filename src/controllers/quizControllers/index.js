@@ -1,7 +1,7 @@
-const createQuiz = require('./createQuestions');
-const updateQuestions = require('./updateQuestions');
+const createQuiz = require('./createQuiz');
+const updateQuiz = require('./updateQuiz');
 
 module.exports = {
     createQuiz,
-    updateQuestions
+    updateQuiz
 };

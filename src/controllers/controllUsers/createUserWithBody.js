@@ -4,10 +4,36 @@ const findOrCreateNation = require('../../handler/dataBase/findOrCreateNation.js
 const findOrCreateCity = require('../../handler/dataBase/findOrCreateCity.js');
 const findOrCreateSport = require('../../handler/dataBase/findOrCreateSport.js');
 const { createToken } = require('../../services/token.js');
+const handleUserInvite = require('../../handler/dataBase/handleUserInvite.js');
+const Invite = require('../../models/Invite.js');
 
 async function createUserWithBody(req, res, next) {
     const { email, password, username, provider, city, nationality, sport, expYearsSports, age } = req.body
     try{
+        const emailInvite = await handleUserInvite(email);
+        if (!emailInvite?.error) {
+            if (!email || !username || !password || !city || !nationality || !sport || !expYearsSports || !age) {
+                throw Error("Faltan datos del usuario");
+            } else {
+                const newSport = await findOrCreateSport(sport);
+                const newCity = await findOrCreateCity(city);
+                const newNation = await findOrCreateNation(nationality);
+                const passwordEncrypt = await encrypt(password);
+                await Users.create({
+                    username,
+                    role: 1,
+                    email,
+                    password: passwordEncrypt,
+                    sport: newSport,
+                    city: newCity,
+                    nation: newNation,
+                    age,
+                    expYearsSports
+                });
+                await Invite.deleteOne({email})
+                return res.status(200).json({ success: "Cuenta creada correctamente" })
+            }
+        }
         if(provider){
             if (!email) {
                 throw Error("Falta el email del usuario");

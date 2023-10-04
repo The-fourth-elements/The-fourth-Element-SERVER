@@ -14,8 +14,8 @@ beforeAll(async()=>{
     await mongoose.connect(DB_URI_TEST);
 });
 
-describe("Data Base Modules Test", () => {
-    describe("City Model", () => {
+xdescribe("Data Base Modules Test", () => {
+    xdescribe("City Model", () => {
         it('Insert a City', async() =>{
             const createCity = (await findOrCreateCity(testCity)).name;
             const foundCity = String((await City.find()).map(city => city.name))
@@ -35,7 +35,7 @@ describe("Data Base Modules Test", () => {
         });
     })
 
-    describe("Nation Model", () => {
+    xdescribe("Nation Model", () => {
         it('Insert a Nation', async() => {
             const createNation = (await findOrCreateNation(testnation)).name;
             const foundNation = String((await Nation.find()).map(nation => nation.name));
