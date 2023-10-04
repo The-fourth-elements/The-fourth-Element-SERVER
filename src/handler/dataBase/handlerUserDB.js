@@ -6,6 +6,7 @@ async function handleUserDB(id) {
         .populate('city')
         .populate('nation')
         .populate('sport')
+        .populate('progress')
 
         if (foundUser) return foundUser;
         else throw Error('User not found.')
