@@ -21,16 +21,7 @@ async function getUsersAge(req, res, next) {
             else if (user.age > 40 && user.age <= 120) ageCategories.menor120++;
         });
 
-        const totalUsers = users.length;
-        const totalAge = users.reduce((sum, user) => sum + user.age, 0);
-        const averageAge = totalAge / totalUsers;
-
-        const result = {
-            ...ageCategories,
-            promedioEdad: averageAge,
-        };
-
-        return res.status(200).json(result);
+        return res.status(200).json(ageCategories);
     } catch (error) {
         next({ message: error.message, statusCode: 400 });
     }
