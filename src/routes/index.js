@@ -21,12 +21,11 @@ const inviteUser = require('../controllers/controllUsers/inviteUser');
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);
 router.put('/user/reset', getUserReset);
-router.get('/users', getAllUsers); //x
-router.get('/user', getUserById); //x
-router.get('/user/:email', getUserByEmail); //x
-router.put('/user', updateUser); //x
-router.delete('/user/:id', deleteUser); //x
-
+router.get('/users', getAllUsers);
+router.get('/user', getUserById);
+router.get('/user/:email', getUserByEmail);
+router.put('/user', updateUser);
+router.delete('/user/:id', deleteUser);
 
 // Invitado
 router.post('/invite', inviteUser)
@@ -40,7 +39,7 @@ router.get('/content', getAllLandingContent);
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
-router.post('/login', loginUser); //x
+router.post('/login', loginUser);
 
 // Modulos
 router.get('/moduls', getAllModules);
