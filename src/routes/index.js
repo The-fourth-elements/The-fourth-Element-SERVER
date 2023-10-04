@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail } = require('../controllers/controllUsers/index');
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/controllUsers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
@@ -11,6 +11,7 @@ const { forgotPassword, resetPassword } = require('../controllers/authController
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
+const { createQuiz } = require('../controllers/quizControllers');
 const {startCourse, approveClass} = require('../controllers/progressControllers/index')
 const inviteUser = require('../controllers/controllUsers/inviteUser');
 
@@ -20,23 +21,25 @@ const feedback = require('../controllers/paymentGateway/feedback');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
-router.get('/users/deleted', getAllUsersDeleted);
-router.put('/user/reset', getUserReset);
-router.get('/users', getAllUsers);
-router.get('/user', getUserById);
-router.get('/user/:email', getUserByEmail);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
+router.get('/users/deleted', getAllUsersDeleted);//x
+router.put('/user/reset', getUserReset);//x
+router.get('/users', getAllUsers);//x
+router.get('/user', getUserById);//x
+router.get('/user/:email', getUserByEmail);//x
+router.put('/user', updateUser);//x
+router.delete('/user/:id', deleteUser);//x
+router.get('/users/ages', getAllUsersAge);//x
+router.get('/users/average', getUsersAge);//x
 
 // Invitado
 router.post('/invite', inviteUser)
 
 // Testimonios de Landing Content 
-router.delete('/content/:id', deleteLandingContent);
-router.put('/content/:id', uppdateLandingContent);
-router.get('/content/:id', getOneLandingContent);
-router.post('/content', createLandingContent);
-router.get('/content', getAllLandingContent);
+router.delete('/content/:id', deleteLandingContent);//x
+router.put('/content/:id', uppdateLandingContent);//x
+router.get('/content/:id', getOneLandingContent);//x
+router.post('/content', createLandingContent);//x
+router.get('/content', getAllLandingContent);//x
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
@@ -49,6 +52,9 @@ router.post('/moduls', createController);
 router.put('/moduls/:id', updateController);
 router.delete('/moduls/:id', deleteController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
+
+// Questions
+router.post('/module/questions/:id', createQuiz);
 
 // Clases
 router.get('/class', getAllClasses);
