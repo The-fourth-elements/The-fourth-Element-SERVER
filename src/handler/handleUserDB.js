@@ -5,7 +5,7 @@ const { Users } = require('../models/Users')
 
 async function handlerForgotPass(email){
     try {
-        const userEmail = await Users.findOne({email: email});
+        const userEmail = await Users.findOne({email});
         if (!email || !isEmail(email)) {
             throw Error('No es un email valido');
         } else {
@@ -23,7 +23,6 @@ async function handlerForgotPass(email){
 async function handlerResetPass(token, password){
     try {
         const userToken = decriptToken(token);
-        console.log( userToken);
         const matchUser = await Users.findById(userToken.data);
         if (matchUser) {
             if (password) {

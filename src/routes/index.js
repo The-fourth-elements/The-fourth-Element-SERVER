@@ -12,10 +12,11 @@ const { getCityById, getAllCities, getCityByName } = require('../controllers/cit
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
 const {startCourse, approveClass} = require('../controllers/progressControllers/index')
+const inviteUser = require('../controllers/controllUsers/inviteUser');
+
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
-const inviteUser = require('../controllers/controllUsers/inviteUser');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
@@ -39,7 +40,7 @@ router.get('/content', getAllLandingContent);
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
-router.post('/login', loginUser);
+router.post('/login', loginUser); //x
 
 // Modulos
 router.get('/moduls', getAllModules);

@@ -21,8 +21,8 @@ describe("Back-End Routing Test", () => {
     describe("GET /users", () =>{
         describe("Should reply with status 200. Verify if: ", () => {
             beforeEach(async() => {
-                await agent.post('/auth').send(testingUsers[0]);
-                await agent.post('/auth').send(testingUsers[1]);
+                await createUser(testingUsers[0]);
+                await createUser(testingUsers[1]);
             });
             
             it("Users exist", async () => {
@@ -57,11 +57,11 @@ describe("Back-End Routing Test", () => {
         }); 
     });
 
-    describe("GET /user/:id", () =>{
+    describe("GET /user?id", () =>{
         describe("Should reply with status 200. Verify if: ", () =>{
             beforeEach(async() => {
-                await agent.post("/auth").send(testingUsers[0]);
-                await agent.post("/auth").send(testingUsers[1]);
+                await createUser(testingUsers[0]);
+                await createUser(testingUsers[1]);
             });
 
             it("User exist.", async () => {
@@ -76,6 +76,7 @@ describe("Back-End Routing Test", () => {
                 expect(response.body).toHaveProperty("username");
                 expect(response.body).toHaveProperty("email");
                 expect(response.body).toHaveProperty("password");
+                expect(response.body).toHaveProperty("role");
             });
 
             it("The username is right.", async () => {
@@ -103,6 +104,70 @@ describe("Back-End Routing Test", () => {
         });
         
     });
+
+    describe("GET /user?email", () =>{
+        describe("Should reply with status 200. Verify if: ", () =>{
+            beforeEach(async() => {
+                await createUser(testingUsers[0]);
+                await createUser(testingUsers[1]);
+            });
+
+            it("User exist.", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[0].username}))._doc;
+                const response = await agent.get(`/user/email?email=${userTest.email}`);
+                expect(response.status).toBe(200);
+            });
+
+            it("Return an Object", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[0].username}))._doc;
+                const response = await agent.get(`/user/email?email=${userTest.email}`);
+                expect(response.body).toHaveProperty("username");
+                expect(response.body).toHaveProperty("email");
+                expect(response.body).toHaveProperty("password");
+                expect(response.body).toHaveProperty("role");
+            });
+
+            it("The username is right.", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[0].username}))._doc;
+                const response = await agent.get(`/user/email?email=${userTest.email}`);
+                expect(response.body.username).toBe(testingUsers[0].username);
+            });
+            
+            it("Have an valid email.", async () => {
+                const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
+                const response = await agent.get(`/user/email?email=${userTest.email}`);
+                expect(response.body.email).toMatch(testingUsers[1].email);
+            });
+
+            it("Have a password.", async () => {
+                const response = await agent.get('/users');
+                expect(response.body[1]).toHaveProperty("password");
+            });
+        });
+
+        it("Should reply with status 400.", async () => {
+            const response = await agent.get("/auth");
+            expect(response.status).toBeGreaterThanOrEqual(400);
+            expect(response).toHaveProperty("error");
+        });
+        
+    });
+
+    describe('GET /users/deleted', () =>{ 
+        beforeEach(async() => {
+            await createUser(testingUsers[0]);
+            await createUser(testingUsers[1]);
+        })
+        describe("Should reply with status 200. Verify if: ", () =>{
+            it()
+        })
+
+        it("Should reply with status 400.", async () => {
+            const response = await agent.get("/user/delete");
+            expect(response.status).toBeGreaterThanOrEqual(400);
+
+        })
+    })
 
     describe('PUT /user', () => {
         beforeEach(async() => {
@@ -168,6 +233,14 @@ describe("Back-End Routing Test", () => {
                 const countryById = await agent.get(`/country/${response.body.nation}`);
                 expect(newIndividualUserTest.nation).toBe(countryById.body.name);
             });
+
+            it('Can update a sport.', async() => {
+                const findUserId = (await Users.findOne({email: individualUserTest.email}))._id.valueOf();
+                const newIndividualUserTest = {id: findUserId, sport: "Futbol"};
+                const response = await agent.put("/user").send(newIndividualUserTest);
+                const SportById = await agent.get(`/sport/${response.body.sport}`);
+                expect(newIndividualUserTest.sport).toBe(SportById.body.name);
+            });
             
             it('Can update a password.', async() => {
                 const findUserId = (await Users.findOne({email: individualUserTest.email}))._id.valueOf();
@@ -194,38 +267,6 @@ describe("Back-End Routing Test", () => {
             });
         })
     });
-
-    describe('POST /user', () => {
-        beforeAll(async() => {
-            await Users.deleteMany({});
-        })
-        describe("Should reply with status 200. Verify if: ", () => {
-            it('The post was successful', async() => {
-                await agent.post("/auth")
-                    .send(individualUserTest)
-                    .expect(200);
-            });
-
-            it('The Content-Type is an JSON Aplication', async() => {
-                await agent
-                    .post("/auth")
-                    .send(individualUserTest)
-                    .expect('Content-Type', /application\/json/);
-            });
-
-            it('User created match with user in DB', async() => {
-                await agent.post("/auth").send(individualUserTest);
-                const matchedUser = await agent.get(`/users`);
-                const dbUser = (await Users.findOne({username: individualUserTest.username}))._doc;
-                expect(matchedUser.body[0]._id.valueOf()).toEqual(dbUser._id.valueOf());
-            });
-        });
-
-        it('Should reply with status 400.', async() => {
-            const response = await agent.post("/auth").send();
-            expect(response.status).toBeGreaterThanOrEqual(400);
-        });
-    })
 
     describe('DELETE /user', () => {
         beforeEach(async() => {
@@ -257,6 +298,38 @@ describe("Back-End Routing Test", () => {
 
         it('Should reply with status 400.', async() => {
             const response = await agent.delete(`/user/${randomID.valueOf()}`);
+            expect(response.status).toBeGreaterThanOrEqual(400);
+        });
+    });
+
+    describe('POST /auth', () => {
+        beforeAll(async() => {
+            await Users.deleteMany({});
+        })
+        describe("Should reply with status 200. Verify if: ", () => {
+            it('The post was successful', async() => {
+                await agent.post("/auth")
+                    .send(individualUserTest)
+                    .expect(200);
+            });
+
+            it('The Content-Type is an JSON Aplication', async() => {
+                await agent
+                    .post("/auth")
+                    .send(individualUserTest)
+                    .expect('Content-Type', /application\/json/);
+            });
+
+            it('User created match with user in DB', async() => {
+                await agent.post("/auth").send(individualUserTest);
+                const matchedUser = await agent.get(`/users`);
+                const dbUser = (await Users.findOne({username: individualUserTest.username}))._doc;
+                expect(matchedUser.body[0]._id.valueOf()).toEqual(dbUser._id.valueOf());
+            });
+        });
+
+        it('Should reply with status 400.', async() => {
+            const response = await agent.post("/auth").send();
             expect(response.status).toBeGreaterThanOrEqual(400);
         });
     });
