@@ -56,7 +56,9 @@ const UserSchemas = new mongoose.Schema({
         ref: "Progress"
     },
     profile_img:{
-        public_id: String,
+        public_id: {
+            type: String
+        },
         secure_url: {
             type: String,
             validate: [isURL, 'Please enter an URL valid']
