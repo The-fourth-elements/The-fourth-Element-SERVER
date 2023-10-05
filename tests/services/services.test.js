@@ -1,11 +1,11 @@
 const request = require('supertest');
-const app = require('../src/app');
-const { encrypt } = require('../src/services/crypt');
+const app = require('../../src/app');
+const { encrypt } = require('../../src/services/crypt');
 const mongoose = require('mongoose');
-const DB_URI_TEST = require('./templates/URItest');
-const { individualUserTest, testingUsers } = require('./templates/user');
-const { createUser } = require('./templates/models');
-const { Users } = require('../src/models/Users');
+const DB_URI_TEST = require('../templates/URItest');
+const { individualUserTest, testingUsers } = require('../templates/user');
+const { createUser } = require('../templates/models');
+const { Users } = require('../../src/models/Users');
 const { compare } = require('bcrypt');
 
 const agent = request(app);
