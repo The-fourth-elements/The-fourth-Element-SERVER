@@ -1,3 +1,5 @@
+require('dotenv').config();
+const { URL } = process.env;
 
 async function feedback(req, res) {
 	try {
