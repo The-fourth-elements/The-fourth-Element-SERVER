@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const RepsonsesMongoose = new mongoose.Schema({
+const ResponsesMongoose = new mongoose.Schema({
     questResponses:[{
         verdadera:{
             type: Boolean
@@ -11,5 +11,5 @@ const RepsonsesMongoose = new mongoose.Schema({
     }]
 });
 
-const Repsonses = mongoose.model("Repsonses", RepsonsesMongoose);
-module.exports = Repsonses;
+const Responses = mongoose.model("Responses", ResponsesMongoose);
+module.exports = Responses;
