@@ -7,7 +7,7 @@ const QuizMongoose = new mongoose.Schema({
     }],
     responses:[{
         type: mongoose.Types.ObjectId,
-        ref: "Repsonses"
+        ref: "Responses"
     }],
     results:{
         type: Number
