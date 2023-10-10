@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/controllUsers/index');
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/usersControllers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
@@ -13,7 +13,7 @@ const { getAllCountries, getCountryById, getCountryByName, getCountersCountries 
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
 const { createQuiz } = require('../controllers/quizControllers');
 const {startCourse, approveClass} = require('../controllers/progressControllers/index')
-const inviteUser = require('../controllers/controllUsers/inviteUser');
+const inviteUser = require('../controllers/usersControllers/inviteUser');
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
@@ -97,7 +97,7 @@ router.get('/sport', getSportByName);
 
 // Pasarela de pagos
 router.post('/create-order', createOrder);
-router.post('/feedback', feedback);
+router.get('/feedback', feedback);
 // router.post('/webhook', reciveWebhook);
 
 // Reseteo de contraseña
