@@ -1,27 +1,48 @@
 const mongoose = require('mongoose');
 const mongooseDelete = require('mongoose-delete');
-const { isEmail, isURL, isAscii } = require('validator');
+const { isEmail, isURL } = require('validator');
 const { compare } = require('../services/crypt');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
+const regexStrings = /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜ_ -]+$/;
 const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
     username:{
         type: String,
         require: true,
-        validate: [isAscii, 'Last name must be a string']
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     name:{
         type: String,
-        validate: [isAscii, 'Last name must be a string']
+        validate: {
+            validator: function(value){
+                return regexSport.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     lastname:{
         type: String,
-        validate: [isAscii, 'Last name must be a string']
+        validate: {
+            validator: function(value){
+                return regexSport.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     adress:{
         type: String,
-        validate: [isAscii, 'Address must be a string']
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     city:{
         type: mongoose.Types.ObjectId,
@@ -107,5 +128,6 @@ const Users = mongoose.model("Users", UserSchemas);
 module.exports = {
     Users,
     regexPass,
-    regexNumber
+    regexNumber,
+    regexStrings
 };

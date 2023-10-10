@@ -3,5 +3,5 @@ const updateQuiz = require('./updateQuiz');
 
 module.exports = {
     createQuiz,
-    updateQuiz
+    updateQuiz,
 };
