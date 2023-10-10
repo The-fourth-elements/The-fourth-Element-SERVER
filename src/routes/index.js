@@ -18,6 +18,7 @@ const inviteUser = require('../controllers/usersControllers/inviteUser');
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
+const createQuest = require('../controllers/questControllers/createQuest');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
@@ -55,6 +56,7 @@ router.put('/module/:moduleId/class/:classId', addClassToModule);
 
 // Questions
 router.post('/module/questions/:id', createQuiz);
+router.post('/createQuest', createQuest)
 
 // Clases
 router.get('/class', getAllClasses);
