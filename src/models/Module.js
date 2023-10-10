@@ -13,7 +13,7 @@ const ModuleMongoose = new mongoose.Schema({
     }],
     quiz:[{
         type: mongoose.Types.ObjectId,
-        ref: "Questions"
+        ref: "Quiz"
     }],
     startingDate:{
         type: Date,
