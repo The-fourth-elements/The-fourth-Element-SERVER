@@ -1,8 +1,15 @@
 const mongoose = require('mongoose');
+const { regexStrings } = require('./Users');
 
 const ModuleMongoose = new mongoose.Schema({
     name:{
-        type: String
+        type: String,
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     description:{
         type: String

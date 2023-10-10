@@ -5,7 +5,6 @@ async function createResponse(resp){
     try {
         if (!response) throw Error("Faltan datos");
         const newResponse = await Responses.create({verdadera, response});
-        console.log(newResponse);
         if (newResponse) return newResponse._id;
         else throw Error("No se pudo crear la respuesta")
     } catch (error) {

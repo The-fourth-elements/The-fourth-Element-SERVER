@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const regexSport = /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜ_ -]+$/;
+const { regexStrings } = require('./Users');
 
 const SportMongoose = new mongoose.Schema({
     name: {
@@ -8,7 +8,7 @@ const SportMongoose = new mongoose.Schema({
         required: [true, 'Please enter an city name'],
         validate: {
             validator: function(value){
-                return regexSport.test(value)
+                return regexStrings.test(value)
             },
             message: 'Solo se permiten numeros, letras'
         }

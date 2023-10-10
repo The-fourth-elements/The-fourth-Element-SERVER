@@ -25,7 +25,7 @@ async function updateClass(req, res, next) {
             newVideoId = newVideo._id;
 
             if (searchClass.video) {
-                const deleteVideo = await Video.findByIdAndDelete(
+                await Video.findByIdAndDelete(
                     searchClass.video._id
                 );
                 await cloudinary.uploader.destroy(searchClass?.video?.id, {

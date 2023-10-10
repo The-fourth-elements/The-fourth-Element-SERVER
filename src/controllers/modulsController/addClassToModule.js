@@ -6,7 +6,7 @@ async function addClassToModule(req, res, next){
     try {
         const { moduleId, classId } = req.params
         const existingModule= await Module.findById(moduleId)
-        if (!existingModule) throw Error('Presentación de power point no encontrada');
+        if (!existingModule) throw Error('Módulo no encontrado');
 
         const existingClass = await Class.findById(classId)
         if (!existingClass) throw Error('Clase no encontrada');

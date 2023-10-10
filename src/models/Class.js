@@ -1,16 +1,26 @@
 const mongoose = require('mongoose');
-const {isAscii} = require('validator');
+const { regexStrings } = require('./Users');
 
 const ClassMongoose = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Por favor ingrese un nombre.'],
-        validate: [isAscii, 'El nombre debe ser un ASCII valido.']
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     description: {
         type: String,
         required: [true, 'Por favor ingrese un nombre.'],
-        validate: [isAscii, 'La descripción debe ser un ASCII valido.']
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     video: {
         type: mongoose.Types.ObjectId,

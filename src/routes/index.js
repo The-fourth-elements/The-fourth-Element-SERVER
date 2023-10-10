@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/usersControllers/index');
-const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
+const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
@@ -18,7 +18,6 @@ const inviteUser = require('../controllers/usersControllers/inviteUser');
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
-const createQuest = require('../controllers/questControllers/createQuest');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
 // Usuarios
@@ -53,10 +52,16 @@ router.post('/moduls', createController);
 router.put('/moduls/:id', updateController);
 router.delete('/moduls/:id', deleteController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
+router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
+
+// Quiz
+router.post('/quiz', createQuiz);
 
 // Questions
-router.post('/module/questions/:id', createQuiz);
-router.post('/createQuest', createQuest)
+
+
+// Responses
+
 
 // Clases
 router.get('/class', getAllClasses);
