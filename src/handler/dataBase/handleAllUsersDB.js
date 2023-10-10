@@ -3,6 +3,7 @@ const { Users } = require("../../models/Users");
 async function handleAllUserDB() {
     try {
         const allUsers = await Users.find({})
+            .select('-password')
             .populate('city')
             .populate('nation')
             .populate('sport')
