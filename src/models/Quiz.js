@@ -5,10 +5,6 @@ const QuizMongoose = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "Quest"
     }],
-    responses:[{
-        type: mongoose.Types.ObjectId,
-        ref: "Responses"
-    }],
     results:{
         type: Number
     }
