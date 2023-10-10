@@ -8,7 +8,8 @@ async function createQuest(question){
         const newResponse = await Promise.all(responses.map(async resp => await createResponse(resp)));
         const newQuest = await Quest.create({
             question: quest,
-            responses: newResponse
+            responses: newResponse,
+            approved: false
         });
         if(!newQuest) throw Error("No se pudo crear la respuesta");
         return newQuest._id;
