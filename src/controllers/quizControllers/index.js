@@ -9,5 +9,5 @@ module.exports = {
     updateQuiz,
     deleteQuiz,
     getOneQuiz,
-    getAllQuiz
+    getAllQuiz,
 };
