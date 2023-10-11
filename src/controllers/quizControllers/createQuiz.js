@@ -2,13 +2,13 @@ const Quiz = require('../../models/Quiz');
 const createQuest = require('../../handler/dataBase/createQuest');
 
 async function createQuiz(req, res, next){
-    const { name, quest } = req.body;
+    const { name, quest, description } = req.body;
     try {
-        if(!name || !quest) throw Error('Faltan el nombre');
+        if(!name || !quest || !description) throw Error('Faltan el nombre');
         const newQuest = await Promise.all(quest.map(async question => await createQuest(question)));
-        console.log(newQuest);
         const newQuiz = await Quiz.create({ 
             name,
+            description,
             results: 0
         });
         if(!newQuiz) throw Error('No se pudo crear la Quiz');

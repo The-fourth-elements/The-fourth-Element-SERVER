@@ -12,6 +12,9 @@ const QuizMongoose = new mongoose.Schema({
             message: 'Solo se permiten numeros, letras'
         }
     },
+    description:{
+        type: String
+    },
     quest:[{
         type: mongoose.Types.ObjectId,
         ref: "Quest"
