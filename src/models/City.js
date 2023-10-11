@@ -1,12 +1,18 @@
 const mongoose = require('mongoose');
-const {isAscii} = require('validator');
+const { regexStrings } = require('./Users');
+
 
 const CityMongoose = new mongoose.Schema({
     name: {
         type: String,
         unique: true,
         required: [true, 'Please enter an city name'],
-        validate: [isAscii, 'Name must be a string']
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     }
 });
 

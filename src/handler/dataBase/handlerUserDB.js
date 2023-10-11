@@ -3,6 +3,7 @@ const { Users } = require("../../models/Users");
 async function handleUserDB(id) {
     try {
         const foundUser = await Users.findById(id)
+        .select('-password')
         .populate('city')
         .populate('nation')
         .populate('sport')

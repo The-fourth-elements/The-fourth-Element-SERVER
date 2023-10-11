@@ -1,11 +1,19 @@
 const mongoose = require('mongoose');
+const { regexStrings } = require('./Users');
+
 
 const ResponsesMongoose = new mongoose.Schema({
     verdadera:{
         type: Boolean
     },
     response:{
-        type: String
+        type: String,
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     }
 });
 
