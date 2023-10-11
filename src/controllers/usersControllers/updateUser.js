@@ -29,7 +29,7 @@ async function updateUser(req, res, next){
                 throw new Error('Usuario no encontrado');
             }
             if(user.profile_img?.public_id){
-                const deleteImage = await Users.findByIdAndDelete(user?.profile_img?.public_id);
+                await Users.findByIdAndDelete(user?.profile_img?.public_id);
                 await cloudinary.uploader.destroy(user?.profile_img?.public_id, { resource_type: "image" });
             }
             user.profile_img = {
