@@ -4,7 +4,7 @@ const router = express.Router();
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/usersControllers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule } = require('../controllers/modulsController');
-const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
+const { createClass, addVideoToClass, addQuizToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
@@ -68,6 +68,7 @@ router.delete('/deleteResponse/:id', delteResponse);
 router.get('/class', getAllClasses);
 router.get('/class/:id', getClassById);
 router.post('/class', createClass);
+router.put('/class/:classId/quiz/:quizId', addQuizToClass);
 router.put('/class/:classId/video/:videoId', addVideoToClass);
 router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass);
 router.delete('/class/:id', deleteClass);
