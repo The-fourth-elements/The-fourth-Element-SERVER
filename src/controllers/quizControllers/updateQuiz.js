@@ -7,10 +7,12 @@ async function updateQuiz(req, res, next){
         const { quiz } = req.body;
         if(!id) throw Error('Ingrese un ID');
         if(!quiz) throw Error('Faltan datos');
-            const searchQuiz = await Quiz.findByIdAndUpdate(id, {
-                name: quiz.name,
-                results: quiz.results
-            });
+        console.log(quiz.description);
+        const searchQuiz = await Quiz.findByIdAndUpdate(id, {
+            name: quiz.name,
+            description: quiz.description,
+            results: quiz.results
+        });
         if(!searchQuiz) throw Error (`No se encontro la quiz con ID: ${id}`);
         if(quiz?.quest) {
             const questUpdate = await Promise.all(quiz.quest.map(question => handlerUpdateQuest(question)));

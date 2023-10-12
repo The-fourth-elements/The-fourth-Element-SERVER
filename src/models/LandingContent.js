@@ -8,10 +8,6 @@ const LandingContentMongoose = new mongoose.Schema({
     image: {
         type: String,
         validate: [isURL, "Must be and URL"]
-    },
-    video: {
-        type: String,
-        validate: [isURL, "Must be and URL"]
     }
 })
 

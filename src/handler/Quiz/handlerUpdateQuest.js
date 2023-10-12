@@ -5,12 +5,12 @@ async function handlerUpdateQuest(quest){
     try {
         if(!quest) throw Error('Faltan datos');
         const updateQuest = await Quest.create({
-            question: quest.quest,
-            aproved: quest.aproved
+            question: quest.question,
+            approved: quest.approved
         });
         if(!updateQuest) throw Error('Ocurrio un error al actualizar la pregunta');
-        if(quest.responses){
-            const updateResponse = await Promise.all(quest.responses.map(response => handlerUpdateResponse(response)));
+        if(quest.answers){
+            const updateResponse = await Promise.all(quest.answers.map(response => handlerUpdateResponse(response)));
             updateQuest.responses = updateResponse;
             await updateQuest.save();
         };

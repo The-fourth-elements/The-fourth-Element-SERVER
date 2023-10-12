@@ -13,14 +13,11 @@ const { getAllCountries, getCountryById, getCountryByName, getCountersCountries 
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
 const { createQuiz, deleteQuiz, updateQuiz } = require('../controllers/quizControllers');
 const {startCourse, approveClass} = require('../controllers/progressControllers/index')
-const inviteUser = require('../controllers/usersControllers/inviteUser');
-
-// Payment Gategway Imports
-const createOrder = require('../controllers/paymentGateway/createOrder');
-const feedback = require('../controllers/paymentGateway/feedback');
 const { deleteQuest } = require('../controllers/questControllers');
 const { delteResponse } = require('../controllers/responseController');
-// const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
+const inviteUser = require('../controllers/usersControllers/inviteUser');
+const createOrder = require('../controllers/paymentGateway/createOrder');
+const feedback = require('../controllers/paymentGateway/feedback');
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);//x
