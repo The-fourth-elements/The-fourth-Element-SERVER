@@ -1,5 +1,4 @@
 const mercadopago = require('mercadopago');
-const Users = require('../../models/Users');
 
 async function reciveWebhook(req, res, next) {
     try {

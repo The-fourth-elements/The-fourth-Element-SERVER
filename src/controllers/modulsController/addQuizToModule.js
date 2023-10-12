@@ -1,7 +1,7 @@
 const Module = require("../../models/Module");
 const Quiz = require("../../models/Quiz");
 
-async function addClassToModule(req, res, next){
+async function addQuizToModule(req, res, next){
     const { moduleId, quizId } = req.params;
     try {
         const findModule= await Module.findById(moduleId);
@@ -16,4 +16,4 @@ async function addClassToModule(req, res, next){
     }
 }
 
-module.exports = addClassToModule;
+module.exports = addQuizToModule;
