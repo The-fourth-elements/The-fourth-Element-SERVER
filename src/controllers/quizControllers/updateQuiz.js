@@ -7,7 +7,6 @@ async function updateQuiz(req, res, next){
         const { quiz } = req.body;
         if(!id) throw Error('Ingrese un ID');
         if(!quiz) throw Error('Faltan datos');
-        console.log(quiz.description);
         const searchQuiz = await Quiz.findByIdAndUpdate(id, {
             name: quiz.name,
             description: quiz.description,
