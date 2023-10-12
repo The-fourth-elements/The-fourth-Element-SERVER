@@ -1,6 +1,5 @@
 const mercadopago = require("mercadopago");
 require('dotenv').config();
-const { URL } = process.env;
 
 async function createOrder(req, res, next) {
     try {
@@ -14,16 +13,14 @@ async function createOrder(req, res, next) {
                 }
             ],
             back_urls: {
-                success: `${URL}/paid-success`,
-                failure: `${URL}/paid-success`,
-                pending: `${URL}/paid-success`,
+                "success": `http://localhost:3001/feedback`,
+                "failure": `http://localhost:3001/feedback`,
+                "pending": `http://localhost:3001/feedback`
             },
-            auto_return: "approved",
-            notification_url: "https://a7a8-168-181-209-34.ngrok.io/webhook"
+            auto_return: "approved"
         });
-        console.log(response.init_point);
         if (response) {
-            res.status(200).json({ status: "Success", url: response.body.init_point, id: response.body.id });
+            res.status(201).json({ status: "Success", url: response.body.init_point, id: response.body.id });
         } else {
             throw Error("No se pudo crear un pedido.");
         }
