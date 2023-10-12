@@ -1,13 +1,13 @@
 const Quest = require("../../models/Quest");
 const createResponse = require("../../handler/dataBase/createResponses");
 
-async function createQuest(question){
-    const { quest, responses } = question;
+async function createQuest(quest){
+    const { question, answers } = quest;
     try {
-        if(!quest || !responses) throw Error("Faltan datos");
-        const newResponse = await Promise.all(responses.map(async resp => await createResponse(resp)));
+        if(!question || !answers) throw Error("Faltan datos");
+        const newResponse = await Promise.all(answers.map(async resp => await createResponse(resp)));
         const newQuest = await Quest.create({
-            question: quest,
+            question,
             responses: newResponse,
             approved: false
         });

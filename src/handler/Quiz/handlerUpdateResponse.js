@@ -4,7 +4,6 @@ async function handlerUpdateResponse(response){
     try {
         if(!response) throw Error('Faltan datos');
         const updateResponse = await Responses.create({
-            
             verdadera: response.verdadera,
             response: response.response
         });
