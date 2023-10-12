@@ -11,14 +11,14 @@ const { forgotPassword, resetPassword } = require('../controllers/authController
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
-const { createQuiz, deleteQuiz } = require('../controllers/quizControllers');
+const { createQuiz, deleteQuiz, updateQuiz } = require('../controllers/quizControllers');
 const {startCourse, approveClass} = require('../controllers/progressControllers/index')
 const inviteUser = require('../controllers/usersControllers/inviteUser');
 
 // Payment Gategway Imports
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
-const { createQuest, addResponse, deleteQuest } = require('../controllers/questControllers');
+const { deleteQuest } = require('../controllers/questControllers');
 const { delteResponse } = require('../controllers/responseController');
 // const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
 
@@ -59,9 +59,9 @@ router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
 // Quiz
 router.post('/quiz', createQuiz);
 router.post('/deleteQuiz/:id', deleteQuiz);
+router.put('/updateQuiz/:id', updateQuiz);
 
 // Questions
-router.post('/createQuest', createQuest);
 router.delete('/deleteQuest/:id', deleteQuest);
 
 // Responses
