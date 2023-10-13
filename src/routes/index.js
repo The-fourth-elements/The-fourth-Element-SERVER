@@ -11,7 +11,7 @@ const { forgotPassword, resetPassword } = require('../controllers/authController
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
-const { createQuiz, deleteQuiz, updateQuiz } = require('../controllers/quizControllers');
+const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('../controllers/quizControllers');
 const {startCourse, approveClass} = require('../controllers/progressControllers/index')
 const { deleteQuest } = require('../controllers/questControllers');
 const { delteResponse } = require('../controllers/responseController');
@@ -57,6 +57,8 @@ router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
 router.post('/quiz', createQuiz);
 router.post('/deleteQuiz/:id', deleteQuiz);
 router.put('/updateQuiz/:id', updateQuiz);
+router.get('/getOneQuiz/:id', getOneQuiz);
+router.get('/getAllQuiz', getAllQuiz);
 
 // Questions
 router.delete('/deleteQuest/:id', deleteQuest);
