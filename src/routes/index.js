@@ -11,8 +11,8 @@ const { forgotPassword, resetPassword } = require('../controllers/authController
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
-const { createQuiz, deleteQuiz, updateQuiz } = require('../controllers/quizControllers');
-const {startCourse, approveClass} = require('../controllers/progressControllers/index')
+const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz } = require('../controllers/quizControllers');
+const { startCourse, approveClass } = require('../controllers/progressControllers/index')
 const { deleteQuest } = require('../controllers/questControllers');
 const { delteResponse } = require('../controllers/responseController');
 const inviteUser = require('../controllers/usersControllers/inviteUser');
@@ -54,6 +54,7 @@ router.put('/module/:moduleId/class/:classId', addClassToModule);
 router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
 
 // Quiz
+router.get('/quiz/:id', getOneQuiz);
 router.post('/quiz', createQuiz);
 router.post('/deleteQuiz/:id', deleteQuiz);
 router.put('/updateQuiz/:id', updateQuiz);
