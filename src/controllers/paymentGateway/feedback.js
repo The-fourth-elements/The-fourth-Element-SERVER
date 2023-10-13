@@ -7,7 +7,8 @@ async function feedback(req, res) {
 	const { jsdklfsdjklfdsjfds } = req.cookies;
 	try {
 		if (req.query.status === "approved") {
-			await Users.findByIdAndUpdate(jsdklfsdjklfdsjfds, { role: 1 })
+			const updateUser = await Users.findByIdAndUpdate(jsdklfsdjklfdsjfds, { role: 1 }, { new: true });
+			console.log(updateUser);
 			res.redirect(`${URL}/paid-success`);
 		} else {
 			res.redirect(`${URL}/prices`);
