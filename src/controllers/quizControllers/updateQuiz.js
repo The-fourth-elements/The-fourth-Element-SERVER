@@ -11,7 +11,7 @@ async function updateQuiz(req, res, next){
             name: quiz.name,
             description: quiz.description,
             results: quiz.results
-        });
+        }, {new: true});
         if(!searchQuiz) throw Error (`No se encontro la quiz con ID: ${id}`);
         if(quiz?.quest) {
             const questUpdate = await Promise.all(quiz.quest.map(question => handlerUpdateQuest(question)));

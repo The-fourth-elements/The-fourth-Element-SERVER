@@ -23,7 +23,7 @@ async function updateUser(req, res, next){
         if(body.hasOwnProperty("password")){
             body.password = await encrypt(body.password);
         }
-        if(body.hasOwnProperty('imagen')){
+        if(body.hasOwnProperty('imagen')){  // Lendo código chie!
             const user = await Users.findById(id);
             if (!user) {
                 throw new Error('Usuario no encontrado');

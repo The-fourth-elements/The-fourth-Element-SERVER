@@ -4,16 +4,16 @@ const router = express.Router();
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/usersControllers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule } = require('../controllers/modulsController');
-const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
+const { createClass, addVideoToClass, addQuizToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
-const { createQuiz, deleteQuiz, updateQuiz } = require('../controllers/quizControllers');
+const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('../controllers/quizControllers');
 const { startCourse, approveClass } = require('../controllers/progressControllers/index')
-const { deleteQuest } = require('../controllers/questControllers');
+const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questControllers');
 const { delteResponse } = require('../controllers/responseController');
 const inviteUser = require('../controllers/usersControllers/inviteUser');
 const createOrder = require('../controllers/paymentGateway/createOrder');
@@ -63,20 +63,27 @@ router.put('/module/:moduleId/class/:classId', addClassToModule);
 router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
 
 // Quiz
+router.get('/quizzes', getAllQuiz);
+router.get('/quiz/:id', getOneQuiz);
 router.post('/quiz', createQuiz);
-router.post('/deleteQuiz/:id', deleteQuiz);
-router.put('/updateQuiz/:id', updateQuiz);
+router.put('/quiz/:id', updateQuiz);
+router.delete('/quiz/:id', deleteQuiz);
 
 // Questions
-router.delete('/deleteQuest/:id', deleteQuest);
+router.get('questions', getAllQuest);
+router.get('quest/:id', getOneQuest);
+router.delete('/quest/:id', deleteQuest);
 
 // Responses
-router.delete('/deleteResponse/:id', delteResponse);
+router.get('responses', getAllQuest);
+router.get('response/:id', getOneQuest);
+router.delete('/response/:id', delteResponse);
 
 // Clases
 router.get('/class', getAllClasses);
 router.get('/class/:id', getClassById);
 router.post('/class', createClass);
+router.put('/class/:classId/quiz/:quizId', addQuizToClass);
 router.put('/class/:classId/video/:videoId', addVideoToClass);
 router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass);
 router.delete('/class/:id', deleteClass);
@@ -114,8 +121,7 @@ router.get('/sport', getSportByName);
 
 // Pasarela de pagos
 router.post('/create-order', createOrder);
-router.get('/feedback', feedback);
-// router.post('/webhook', reciveWebhook);
+router.get('/feedback', feedback);;
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
