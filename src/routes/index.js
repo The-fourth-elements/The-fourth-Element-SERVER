@@ -114,6 +114,6 @@ router.post('/reset-password', resetPassword);
 
 //progreso
 router.post('/startCourse/:userId', startCourse)
-router.put('/approve/user/:userId/module/:moduleId/classe/:classId', approveClass)
+router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass)
 
 module.exports = router;
