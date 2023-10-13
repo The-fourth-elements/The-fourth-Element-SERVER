@@ -18,6 +18,7 @@ const { delteResponse } = require('../controllers/responseController');
 const inviteUser = require('../controllers/usersControllers/inviteUser');
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
+const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);//x
@@ -39,6 +40,14 @@ router.put('/content/:id', uppdateLandingContent);//x
 router.get('/content/:id', getOneLandingContent);//x
 router.post('/content', createLandingContent);//x
 router.get('/content', getAllLandingContent);//x
+
+// About de about us
+router.post('/about', createAbout)
+router.get('/about', getAllAbouts)
+router.delete('/about/:id', deleteAbout)
+router.put('/about/:id', putAbout)
+router.get('/about/:id', getAboutById)
+
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
