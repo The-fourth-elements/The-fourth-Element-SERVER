@@ -5,6 +5,7 @@ const { URL } = process.env;
 
 async function feedback(req, res) {
 	const { jsdklfsdjklfdsjfds } = req.cookies;
+	console.log(jsdklfsdjklfdsjfds);
 	try {
 		if (req.query.status === "approved") {
 			const updateUser = await Users.findByIdAndUpdate(jsdklfsdjklfdsjfds, { role: 1 }, { new: true });
