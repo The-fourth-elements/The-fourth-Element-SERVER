@@ -4,8 +4,12 @@ require('dotenv').config();
 const { URL } = process.env;
 
 async function feedback(req, res) {
-	const { jsdklfsdjklfdsjfds } = req.cookies;
-	console.log(jsdklfsdjklfdsjfds);
+	console.log(req.cookies);
+	console.log(req.headers);
+	console.log(req.header);
+	console.log(req.body);
+	console.log(req.params);
+	console.log(req.query);
 	try {
 		if (req.query.status === "approved") {
 			const updateUser = await Users.findByIdAndUpdate(jsdklfsdjklfdsjfds, { role: 1 }, { new: true });
