@@ -121,7 +121,7 @@ router.get('/sport', getSportByName);
 
 // Pasarela de pagos
 router.post('/create-order', createOrder);
-router.get('/feedback', feedback);;
+router.get('/feedback', feedback);
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);

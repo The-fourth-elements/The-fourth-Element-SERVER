@@ -1,7 +1,9 @@
-const mercadopago = require("mercadopago");
 require('dotenv').config();
+const mercadopago = require("mercadopago");
+const { BACK_URL } = process.env;
 
 async function createOrder(req, res, next) {
+    const { id } = req.query;
     try {
         const response = await mercadopago.preferences.create({
             items:[
@@ -13,9 +15,9 @@ async function createOrder(req, res, next) {
                 }
             ],
             back_urls: {
-                "success": `http://localhost:3001/feedback`,
-                "failure": `http://localhost:3001/feedback`,
-                "pending": `http://localhost:3001/feedback`
+                "success": `${BACK_URL}/feedback?id=${id}`,
+                "failure": `${BACK_URL}/feedback?id=${id}`,
+                "pending": `${BACK_URL}/feedback?id=${id}`,
             },
             auto_return: "approved"
         });
