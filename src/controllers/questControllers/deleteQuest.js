@@ -1,15 +1,15 @@
-const Quiz = require('../../models/Quiz');
+const Quest = require("../../models/Quest");
 
-async function deleteQuiz(req, res, next){
+async function deleteQuest (req, res, next){
     try {
         const { id } = req.params;
         if(!id) throw Error('Ingrese un ID');
-        const quizDelete = await Quiz.findByIdAndDelete(id);
-        if(!quizDelete) throw Error('Pregunta no encontrada');
+        const questDelete = await Quest.findByIdAndDelete(id);
+        if(!questDelete) throw Error('Pregunta no encontrada');
         return res.status(200).json({ message: "Pregunta borrada con exito" });
     } catch (error) {
         next({ message: error.message, statusCode: 400});
     }
 };
 
-module.exports = deleteQuiz;
+module.exports = deleteQuest;

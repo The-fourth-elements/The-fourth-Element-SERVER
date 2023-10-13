@@ -2,23 +2,23 @@ const express = require('express');
 const router = express.Router();
 
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/controllUsers/index');
-const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById } = require('../controllers/modulsController');
-const { createClass, addVideoToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/usersControllers/index');
+const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule } = require('../controllers/modulsController');
+const { createClass, addVideoToClass, addQuizToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
 const { forgotPassword, resetPassword } = require('../controllers/authController');
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
-const { createQuiz } = require('../controllers/quizControllers');
-const {startCourse, approveClass} = require('../controllers/progressControllers/index')
-const inviteUser = require('../controllers/controllUsers/inviteUser');
-
-// Payment Gategway Imports
+const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('../controllers/quizControllers');
+const { startCourse, approveClass } = require('../controllers/progressControllers/index')
+const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questControllers');
+const { delteResponse } = require('../controllers/responseController');
+const inviteUser = require('../controllers/usersControllers/inviteUser');
 const createOrder = require('../controllers/paymentGateway/createOrder');
 const feedback = require('../controllers/paymentGateway/feedback');
-// const reciveWebhook = require('../controllers/paymentGateway/reciveWebhook');
+const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);//x
@@ -41,6 +41,14 @@ router.get('/content/:id', getOneLandingContent);//x
 router.post('/content', createLandingContent);//x
 router.get('/content', getAllLandingContent);//x
 
+// About de about us
+router.post('/about', createAbout)
+router.get('/about', getAllAbouts)
+router.delete('/about/:id', deleteAbout)
+router.put('/about/:id', putAbout)
+router.get('/about/:id', getAboutById)
+
+
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
 router.post('/login', loginUser);
@@ -52,14 +60,30 @@ router.post('/moduls', createController);
 router.put('/moduls/:id', updateController);
 router.delete('/moduls/:id', deleteController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
+router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
+
+// Quiz
+router.get('/quizzes', getAllQuiz);
+router.get('/quiz/:id', getOneQuiz);
+router.post('/quiz', createQuiz);
+router.put('/quiz/:id', updateQuiz);
+router.delete('/quiz/:id', deleteQuiz);
 
 // Questions
-router.post('/module/questions/:id', createQuiz);
+router.get('questions', getAllQuest);
+router.get('quest/:id', getOneQuest);
+router.delete('/quest/:id', deleteQuest);
+
+// Responses
+router.get('responses', getAllQuest);
+router.get('response/:id', getOneQuest);
+router.delete('/response/:id', delteResponse);
 
 // Clases
 router.get('/class', getAllClasses);
 router.get('/class/:id', getClassById);
 router.post('/class', createClass);
+router.put('/class/:classId/quiz/:quizId', addQuizToClass);
 router.put('/class/:classId/video/:videoId', addVideoToClass);
 router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass);
 router.delete('/class/:id', deleteClass);
@@ -97,8 +121,7 @@ router.get('/sport', getSportByName);
 
 // Pasarela de pagos
 router.post('/create-order', createOrder);
-router.post('/feedback', feedback);
-// router.post('/webhook', reciveWebhook);
+router.get('/feedback', feedback);;
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);

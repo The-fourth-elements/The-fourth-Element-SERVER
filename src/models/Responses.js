@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const { regexStrings } = require('./Users');
 
 
-const CityMongoose = new mongoose.Schema({
-    name: {
+const ResponsesMongoose = new mongoose.Schema({
+    verdadera:{
+        type: Boolean
+    },
+    response:{
         type: String,
-        unique: true,
-        required: [true, 'Please enter an city name'],
         validate: {
             validator: function(value){
                 return regexStrings.test(value)
@@ -16,5 +17,5 @@ const CityMongoose = new mongoose.Schema({
     }
 });
 
-const City = mongoose.model("City", CityMongoose);
-module.exports = City;
+const Responses = mongoose.model("Responses", ResponsesMongoose);
+module.exports = Responses;
