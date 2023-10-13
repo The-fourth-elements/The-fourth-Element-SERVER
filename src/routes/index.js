@@ -12,8 +12,8 @@ const { getCityById, getAllCities, getCityByName } = require('../controllers/cit
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
 const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('../controllers/quizControllers');
-const {startCourse, approveClass} = require('../controllers/progressControllers/index')
-const { deleteQuest } = require('../controllers/questControllers');
+const { startCourse, approveClass } = require('../controllers/progressControllers/index')
+const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questControllers');
 const { delteResponse } = require('../controllers/responseController');
 const inviteUser = require('../controllers/usersControllers/inviteUser');
 const createOrder = require('../controllers/paymentGateway/createOrder');
@@ -54,17 +54,21 @@ router.put('/module/:moduleId/class/:classId', addClassToModule);
 router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
 
 // Quiz
+router.get('/quizzes', getAllQuiz);
+router.get('/quiz/:id', getOneQuiz);
 router.post('/quiz', createQuiz);
-router.post('/deleteQuiz/:id', deleteQuiz);
-router.put('/updateQuiz/:id', updateQuiz);
-router.get('/getOneQuiz/:id', getOneQuiz);
-router.get('/getAllQuiz', getAllQuiz);
+router.put('/quiz/:id', updateQuiz);
+router.delete('/quiz/:id', deleteQuiz);
 
 // Questions
-router.delete('/deleteQuest/:id', deleteQuest);
+router.get('questions', getAllQuest);
+router.get('quest/:id', getOneQuest);
+router.delete('/quest/:id', deleteQuest);
 
 // Responses
-router.delete('/deleteResponse/:id', delteResponse);
+router.get('responses', getAllQuest);
+router.get('response/:id', getOneQuest);
+router.delete('/response/:id', delteResponse);
 
 // Clases
 router.get('/class', getAllClasses);

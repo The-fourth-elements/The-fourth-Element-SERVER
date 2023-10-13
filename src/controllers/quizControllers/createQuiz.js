@@ -4,7 +4,7 @@ const createQuest = require('../../handler/dataBase/createQuest');
 async function createQuiz(req, res, next){
     const { name, quest, description } = req.body;
     try {
-        if(!name || !quest || !description) throw Error('Faltan el nombre');
+        if(!name || !quest || !description) throw Error('Faltan datos');
         const newQuest = await Promise.all(quest.map(async question => await createQuest(question)));
         const newQuiz = await Quiz.create({ 
             name,

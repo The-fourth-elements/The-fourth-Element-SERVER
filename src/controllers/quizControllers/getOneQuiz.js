@@ -7,8 +7,8 @@ async function getOneQuiz (req, res, next){
         const quiz = await Quiz.findById(id).populate({
             path: 'quest',
             populate: {
-                path: 'responses',
-            },
+                path: 'responses'
+            }
         });
         if(!quiz) throw Error(`No se encontro la quiz con ID: ${id}`);
         return res.status(200).json(quiz);
