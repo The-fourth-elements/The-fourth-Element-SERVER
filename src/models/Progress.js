@@ -5,10 +5,9 @@ const ProgressMongoose = new mongoose.Schema({
     certificated:{
         type: Boolean
     },
-    modules:[{
-        type: mongoose.Types.ObjectId,
-        ref: "Module"
-    }],
+    modules:{
+        type: Array
+    },
     assistance:{
         type: Number
     }
