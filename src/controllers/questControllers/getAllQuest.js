@@ -2,7 +2,7 @@ const Quest = require("../../models/Quest");
 
 async function getAllQuest(req, res, next){
     try {
-        const quest = await Quest.find({});
+        const quest = await Quest.find({}).populate('responses');
         if(!quest) throw Error('No se encontraron quiz');
         return res.status(200).json(quest);
     } catch (error) {
