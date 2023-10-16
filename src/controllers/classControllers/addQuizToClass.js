@@ -8,7 +8,7 @@ async function addQuizToClass(req, res, next){
         if(!searchClass) throw Error('Clase no encontrada');
         const searchQuiz = await Quiz.findById(quizId);
         if(!searchQuiz) throw Error('Quiz no encontrado');
-        searchClass.quiz = searchQuiz;
+        searchClass.quiz.push(searchQuiz);
         await searchClass.save();
         return res.status(200).json({ message: 'Quiz agregado a la clase con éxito' });
     } catch (error) {

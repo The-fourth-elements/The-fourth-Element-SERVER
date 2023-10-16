@@ -30,10 +30,10 @@ const ClassMongoose = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "PowerPoint"
     },
-    quiz:{
+    quiz:[{
         type: mongoose.Types.ObjectId,
         ref: "Quiz"
-    }
+    }]
 });
 
 const Class = mongoose.model("Class", ClassMongoose);
