@@ -12,7 +12,7 @@ const { getCityById, getAllCities, getCityByName } = require('../controllers/cit
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
 const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
 const { createQuiz, deleteQuiz, updateQuiz } = require('../controllers/quizControllers');
-const {startCourse, approveClass} = require('../controllers/progressControllers/index')
+const {startCourse, approveClass, approveModule} = require('../controllers/progressControllers/index')
 const { deleteQuest } = require('../controllers/questControllers');
 const { delteResponse } = require('../controllers/responseController');
 const inviteUser = require('../controllers/usersControllers/inviteUser');
@@ -115,5 +115,6 @@ router.post('/reset-password', resetPassword);
 //progreso
 router.post('/startCourse/:userId', startCourse)
 router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass)
+router.put('/approveModule/user/:userId/module/:moduleId', approveModule)
 
 module.exports = router;
