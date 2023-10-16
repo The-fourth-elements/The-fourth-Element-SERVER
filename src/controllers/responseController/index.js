@@ -1,9 +1,9 @@
-const delteResponse = require('./deleteResponse');
+const deleteResponse = require('./deleteResponse');
 const getAllResponses = require('./getAllResponses');
 const getOneResponse = require('./getOneResponse');
 
 module.exports = {
-    delteResponse,
+    deleteResponse,
     getAllResponses,
-    getOneResponse,
+    getOneResponse
 };
