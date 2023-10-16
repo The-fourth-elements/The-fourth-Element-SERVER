@@ -48,7 +48,6 @@ router.delete('/about/:id', deleteAbout)
 router.put('/about/:id', putAbout)
 router.get('/about/:id', getAboutById)
 
-
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
 router.post('/login', loginUser);

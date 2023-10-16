@@ -17,7 +17,7 @@ async function createOrder(req, res, next) {
             back_urls: {
                 "success": `${BACK_URL}/feedback?id=${id}`,
                 "failure": `${BACK_URL}/feedback?id=${id}`,
-                "pending": `${BACK_URL}/feedback?id=${id}`,
+                "pending": `${BACK_URL}/feedback?id=${id}`
             },
             auto_return: "approved"
         });
