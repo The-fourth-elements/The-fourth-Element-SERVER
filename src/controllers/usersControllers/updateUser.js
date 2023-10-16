@@ -27,17 +27,16 @@ async function updateUser(req, res, next){
             const user = await Users.findById(id);
             if (!user) {
                 throw new Error('Usuario no encontrado');
-            }
-            if(user.profile_img?.public_id){
-                await Users.findByIdAndDelete(user?.profile_img?.public_id);
-                await cloudinary.uploader.destroy(user?.profile_img?.public_id, { resource_type: "image" });
-            }
-            user.profile_img = {
-                public_id: body.imagen?.public_id,
-                secure_url: body.imagen?.secure_url
             };
-            await user.save();
-        }
+            if(user.profile_img?.public_id){
+                await cloudinary.uploader.destroy(user?.profile_img?.public_id, { resource_type: "image" });
+                user.profile_img = {
+                    public_id: body.imagen?.public_id,
+                    secure_url: body.imagen?.secure_url
+                };
+                await user.save();
+            };
+        };
         const updateUser = await Users.findByIdAndUpdate(id, body, {new: true});
         if (updateUser) res.status(200).json(updateUser);
         else throw Error('Ocurrió un error al actualizar.');
