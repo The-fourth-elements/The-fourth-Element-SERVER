@@ -9,6 +9,7 @@ async function createProgress(existingProgress) {
             const progress = modules.map((module, moduleIndex) => ({
                 module: module.name,
                 moduleId: module._id,
+                isApproved: false,
                 classes: module.classModule.map((c, classIndex) => {
                     let newDate = new Date(currentDate);
 
