@@ -4,6 +4,7 @@ const { regexStrings } = require('./Users');
 const ModuleMongoose = new mongoose.Schema({
     name:{
         type: String,
+        unique: true
         validate: {
             validator: function(value){
                 return regexStrings.test(value)
