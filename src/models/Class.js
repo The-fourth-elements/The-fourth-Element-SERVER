@@ -29,6 +29,10 @@ const ClassMongoose = new mongoose.Schema({
     powerPoint:{
         type: mongoose.Types.ObjectId,
         ref: "PowerPoint"
+    },
+    quiz:{
+        type: mongoose.Types.ObjectId,
+        ref: "Quiz"
     }
 });
 

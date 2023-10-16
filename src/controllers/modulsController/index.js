@@ -6,8 +6,6 @@ const getAllModules = require('./getAllModules');
 const getModuleById = require('./getModuleById');
 const addQuizToModule = require('./addQuizToModule');
 
-
-
 module.exports = {
     updateController,
     deleteController,
