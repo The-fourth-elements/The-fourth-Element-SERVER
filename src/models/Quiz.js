@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
+const { regexStrings } = require('./Users');
 
 const QuizMongoose = new mongoose.Schema({
     name:{
         type: String,
-        required : true
+        required : true,
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     description:{
         type: String

@@ -3,7 +3,13 @@ const { regexStrings } = require('./Users');
 
 const QuestMongoose = new mongoose.Schema({
     question:{
-        type: String
+        type: String,
+        validate: {
+            validator: function(value){
+                return regexStrings.test(value)
+            },
+            message: 'Solo se permiten numeros, letras'
+        }
     },
     responses:[{
         type: mongoose.Types.ObjectId,
