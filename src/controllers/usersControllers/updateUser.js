@@ -5,31 +5,30 @@ const { Users } = require("../../models/Users");
 const { encrypt } = require("../../services/crypt");
 const cloudinary = require('cloudinary');
 
-async function updateUser(req, res, next){
+async function updateUser(req, res, next) {
     try {
         const { id } = req.body;
-        if(!id) throw Error('Ingrese un id.');
+        if (!id) throw Error('Ingrese un id.');
         const { body } = req;
-        if(!body) throw Error('Faltan datos.');
-        if(body.hasOwnProperty("sport")){
+        if (!body) throw Error('Faltan datos.');
+        if (body.hasOwnProperty("sport")) {
             body.sport = await findOrCreateSport(body.sport);
         }
         if (body.hasOwnProperty("nation")) {
             body.nation = await findOrCreateNation(body.nation);
         }
-        if(body.hasOwnProperty("city")){
+        if (body.hasOwnProperty("city")) {
             body.city = await findOrCreateCity(body.city);
         }
-        if(body.hasOwnProperty("password")){
+        if (body.hasOwnProperty("password")) {
             body.password = await encrypt(body.password);
         }
-        if(body.hasOwnProperty('imagen')){  // Lendo código chie!
+        if (body.hasOwnProperty('imagen')) {  // Lendo código chie!
             const user = await Users.findById(id);
             if (!user) {
                 throw new Error('Usuario no encontrado');
             }
-            if(user.profile_img?.public_id){
-                await Users.findByIdAndDelete(user?.profile_img?.public_id);
+            if (user.profile_img?.public_id) {
                 await cloudinary.uploader.destroy(user?.profile_img?.public_id, { resource_type: "image" });
             }
             user.profile_img = {
@@ -38,11 +37,12 @@ async function updateUser(req, res, next){
             };
             await user.save();
         }
-        const updateUser = await Users.findByIdAndUpdate(id, body, {new: true});
+        const updateUser = await Users.findByIdAndUpdate(id, body, { new: true });
+        console.log(updateUser);
         if (updateUser) res.status(200).json(updateUser);
         else throw Error('Ocurrió un error al actualizar.');
     } catch (error) {
-        next({message: error.message, statusCode: 404});
+        next({ message: error.message, statusCode: 404 });
     }
 };
 

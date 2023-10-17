@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
-const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge } = require('../controllers/usersControllers/index');
+const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge, inviteUser } = require('../controllers/usersControllers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addQuizToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
@@ -14,32 +14,30 @@ const { getAllSports, getSportById, getSportByName } = require('../controllers/s
 const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('../controllers/quizControllers');
 const { startCourse, approveClass, approveModule } = require('../controllers/progressControllers/index')
 const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questControllers');
-const { delteResponse } = require('../controllers/responseController');
-const inviteUser = require('../controllers/usersControllers/inviteUser');
-const createOrder = require('../controllers/paymentGateway/createOrder');
-const feedback = require('../controllers/paymentGateway/feedback');
+const { getAllResponses, getOneResponse, deleteResponse } = require('../controllers/responseController');
+const { createOrder, feedback } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
 
 // Usuarios
-router.get('/users/deleted', getAllUsersDeleted);//x
-router.put('/user/reset', getUserReset);//x
-router.get('/users', getAllUsers);//x
-router.get('/user', getUserById);//x
-router.get('/user/:email', getUserByEmail);//x
-router.put('/user', updateUser);//x
-router.delete('/user/:id', deleteUser);//x
-router.get('/users/ages', getAllUsersAge);//x
-router.get('/users/average', getUsersAge);//x
+router.get('/users/deleted', getAllUsersDeleted);
+router.put('/user/reset', getUserReset);
+router.get('/users', getAllUsers);
+router.get('/user', getUserById);
+router.get('/user/:email', getUserByEmail);
+router.put('/user', updateUser);
+router.delete('/user/:id', deleteUser);
+router.get('/users/ages', getAllUsersAge);
+router.get('/users/average', getUsersAge);
 
 // Invitado
 router.post('/invite', inviteUser)
 
 // Testimonios de Landing Content 
-router.delete('/content/:id', deleteLandingContent);//x
-router.put('/content/:id', uppdateLandingContent);//x
-router.get('/content/:id', getOneLandingContent);//x
-router.post('/content', createLandingContent);//x
-router.get('/content', getAllLandingContent);//x
+router.delete('/content/:id', deleteLandingContent);
+router.put('/content/:id', uppdateLandingContent);
+router.get('/content/:id', getOneLandingContent);
+router.post('/content', createLandingContent);
+router.get('/content', getAllLandingContent);
 
 // About de about us
 router.post('/about', createAbout)
@@ -74,9 +72,9 @@ router.get('quest/:id', getOneQuest);
 router.delete('/quest/:id', deleteQuest);
 
 // Responses
-router.get('responses', getAllQuest);
-router.get('response/:id', getOneQuest);
-router.delete('/response/:id', delteResponse);
+router.get('responses', getAllResponses);
+router.get('response/:id', getOneResponse);
+router.delete('/response/:id', deleteResponse);
 
 // Clases
 router.get('/class', getAllClasses);
