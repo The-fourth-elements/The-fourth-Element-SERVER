@@ -9,6 +9,7 @@ const loginUser = require('./loginUser');
 const getUserByEmail = require('./getUserByEmail');
 const getAllUsersAge = require('./getAllUsersAge');
 const getUsersAge = require('./getUsersAge');
+const inviteUser = require('./inviteUser')
 
 module.exports = {
     deleteUser,
@@ -21,5 +22,6 @@ module.exports = {
     loginUser,
     getUserByEmail,
     getAllUsersAge,
-    getUsersAge
+    getUsersAge,
+    inviteUser
 }
