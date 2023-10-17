@@ -3,7 +3,7 @@ const mongooseDelete = require('mongoose-delete');
 const { isEmail, isURL } = require('validator');
 const { compare } = require('../services/crypt');
 const regexPass = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
-const regexStrings = /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜ_ -¿?¡!]+$/;
+const regexStrings = /^[A-Za-z0-9áéíóúÁÉÍÓÚüÜñÑ.,¿?¡!]+$/u;
 const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
