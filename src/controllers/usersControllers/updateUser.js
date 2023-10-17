@@ -24,21 +24,23 @@ async function updateUser(req, res, next) {
             body.password = await encrypt(body.password);
         }
         if (body.hasOwnProperty('imagen')) {  // Lendo código chie!
+            console.log(user)
             const user = await Users.findById(id);
             if (!user) {
                 throw new Error('Usuario no encontrado');
             }
             if (user.profile_img?.public_id) {
+                console.log("te entre chuchu")
                 await cloudinary.uploader.destroy(user?.profile_img?.public_id, { resource_type: "image" });
+                console.log("entro y salgo chuchu")
+                user.profile_img = {
+                    public_id: body.imagen?.public_id,
+                    secure_url: body.imagen?.secure_url
+                };
+                await user.save();
             }
-            user.profile_img = {
-                public_id: body.imagen?.public_id,
-                secure_url: body.imagen?.secure_url
-            };
-            await user.save();
         }
         const updateUser = await Users.findByIdAndUpdate(id, body, { new: true });
-        console.log(updateUser);
         if (updateUser) res.status(200).json(updateUser);
         else throw Error('Ocurrió un error al actualizar.');
     } catch (error) {
