@@ -2,7 +2,7 @@ require('dotenv').config();
 const mercadopago = require("mercadopago");
 const { BACK_URL } = process.env;
 
-async function createOrder(req, res, next) {
+async function createOrderMP(req, res, next) {
     const { id } = req.query;
     try {
         const response = await mercadopago.preferences.create({
@@ -31,4 +31,4 @@ async function createOrder(req, res, next) {
     }
 };
 
-module.exports = createOrder;
+module.exports = createOrderMP;

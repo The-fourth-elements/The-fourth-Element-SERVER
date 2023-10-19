@@ -3,7 +3,7 @@ const { Users } = require('../../models/Users');
 require('dotenv').config();
 const { URL } = process.env;
 
-async function feedback(req, res) {
+async function feedbackMP(req, res) {
 	const { id } = req.query;
 	try {
 		if (req.query.status === "approved") {
@@ -17,4 +17,4 @@ async function feedback(req, res) {
 	}
 }
 
-module.exports = feedback;
+module.exports = feedbackMP;
