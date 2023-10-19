@@ -7,7 +7,6 @@ const environment = new paypal.core.SandboxEnvironment(ID_CLIENT, CLIENT_SECRET)
 const client = new paypal.core.PayPalHttpClient(environment);
 
 const createOrderPP = async (req, res, next) => {
-    const { userID } = req.body;
     try {
         const order = new paypal.orders.OrdersCreateRequest();
         order.requestBody({
