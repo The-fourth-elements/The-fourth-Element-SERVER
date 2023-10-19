@@ -21,7 +21,7 @@ const createOrderPP = async (req, res, next) => {
                 }
             ]
         })
-        responseOrder = await client.execute(order);
+        const responseOrder = await client.execute(order);
         return res.status(200).json({ id: responseOrder.result.id });
     } catch (error) {
         next({ message: error.message, statusCode: 404 });
