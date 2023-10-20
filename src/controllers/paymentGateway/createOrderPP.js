@@ -7,7 +7,6 @@ const environment = new paypal.core.SandboxEnvironment(ID_CLIENT, CLIENT_SECRET)
 const client = new paypal.core.PayPalHttpClient(environment);
 
 const createOrderPP = async (req, res, next) => {
-    const { userID } = req.body;
     try {
         const order = new paypal.orders.OrdersCreateRequest();
         order.requestBody({
@@ -22,7 +21,7 @@ const createOrderPP = async (req, res, next) => {
                 }
             ]
         })
-        responseOrder = await client.execute(order);
+        const responseOrder = await client.execute(order);
         return res.status(200).json({ id: responseOrder.result.id });
     } catch (error) {
         next({ message: error.message, statusCode: 404 });
