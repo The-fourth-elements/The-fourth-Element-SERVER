@@ -7,76 +7,76 @@ const regexStrings = /^[A-Za-z0-9áéíóúÁÉÍÓÚüÜñÑ.,¿?¡! ]+$/u;
 const regexNumber = /^\d+$/;
 
 const UserSchemas = new mongoose.Schema({
-    username:{
+    username: {
         type: String,
         require: true,
         validate: {
-            validator: function(value){
+            validator: function (value) {
                 return regexStrings.test(value)
             },
             message: 'Solo se permiten numeros, letras'
         }
     },
-    name:{
+    name: {
         type: String,
         validate: {
-            validator: function(value){
+            validator: function (value) {
                 return regexSport.test(value)
             },
             message: 'Solo se permiten numeros, letras'
         }
     },
-    lastname:{
+    lastname: {
         type: String,
         validate: {
-            validator: function(value){
+            validator: function (value) {
                 return regexSport.test(value)
             },
             message: 'Solo se permiten numeros, letras'
         }
     },
-    adress:{
+    adress: {
         type: String,
         validate: {
-            validator: function(value){
+            validator: function (value) {
                 return regexStrings.test(value)
             },
             message: 'Solo se permiten numeros, letras'
         }
     },
-    city:{
+    city: {
         type: mongoose.Types.ObjectId,
         ref: "City",
     },
-    nation:{
+    nation: {
         type: mongoose.Types.ObjectId,
         ref: "Nation",
     },
-    sport:{
+    sport: {
         type: mongoose.Types.ObjectId,
         ref: "Sport",
     },
-    age:{
+    age: {
         type: Number
     },
-    expYearsSports:{
+    expYearsSports: {
         type: Number
     },
-    role:{
+    role: {
         type: Number,
         require: true,
         validate: {
-            validator: function(value){
+            validator: function (value) {
                 return regexNumber.test(value)
             },
             message: 'Role must be a number'
         }
     },
-    progress:{
+    progress: {
         type: mongoose.Types.ObjectId,
         ref: "Progress"
     },
-    profile_img:{
+    profile_img: {
         public_id: {
             type: String
         },
@@ -85,44 +85,45 @@ const UserSchemas = new mongoose.Schema({
             validate: [isURL, 'Please enter an URL valid']
         }
     },
-    email:{
+    email: {
         type: String,
         unique: true,
         required: [true, 'Please enter an email'],
         lowercase: true,
         validate: [isEmail, 'Please enter a valid email']
     },
-    password:{
+    password: {
         type: String,
         required: [true, 'Please enter an password'],
         validate: {
-            validator: function(value){
+            validator: function (value) {
                 return regexPass.test(value);
             },
             message: 'Please enter a minimun six characters, one number and one capital letter'
         }
-    }
+    },
+    stripe_payment: { type: String }
 },
-{
-    timestamps: true
-});
+    {
+        timestamps: true
+    });
 
-UserSchemas.statics.login = async function(email, password){
+UserSchemas.statics.login = async function (email, password) {
     try {
-        const user = await this.findOne({email});
-        
-        if(user){
+        const user = await this.findOne({ email });
+
+        if (user) {
             const auth = await compare(password, user.password);
-            if(auth){
+            if (auth) {
                 return user;
             } else throw Error('Incorrect Password');
         } else throw Error('Invalid Email');
     } catch (error) {
-        return {error: error.message};
+        return { error: error.message };
     }
 }
 
-UserSchemas.plugin(mongooseDelete, { overrideMethods: 'all'});
+UserSchemas.plugin(mongooseDelete, { overrideMethods: 'all' });
 const Users = mongoose.model("Users", UserSchemas);
 
 module.exports = {

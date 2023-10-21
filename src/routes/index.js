@@ -15,7 +15,7 @@ const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('
 const { startCourse, approveClass, approveModule } = require('../controllers/progressControllers/index')
 const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questControllers');
 const { getAllResponses, getOneResponse, deleteResponse } = require('../controllers/responseController');
-const { createOrderMP, feedbackMP, createOrderPP, feedbackPP } = require('../controllers/paymentGateway');
+const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, getPricesSP, feedbackSP, cancelOrderStripe } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
 
 // Usuarios
@@ -118,11 +118,15 @@ router.get('/sport/:id', getSportById);
 router.get('/sport', getSportByName);
 
 // Pasarela de pagos
-    // Mercadopago
+// Mercadopago
 router.post('/create-order-mp', createOrderMP);
 router.get('/feedback', feedbackMP);
 router.post('/create-order-pp', createOrderPP)
 router.put('/feedback-pp', feedbackPP);
+router.get('/get-prices-sp', getPricesSP);
+router.post('/create-order-sp', createOrderSP);
+router.get('/feedback-sp', feedbackSP);
+router.get('/stripe-cancel', cancelOrderStripe)
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
@@ -132,5 +136,6 @@ router.post('/reset-password', resetPassword);
 router.post('/startCourse/:userId', startCourse)
 router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass)
 router.put('/approveModule/user/:userId/module/:moduleId', approveModule)
+
 
 module.exports = router;
