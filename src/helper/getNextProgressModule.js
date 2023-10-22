@@ -15,7 +15,7 @@ function getNextProgressModule(modules, index) {
         }
         return nextModule
     } catch (error) {
-        console.log(error)
+        return error
     }
 }
 
