@@ -17,6 +17,9 @@ const UserSchemas = new mongoose.Schema({
             message: 'Solo se permiten numeros, letras'
         }
     },
+    providerId: {
+        type: String
+    },
     name: {
         type: String,
         validate: {

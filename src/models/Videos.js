@@ -8,7 +8,7 @@ const VideoMongoose = new mongoose.Schema({
     url: {
         type: String,
         validate: [isURL, 'Profile image must be a valid URL']
-    },
+    }
 });
 
 const Video = mongoose.model("Video", VideoMongoose);

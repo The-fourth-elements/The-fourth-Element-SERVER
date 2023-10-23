@@ -18,6 +18,9 @@ const { getAllResponses, getOneResponse, deleteResponse } = require('../controll
 const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, getPricesSP, feedbackSP, cancelOrderStripe } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
 const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises } = require('../controllers/exercisesControllers');
+const createMeditation = require('../controllers/meditationControllers/createMeditation');
+const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation } = require('../controllers/meditationControllers');
+const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);
@@ -32,7 +35,7 @@ router.get('/users/average', getUsersAge);
 router.get('/orderUsersByAZ', orderUsersByAZ);
 
 // Invitado
-router.post('/invite', inviteUser)
+router.post('/invite', inviteUser);
 
 // Testimonios de Landing Content 
 router.delete('/content/:id', deleteLandingContent);
@@ -42,11 +45,11 @@ router.post('/content', createLandingContent);
 router.get('/content', getAllLandingContent);
 
 // About de about us
-router.post('/about', createAbout)
-router.get('/about', getAllAbouts)
-router.delete('/about/:id', deleteAbout)
-router.put('/about/:id', putAbout)
-router.get('/about/:id', getAboutById)
+router.post('/about', createAbout);
+router.get('/about', getAllAbouts);
+router.delete('/about/:id', deleteAbout);
+router.put('/about/:id', putAbout);
+router.get('/about/:id', getAboutById);
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
@@ -111,39 +114,55 @@ router.get('/city', getCityByName);
 router.get('/countries', getAllCountries);
 router.get('/country/:id', getCountryById);
 router.get('/country', getCountryByName);
-router.get('/countriesC', getCountersCountries)
+router.get('/countriesC', getCountersCountries);
 
 // Deportes
 router.get('/sports', getAllSports);
 router.get('/sport/:id', getSportById);
 router.get('/sport', getSportByName);
 
-// Pasarela de pagos
+// Pasarela de pagos //
+
 // Mercadopago
 router.post('/create-order-mp', createOrderMP);
 router.get('/feedback', feedbackMP);
+
+// PayPal 
 router.post('/create-order-pp', createOrderPP)
 router.put('/feedback-pp', feedbackPP);
+
+// Stripe
 router.get('/get-prices-sp', getPricesSP);
-router.post('/create-order-sp', createOrderSP);
 router.get('/feedback-sp', feedbackSP);
+router.post('/create-order-sp', createOrderSP);
 router.get('/stripe-cancel', cancelOrderStripe)
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
 router.post('/reset-password', resetPassword);
 
-//progreso
-router.post('/startCourse/:userId', startCourse)
-router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass)
-router.put('/approveModule/user/:userId/module/:moduleId', approveModule)
+// Progreso
+router.post('/startCourse/:userId', startCourse);
+router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass);
+router.put('/approveModule/user/:userId/module/:moduleId', approveModule);
 
-//ejercicios
+// Ejercicios
 router.delete('/ejercicio/:id', deleteExercises);
 router.put('/ejercicio/:id', updateExercises);
 router.get('/ejercicio/:id', getOneExercises);
 router.get('/ejercicios', getAllExercises);
 router.post('/ejercicio', createExercises);
 
+// Meditations
+router.get('/meditations', getAllMeditations);
+router.get('/meditation/:id', getMeditationById);
+router.post('/meditation', createMeditation);
+router.put('/meditation/:id', updateMeditation)
+router.delete('/meditation/:id', deleteMeditation);
+
+// Tracks
+router.get('/tracks', getAllTracks);
+router.get('/track/:id', getTrackById);
+router.delete('/track/:id', deleteTrack);
 
 module.exports = router;

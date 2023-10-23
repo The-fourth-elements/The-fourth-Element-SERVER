@@ -8,8 +8,8 @@ const MeditationSchema = new mongoose.Schema({
         type: String
     },
     tracks:[{
-        type: String,
-        ref: 'Tracks'
+        type: mongoose.Types.ObjectId,
+        ref: "Tracks"
     }]
 });
 
