@@ -17,6 +17,7 @@ const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questC
 const { getAllResponses, getOneResponse, deleteResponse } = require('../controllers/responseController');
 const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, getPricesSP, feedbackSP, cancelOrderStripe } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
+const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises } = require('../controllers/exercisesControllers');
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);
@@ -136,6 +137,13 @@ router.post('/reset-password', resetPassword);
 router.post('/startCourse/:userId', startCourse)
 router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass)
 router.put('/approveModule/user/:userId/module/:moduleId', approveModule)
+
+//ejercicios
+router.delete('/ejercicio/:id', deleteExercises);
+router.put('/ejercicio/:id', updateExercises);
+router.get('/ejercicio/:id', getOneExercises);
+router.get('/ejercicios', getAllExercises);
+router.post('/ejercicio', createExercises);
 
 
 module.exports = router;

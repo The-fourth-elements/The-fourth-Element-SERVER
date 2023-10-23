@@ -32,7 +32,19 @@ const ModuleMongoose = new mongoose.Schema({
     },
     paid: {
         type: Boolean
-    }
+    },
+    meditation:[{
+        type: String,
+        ref: 'Meditation'
+    }],
+    exercises:[{
+        type: String,
+        ref: 'Exercises'
+    }],
+    selfKnowledge:[{
+        type: String,
+        ref: 'SelfKnowledge'
+    }]
 });
 
 const Module = mongoose.model("Module", ModuleMongoose);
