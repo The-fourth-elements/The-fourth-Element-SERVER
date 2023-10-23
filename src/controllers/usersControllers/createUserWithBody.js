@@ -8,7 +8,7 @@ const handleUserInvite = require('../../handler/dataBase/handleUserInvite.js');
 const Invite = require('../../models/Invite.js');
 
 async function createUserWithBody(req, res, next) {
-    const { email, password, username, provider, city, nationality, sport, expYearsSports, age } = req.body
+    const { email, password, username, providerId, city, nationality, sport, expYearsSports, age } = req.body
     try{
         const emailInvite = await handleUserInvite(email);
         if (!emailInvite?.error) {
@@ -34,7 +34,7 @@ async function createUserWithBody(req, res, next) {
                 return res.status(200).json({ success: "Cuenta creada correctamente" })
             }
         }
-        if(provider){
+        if(providerId){
             if (!email) {
                 throw Error("Falta el email del usuario");
             } else {
@@ -42,6 +42,7 @@ async function createUserWithBody(req, res, next) {
                 const passwordEncrypt = await encrypt(token);
                 await Users.create({
                     username,
+                    providerId,
                     role: 0,
                     email,
                     password: passwordEncrypt
