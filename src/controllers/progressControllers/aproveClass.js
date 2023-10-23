@@ -3,6 +3,9 @@ const { Users } = require('../../models/Users');
 const mongoose = require('mongoose');
 
 const customError = require('../../helper/customError');
+const getNextProgressModule = require('../../helper/getNextProgressModule');
+const getNextProgressClass = require('../../helper/getNextProgressClass');
+const Module = require('../../models/Module');
 
 async function approveClass(req, res, next) {
     try {
@@ -19,20 +22,38 @@ async function approveClass(req, res, next) {
         const userProgress = await Progress.findById(user.progress._id)
 
         const modules = [...userProgress.modules]
-        const moduleProgress = modules.find((progressItem) => progressItem.moduleId.equals(moduleId))
 
-        if (!moduleProgress) throw customError('Progreso del módulo no encontrado', 404)
+        let moduleProgress
 
-        const classProgress = moduleProgress.classes.find((c) => c.classId.equals(classId))
-        if (!classProgress) throw customError('Progreso de la clase no encontrado', 404)
+        const moduleIndex = modules.findIndex((progressItem) => progressItem.moduleId.equals(moduleId))
 
-        const onlockDate = new Date(classProgress.unlockDate)
-        const now = new Date()
+        if (moduleIndex !== -1) {
+            moduleProgress = modules[moduleIndex];
+        } else {
+            throw customError('Progreso del módulo no encontrado', 404)
+        }
 
-        if( onlockDate > now) throw customError('Clase bloqueada', 403)
+        let classProgress
+
+        const classIndex = moduleProgress.classes.findIndex((c) => c.classId.equals(classId))
+
+        if (classIndex !== -1) {
+            classProgress = moduleProgress.classes[classIndex]
+        } else {
+            throw customError('Progreso de la clase no encontrado', 404)
+        }
 
         classProgress.approved = true;
         classProgress.approvedDate = new Date()
+
+        const dbModules = await Module.find()
+            .populate('classModule')
+
+        if (!dbModules[moduleIndex].classModule[classIndex + 1]) {
+            modules.push(getNextProgressModule(dbModules, moduleIndex + 1))
+        } else {
+            modules[moduleIndex].classes.push(getNextProgressClass(dbModules, moduleIndex, classIndex + 1))
+        }
 
         await Progress.updateOne(
             { _id: user.progress._id },
@@ -44,6 +65,7 @@ async function approveClass(req, res, next) {
         )
         res.status(200).json({ message: "Clase aprobada con éxito" })
     } catch (error) {
+        console.log(error)
         next({ message: error.message, statusCode: error.statusCode })
     }
 }

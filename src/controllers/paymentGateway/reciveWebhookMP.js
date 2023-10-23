@@ -1,6 +1,6 @@
 const mercadopago = require('mercadopago');
 
-async function reciveWebhook(req, res, next) {
+async function reciveWebhookMP(req, res, next) {
     try {
         const payment = req.query;
 
@@ -18,4 +18,4 @@ async function reciveWebhook(req, res, next) {
     }
 }
 
-module.exports = reciveWebhook;
+module.exports = reciveWebhookMP;
