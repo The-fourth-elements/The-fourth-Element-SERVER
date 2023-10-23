@@ -1,15 +1,15 @@
 require('dotenv').config();
+const { STRIPE_SECRET_KEY } = process.env
 const { Stripe } = require('stripe')
 
-const getPricesSP = async (request, response, next) => {
+const getPricesSP = async (req, res, next) => {
     try {
-
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-        const prices = await stripe.prices.list()
-        return response.status(200).json({ prices: prices.data });
+        const stripe = new Stripe(STRIPE_SECRET_KEY);
+        const prices = await stripe.prices.list();
+        return res.status(200).json({ prices: prices.data });
     } catch (error) {
-        console.log('ocurrio un error en la obtencion de precio, Aqui el error ===>', error);
+        next({ message: error.message, statusCode: 404});
     }
-}
+};
 
 module.exports = getPricesSP;
