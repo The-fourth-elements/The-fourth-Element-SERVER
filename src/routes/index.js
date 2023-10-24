@@ -151,7 +151,7 @@ router.delete('/ejercicio/:id', deleteExercises);
 router.put('/ejercicio/:id', updateExercises);
 router.get('/ejercicio/:id', getOneExercises);
 router.get('/ejercicios', getAllExercises);
-router.post('/ejercicio', createExercises);
+router.post('/ejercicio/:id', createExercises);
 
 // Meditations
 router.get('/meditations', getAllMeditations);
