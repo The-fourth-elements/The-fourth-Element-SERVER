@@ -38,7 +38,7 @@ async function createUserWithBody(req, res, next) {
             if (!email) {
                 throw Error("Falta el email del usuario");
             } else {
-                const token = createToken(provider);
+                const token = createToken(providerId);
                 const passwordEncrypt = await encrypt(token);
                 await Users.create({
                     username,
