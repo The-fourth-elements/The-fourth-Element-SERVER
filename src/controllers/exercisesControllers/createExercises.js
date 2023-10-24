@@ -3,12 +3,11 @@ const Exercises = require('../../models/Exercises');
 async function createExercises(req, res, next){
     try {
         const { id } = req.params;
-        const { name, description } = req.body;
+        const { question } = req.body;
         if(!id) throw Error('Ingrese un ID');
-        if(!name || !description) throw Error('Faltan datos');
+        if(!question) throw Error('Faltan datos');
         const exercises = await Exercises.create({
-            name,
-            description
+            question
         });
         await exercises.save();
         if(!exercises) throw Error('Error al crear el ejercicio');

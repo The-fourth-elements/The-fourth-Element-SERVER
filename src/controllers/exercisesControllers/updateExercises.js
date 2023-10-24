@@ -3,12 +3,13 @@ const Exercises = require('../../models/Exercises');
 async function updateExercises(req, res, next){
     try {
         const { id } = req.params;
-        const { nameBody, descriptionBody} = req.body;
+        const { question, response} = req.body;
         if(!id) throw Error('Ingrese un ID');
-        if(!nameBody || !descriptionBody) throw Error('Faltan datos');
+        if(!response) throw Error('Faltan datos');
+        
         const exercises = await Exercises.findByIdAndUpdate(id, {
-            name: nameBody,
-            description: descriptionBody
+            question: question,
+            response: response
         }, { new: true});
         await exercises.save();
         if(!exercises) throw Error(`No se pudo encontrar el ejercicio con id: ${id}`)
