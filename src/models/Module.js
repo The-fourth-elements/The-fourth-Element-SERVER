@@ -19,9 +19,9 @@ const ModuleMongoose = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "Class"
     }],
-    quiz:[{
-        type: mongoose.Types.ObjectId,
-        ref: "Quiz"
+    meditation:[{
+        type: String,
+        ref: 'Meditation'
     }],
     startingDate:{
         type: Date,
@@ -33,17 +33,17 @@ const ModuleMongoose = new mongoose.Schema({
     paid: {
         type: Boolean
     },
-    meditation:[{
-        type: String,
-        ref: 'Meditation'
-    }],
     exercises:[{
-        type: String,
+        type: mongoose.Types.ObjectId,
         ref: 'Exercises'
     }],
-    selfKnowledge:[{
-        type: String,
+    selfKnowledge:{
+        type: mongoose.Types.ObjectId,
         ref: 'SelfKnowledge'
+    },
+    quiz:[{
+        type: mongoose.Types.ObjectId,
+        ref: "Quiz"
     }]
 });
 

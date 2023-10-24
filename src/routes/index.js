@@ -21,6 +21,7 @@ const { updateExercises, createExercises, deleteExercises, getAllExercises, getO
 const createMeditation = require('../controllers/meditationControllers/createMeditation');
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
+const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge } = require('../controllers/selfKnowledge');
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);
@@ -147,11 +148,11 @@ router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass
 router.put('/approveModule/user/:userId/module/:moduleId', approveModule);
 
 // Ejercicios
-router.delete('/excercise/:id', deleteExercises);
-router.put('/excercise/:id', updateExercises);
-router.get('/excercise/:id', getOneExercises);
-router.get('/excercise', getAllExercises);
-router.post('/excercise/:id', createExercises);
+router.get('/exercise/:id', getOneExercises);
+router.get('/exercises', getAllExercises);
+router.post('/exercise/:moduleId', createExercises);
+router.put('/exercise/:id', updateExercises);
+router.delete('/exercise/:id', deleteExercises);
 
 // Meditations
 router.get('/meditations', getAllMeditations);
@@ -164,5 +165,12 @@ router.delete('/meditation/:id', deleteMeditation);
 router.get('/tracks', getAllTracks);
 router.get('/track/:id', getTrackById);
 router.delete('/track/:id', deleteTrack);
+
+// Autoconocimiento
+router.get('/selfKnowledges', getAllSelfKnowledge);
+router.get('/selfK/:id', getSelfKnowledgeById);
+router.post('/selfK/:moduleId', createSelfKnowledge);
+router.put('/selfK/:id', updateSelfKnowledge);
+router.delete('/selfK/:id', deleteSelfKnowledge);
 
 module.exports = router;
