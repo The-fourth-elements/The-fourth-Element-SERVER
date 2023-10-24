@@ -7,6 +7,9 @@ async function getModuleById(req, res, next) {
         if (id) {
             const module = await Module.findById(id)
                 .populate('classModule')
+                .populate('quiz')
+                .populate('exercises')
+                .populate('selfKnowledge')
             if (module) {
                 res.status(200).json({ message: "Modulo encontrado", module: module });
             } else throw Error("No se pudo encontrar un modulo con ese ID");

@@ -4,8 +4,11 @@ const SelfKnowledgeSchema = new mongoose.Schema({
     name: {
         type: String
     },
-    description:[{
-        type: Number
+    description:{
+        type: String
+    },
+    question:[{
+        type: String
     }]
 });
 
