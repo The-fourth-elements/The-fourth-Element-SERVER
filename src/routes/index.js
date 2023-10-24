@@ -147,11 +147,11 @@ router.put('/approve/user/:userId/module/:moduleId/class/:classId', approveClass
 router.put('/approveModule/user/:userId/module/:moduleId', approveModule);
 
 // Ejercicios
-router.delete('/ejercicio/:id', deleteExercises);
-router.put('/ejercicio/:id', updateExercises);
-router.get('/ejercicio/:id', getOneExercises);
-router.get('/ejercicios', getAllExercises);
-router.post('/ejercicio/:id', createExercises);
+router.delete('/excercise/:id', deleteExercises);
+router.put('/excercise/:id', updateExercises);
+router.get('/excercise/:id', getOneExercises);
+router.get('/excercise', getAllExercises);
+router.post('/excercise/:id', createExercises);
 
 // Meditations
 router.get('/meditations', getAllMeditations);
