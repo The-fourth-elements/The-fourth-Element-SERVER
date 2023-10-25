@@ -24,33 +24,33 @@ const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/trac
 const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge } = require('../controllers/selfKnowledge');
 
 // Usuarios
-router.get('/users/deleted', getAllUsersDeleted);
-router.put('/user/reset', getUserReset);
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
 router.get('/user/:email', getUserByEmail);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
 router.get('/users/ages', getAllUsersAge);
 router.get('/users/average', getUsersAge);
+router.get('/users/deleted', getAllUsersDeleted);
 router.get('/orderUsersByAZ', orderUsersByAZ);
+router.put('/user/reset', getUserReset);
+router.put('/user', updateUser);
+router.delete('/user/:id', deleteUser);
 
 // Invitado
 router.post('/invite', inviteUser);
 
 // Testimonios de Landing Content 
-router.delete('/content/:id', deleteLandingContent);
-router.put('/content/:id', uppdateLandingContent);
+router.get('/content', getAllLandingContent);
 router.get('/content/:id', getOneLandingContent);
 router.post('/content', createLandingContent);
-router.get('/content', getAllLandingContent);
+router.put('/content/:id', uppdateLandingContent);
+router.delete('/content/:id', deleteLandingContent);
 
 // About de about us
-router.post('/about', createAbout);
 router.get('/about', getAllAbouts);
-router.delete('/about/:id', deleteAbout);
-router.put('/about/:id', putAbout);
 router.get('/about/:id', getAboutById);
+router.post('/about', createAbout);
+router.put('/about/:id', putAbout);
+router.delete('/about/:id', deleteAbout);
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
@@ -61,9 +61,9 @@ router.get('/moduls', getAllModules);
 router.get('/moduls/:id', getModuleById);
 router.post('/moduls', createController);
 router.put('/moduls/:id', updateController);
-router.delete('/moduls/:id', deleteController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
 router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
+router.delete('/moduls/:id', deleteController);
 
 // Quiz
 router.get('/quizzes', getAllQuiz);
@@ -86,11 +86,11 @@ router.delete('/response/:id', deleteResponse);
 router.get('/class', getAllClasses);
 router.get('/class/:id', getClassById);
 router.post('/class', createClass);
+router.put('/class/:id', updateClass);
 router.put('/class/:classId/quiz/:quizId', addQuizToClass);
 router.put('/class/:classId/video/:videoId', addVideoToClass);
 router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass);
 router.delete('/class/:id', deleteClass);
-router.put('/class/:id', updateClass);
 
 // Videos
 router.get('/videos', getAllVideos);
@@ -135,8 +135,8 @@ router.put('/feedback-pp', feedbackPP);
 // Stripe
 router.get('/get-prices-sp', getPricesSP);
 router.get('/feedback-sp', feedbackSP);
-router.post('/create-order-sp', createOrderSP);
 router.get('/stripe-cancel', cancelOrderStripe)
+router.post('/create-order-sp', createOrderSP);
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
