@@ -19,7 +19,7 @@ const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, get
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
 const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises, onlyCreateExercises } = require('../controllers/exercisesControllers');
 const createMeditation = require('../controllers/meditationControllers/createMeditation');
-const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation } = require('../controllers/meditationControllers');
+const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge } = require('../controllers/selfKnowledge');
 
@@ -161,6 +161,7 @@ router.get('/meditation/:id', getMeditationById);
 router.post('/meditation', createMeditation);
 router.put('/meditation/:id', updateMeditation)
 router.delete('/meditation/:id', deleteMeditation);
+router.put('/module/:moduleId/meditation/:meditationId', addMeditationToModuls);
 
 // Tracks
 router.get('/tracks', getAllTracks);
