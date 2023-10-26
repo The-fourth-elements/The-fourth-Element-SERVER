@@ -3,12 +3,19 @@ const Module = require("../../models/Module");
 
 
 async function createSelfKnowledge(req, res, next){
-    const { moduleId } = req.params;
-    const { name, description, question } = req.body; 
+    
+    // console.log(selfKnowledge);
     try {
-        if(!name || !description || !question) throw Error('Faltan datos');
-        const newSelfKnowledge = await findOrCreateSelfKnowledge(name, description, question);
-        if(!newSelfKnowledge) throw Error('No se pudo crear el Autoconocimiento');
+        const { moduleId } = req.params;
+        const { selfKnowledge } = req.body; 
+        if(!selfKnowledge) throw Error('Faltan datos');
+        const newSelfKnowledge = await Promise.all(selfKnowledge.map(async selk => {
+            // console.log(selk);
+            // return selk
+            const newSelfk = await findOrCreateSelfKnowledge(selk);
+            return newSelfk;
+        }));
+        // if(newSelfKnowledge.length <= 0) throw Error('No se pudo crear el Autoconocimiento');
         const findModule = await Module.findById(moduleId);
         if (!findModule) throw Error('No se encontro el módulo al que agregar el autoconocimiento.');
         findModule.selfKnowledge = newSelfKnowledge;

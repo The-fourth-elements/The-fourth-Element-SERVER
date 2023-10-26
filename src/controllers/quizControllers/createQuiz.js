@@ -1,11 +1,11 @@
 const Quiz = require('../../models/Quiz');
-const createQuest = require('../../handler/dataBase/createQuest');
+const findOrCreateQuest = require('../../handler/dataBase/findOrCreateQuest');
 
 async function createQuiz(req, res, next){
     const { name, quest, description } = req.body;
     try {
         if(!name || !quest || !description) throw Error('Faltan datos');
-        const newQuest = await Promise.all(quest.map(async question => await createQuest(question)));
+        const newQuest = await Promise.all(quest.map(async question => await findOrCreateQuest(question)));
         const newQuiz = await Quiz.create({ 
             name,
             description,

@@ -1,11 +1,13 @@
 const Quest = require("../../models/Quest");
-const createResponse = require("../../handler/dataBase/createResponses");
+const findOrCreateResponse = require("./findOrCreateResponse");
 
-async function createQuest(quest){
+async function findOrCreateQuest(quest){
     const { question, answers } = quest;
     try {
         if(!question || !answers) throw Error("Faltan datos");
-        const newResponse = await Promise.all(answers.map(async resp => await createResponse(resp)));
+        const findQuest = await Quest.findOne({ question });
+        if(findQuest) return findQuest;
+        const newResponse = await Promise.all(answers.map(async resp => await findOrCreateResponse(resp)));
         const newQuest = await Quest.create({
             question,
             responses: newResponse,
@@ -18,4 +20,4 @@ async function createQuest(quest){
     }
 }
 
-module.exports = createQuest;
+module.exports = findOrCreateQuest;
