@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const ExercisesSchema = new mongoose.Schema({
-    question: {
+    name:{
         type: String
+    },
+    description:{
+        type: String
+    },
+    questions: {
+        type: Array
     },
     response:{
         type: String

@@ -17,7 +17,7 @@ const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questC
 const { getAllResponses, getOneResponse, deleteResponse } = require('../controllers/responseController');
 const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, getPricesSP, feedbackSP, cancelOrderStripe } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
-const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises } = require('../controllers/exercisesControllers');
+const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises, onlyCreateExercises } = require('../controllers/exercisesControllers');
 const createMeditation = require('../controllers/meditationControllers/createMeditation');
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
@@ -153,6 +153,7 @@ router.get('/exercises', getAllExercises);
 router.post('/exercise/:moduleId', createExercises);
 router.put('/exercise/:id', updateExercises);
 router.delete('/exercise/:id', deleteExercises);
+router.post('/exercise', onlyCreateExercises);
 
 // Meditations
 router.get('/meditations', getAllMeditations);
