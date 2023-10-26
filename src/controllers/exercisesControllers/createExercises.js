@@ -8,7 +8,6 @@ async function createExercises(req, res, next){
         if(!questions) throw Error('Faltan datos');
         const newExercises = await findOrCreateExercise(name, description, questions);
         if(!newExercises) throw Error('Error al crear el ejercicio');
-        console.log(newExercises);
         const findModule = await Module.findById(moduleId);
         if (!findModule) throw Error('No se encontro el módulo al que agregar el ejercicio');
         findModule.exercises.push(newExercises);

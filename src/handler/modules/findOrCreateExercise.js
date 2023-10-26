@@ -2,9 +2,6 @@ const Exercises = require("../../models/Exercises");
 
 const findOrCreateExercise = async(name, description, questions) => {
     try {
-        // const exercises = await Promise.all(questions.map( async question => {
-            
-        // }));
         const findExercise = await Exercises.findOne({name});
         if(findExercise) return findExercise;
         const createExercise = await Exercises.create({name, description, questions});
