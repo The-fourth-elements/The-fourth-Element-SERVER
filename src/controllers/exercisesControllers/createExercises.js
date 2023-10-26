@@ -3,10 +3,10 @@ const Module = require('../../models/Module');
 
 async function createExercises(req, res, next){
     const { moduleId } = req.params;
-    const { question } = req.body;
+    const { questions } = req.body;
     try {
-        if(!question) throw Error('Faltan datos');
-        const newExercises = await findOrCreateExercise(question);
+        if(!questions) throw Error('Faltan datos');
+        const newExercises = await findOrCreateExercise(questions);
         if(!newExercises) throw Error('Error al crear el ejercicio');
         console.log(newExercises);
         const findModule = await Module.findById(moduleId);
