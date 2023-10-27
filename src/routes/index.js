@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge, inviteUser, orderUsersByAZ } = require('../controllers/usersControllers/index');
-const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule, addExerciseToModule } = require('../controllers/modulsController');
+const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule, addExerciseToModule, addMeditationToModule } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addQuizToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
@@ -63,6 +63,7 @@ router.post('/moduls', createController);
 router.put('/moduls/:id', updateController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
 router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
+router.put('/module/:moduleId/exercise/:exerciseId', addExerciseToModule);
 router.put('/module/:moduleId/exercise/:exerciseId', addExerciseToModule);
 router.delete('/moduls/:id', deleteController);
 

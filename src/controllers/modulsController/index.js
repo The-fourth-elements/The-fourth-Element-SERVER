@@ -6,6 +6,7 @@ const getAllModules = require('./getAllModules');
 const getModuleById = require('./getModuleById');
 const addQuizToModule = require('./addQuizToModule');
 const addExerciseToModule = require('./addExerciseToModule')
+const addMeditationToModule = require('./addMeditationToModule')
 
 module.exports = {
     updateController,
@@ -15,5 +16,6 @@ module.exports = {
     getAllModules,
     getModuleById,
     addQuizToModule,
-    addExerciseToModule
+    addExerciseToModule,
+    addMeditationToModule
 }

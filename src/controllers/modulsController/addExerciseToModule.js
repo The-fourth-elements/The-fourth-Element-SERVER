@@ -1,7 +1,6 @@
 const Exercises = require("../../models/Exercises");
 const Module = require("../../models/Module");
 
-
 async function addExerciseToModule(req, res, next){
     const { moduleId, exerciseId } = req.params;
     try {
