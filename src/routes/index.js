@@ -74,13 +74,13 @@ router.put('/quiz/:id', updateQuiz);
 router.delete('/quiz/:id', deleteQuiz);
 
 // Questions
-router.get('questions', getAllQuest);
-router.get('quest/:id', getOneQuest);
+router.get('/questions', getAllQuest);
+router.get('/quest/:id', getOneQuest);
 router.delete('/quest/:id', deleteQuest);
 
 // Responses
-router.get('responses', getAllResponses);
-router.get('response/:id', getOneResponse);
+router.get('/responses', getAllResponses);
+router.get('/response/:id', getOneResponse);
 router.delete('/response/:id', deleteResponse);
 
 // Clases
