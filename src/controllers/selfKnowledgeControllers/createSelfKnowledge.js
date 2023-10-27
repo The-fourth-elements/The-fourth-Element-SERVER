@@ -15,7 +15,7 @@ async function createSelfKnowledge(req, res, next){
         const findModule = await Module.findById(moduleId);
         if (!findModule) throw Error('No se encontro el módulo al que agregar el autoconocimiento.');
         findModule.selfKnowledge = newSelfKnowledge;
-        findModule.save();
+        await findModule.save();
         res.status(200).json({ message: 'Autoconocimiento creado', data: newSelfKnowledge });
     } catch (error) {
         next({ message: error.message, statusCode: 404 });
