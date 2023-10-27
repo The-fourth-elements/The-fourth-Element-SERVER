@@ -9,7 +9,7 @@ async function getAllModules(req, res, next){
         .populate('exercises')
         .populate('selfKnowledge')
 
-        modules.length === 0 ?
+        modules.length <= 0 ?
         res.status(404).json({ message: 'No se encontraron modulos' }) :
         res.status(200).json(modules)
     } catch (error) {

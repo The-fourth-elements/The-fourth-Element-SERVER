@@ -6,7 +6,7 @@ async function getAllClasses(req, res, next) {
             .populate('video')
             .populate('powerPoint');
 
-        classes.length === 0 ?
+        classes.length <= 0 ?
             res.status(404).json({ message: 'No se encontraron clases' }) :
             res.status(200).json(classes)
 
