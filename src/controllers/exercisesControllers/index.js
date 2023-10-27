@@ -4,6 +4,7 @@ const getAllExercises = require('./getAllExercises');
 const getOneExercises = require('./getOneExercises');
 const updateExercises = require('./updateExercises');
 const onlyCreateExercises = require('./onlyCreateExercises');
+const addExercisesToModule = require('./addExercisesToModule');
 
 module.exports = {
     createExercises,
@@ -11,5 +12,6 @@ module.exports = {
     getAllExercises,
     getOneExercises,
     updateExercises,
-    onlyCreateExercises
+    onlyCreateExercises,
+    addExercisesToModule
 };
