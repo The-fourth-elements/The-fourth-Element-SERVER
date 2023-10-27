@@ -20,7 +20,7 @@ const ModuleMongoose = new mongoose.Schema({
         ref: "Class"
     }],
     meditation:[{
-        type: String,
+        type: mongoose.Types.ObjectId,
         ref: 'Meditation'
     }],
     startingDate:{

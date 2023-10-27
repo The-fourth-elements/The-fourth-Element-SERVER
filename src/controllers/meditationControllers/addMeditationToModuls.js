@@ -3,7 +3,7 @@ const Module = require('../../models/Module');
 
 async function addMeditationToModuls (req, res, next){
     try {
-        const { meditationId, moduleId } = req.params;
+        const { moduleId , meditationId } = req.params;
         if(!meditationId || !moduleId) throw Error('Ingrese un ID');
         const searchMeditation = await Meditation.findById(meditationId);
         if(!searchMeditation) throw Error(`No se pudo encontrar a la meditacion con ID: ${meditationId}`);

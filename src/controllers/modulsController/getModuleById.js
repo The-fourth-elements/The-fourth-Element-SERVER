@@ -10,6 +10,13 @@ async function getModuleById(req, res, next) {
                 .populate('quiz')
                 .populate('exercises')
                 .populate('selfKnowledge')
+                .populate('meditation')
+                .populate({
+                    path: 'meditation',
+                    populate: {
+                        path: 'tracks' 
+                    }
+                })
             if (module) {
                 res.status(200).json({ message: "Modulo encontrado", module: module });
             } else throw Error("No se pudo encontrar un modulo con ese ID");
