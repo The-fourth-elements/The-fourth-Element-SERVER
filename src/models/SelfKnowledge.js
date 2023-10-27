@@ -7,9 +7,9 @@ const SelfKnowledgeSchema = new mongoose.Schema({
     description:{
         type: String
     },
-    question:[{
-        type: String
-    }]
+    question:{
+        type: Array
+    }
 });
 
 const SelfKnowledge = mongoose.model("SelfKnowledge", SelfKnowledgeSchema);
