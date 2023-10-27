@@ -6,7 +6,7 @@ async function createSelfKnowledge(req, res, next){
     const { moduleId } = req.params;
     const { selfKnowledge } = req.body;
     try {
-        if(!selfKnowledge) throw Error('Faltan datos');
+        if(selfKnowledge.length <= 0) throw Error('Faltan datos');
         const newSelfKnowledge = await Promise.all(selfKnowledge.map(async selk => {
             const newSelfk = await findOrCreateSelfKnowledge(selk);
             return newSelfk;
