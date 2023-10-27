@@ -1,7 +1,6 @@
 const { Users } = require('../../models/Users');
 
 async function orderUsersByAZ (req, res, next){
-    console.log(req.query);
     try {
         if (req.query.hasOwnProperty('ASC') || req.query.hasOwnProperty('DSC')) {
             const users = {};

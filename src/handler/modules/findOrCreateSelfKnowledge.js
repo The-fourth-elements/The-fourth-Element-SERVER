@@ -3,7 +3,6 @@ const SelfKnowledge = require("../../models/SelfKnowledge");
 
 const findOrCreateSelfKnowledge = async({name, description, question}) => {
     try {
-        console.log(name, description, question);
         const findSelfKnowledge = await SelfKnowledge.findOne({ name });
         if (findSelfKnowledge) return findSelfKnowledge;
         const createSelfKnowledge = await SelfKnowledge.create({ name, description, question });
