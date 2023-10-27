@@ -17,11 +17,11 @@ const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questC
 const { getAllResponses, getOneResponse, deleteResponse } = require('../controllers/responseController');
 const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, getPricesSP, feedbackSP, cancelOrderStripe } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
-const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises, onlyCreateExercises } = require('../controllers/exercisesControllers');
+const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises, onlyCreateExercises, addExercisesToModule } = require('../controllers/exercisesControllers');
 const createMeditation = require('../controllers/meditationControllers/createMeditation');
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
-const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge } = require('../controllers/selfKnowledge');
+const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge, onlyCreateSelfKnowLedge } = require('../controllers/selfKnowledgeController');
 
 // Usuarios
 router.get('/users', getAllUsers);
@@ -155,6 +155,7 @@ router.post('/exercise/:moduleId', createExercises);
 router.post('/exercise', onlyCreateExercises);
 router.put('/exercise/:id', updateExercises);
 router.delete('/exercise/:id', deleteExercises);
+router.put('/exercisesToModule', addExercisesToModule);
 
 // Meditations
 router.get('/meditations', getAllMeditations);
@@ -175,5 +176,6 @@ router.get('/selfK/:id', getSelfKnowledgeById);
 router.post('/selfK/:moduleId', createSelfKnowledge);
 router.put('/selfK/:id', updateSelfKnowledge);
 router.delete('/selfK/:id', deleteSelfKnowledge);
+router.post('/selfK', onlyCreateSelfKnowLedge);
 
 module.exports = router;
