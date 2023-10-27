@@ -21,7 +21,7 @@ const { updateExercises, createExercises, deleteExercises, getAllExercises, getO
 const createMeditation = require('../controllers/meditationControllers/createMeditation');
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
-const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge } = require('../controllers/selfKnowledge');
+const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge, onlyCreateSelfKnowLedge } = require('../controllers/selfKnowledgeController');
 
 // Usuarios
 router.get('/users/deleted', getAllUsersDeleted);
@@ -174,5 +174,6 @@ router.get('/selfK/:id', getSelfKnowledgeById);
 router.post('/selfK/:moduleId', createSelfKnowledge);
 router.put('/selfK/:id', updateSelfKnowledge);
 router.delete('/selfK/:id', deleteSelfKnowledge);
+router.post('/selfK', onlyCreateSelfKnowLedge);
 
 module.exports = router;
