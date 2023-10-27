@@ -1,7 +1,7 @@
 const SelfKnowledge = require("../../models/SelfKnowledge");
 
 
-const findOrCreateSelfKnowledge = async(name, description, question) => {
+const findOrCreateSelfKnowledge = async({name, description, question}) => {
     try {
         const findSelfKnowledge = await SelfKnowledge.findOne({ name });
         if (findSelfKnowledge) return findSelfKnowledge;

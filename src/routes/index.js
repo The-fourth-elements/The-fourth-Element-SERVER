@@ -17,40 +17,40 @@ const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questC
 const { getAllResponses, getOneResponse, deleteResponse } = require('../controllers/responseController');
 const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, getPricesSP, feedbackSP, cancelOrderStripe } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
-const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises } = require('../controllers/exercisesControllers');
+const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises, onlyCreateExercises, addExercisesToModule } = require('../controllers/exercisesControllers');
 const createMeditation = require('../controllers/meditationControllers/createMeditation');
-const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation } = require('../controllers/meditationControllers');
+const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
-const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge } = require('../controllers/selfKnowledge');
+const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge, onlyCreateSelfKnowLedge } = require('../controllers/selfKnowledgeController');
 
 // Usuarios
-router.get('/users/deleted', getAllUsersDeleted);
-router.put('/user/reset', getUserReset);
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
 router.get('/user/:email', getUserByEmail);
-router.put('/user', updateUser);
-router.delete('/user/:id', deleteUser);
 router.get('/users/ages', getAllUsersAge);
 router.get('/users/average', getUsersAge);
+router.get('/users/deleted', getAllUsersDeleted);
 router.get('/orderUsersByAZ', orderUsersByAZ);
+router.put('/user/reset', getUserReset);
+router.put('/user', updateUser);
+router.delete('/user/:id', deleteUser);
 
 // Invitado
 router.post('/invite', inviteUser);
 
 // Testimonios de Landing Content 
-router.delete('/content/:id', deleteLandingContent);
-router.put('/content/:id', uppdateLandingContent);
+router.get('/content', getAllLandingContent);
 router.get('/content/:id', getOneLandingContent);
 router.post('/content', createLandingContent);
-router.get('/content', getAllLandingContent);
+router.put('/content/:id', uppdateLandingContent);
+router.delete('/content/:id', deleteLandingContent);
 
 // About de about us
-router.post('/about', createAbout);
 router.get('/about', getAllAbouts);
-router.delete('/about/:id', deleteAbout);
-router.put('/about/:id', putAbout);
 router.get('/about/:id', getAboutById);
+router.post('/about', createAbout);
+router.put('/about/:id', putAbout);
+router.delete('/about/:id', deleteAbout);
 
 // Validaciones y Registro
 router.post('/auth', createUserWithBody);
@@ -61,12 +61,11 @@ router.get('/moduls', getAllModules);
 router.get('/moduls/:id', getModuleById);
 router.post('/moduls', createController);
 router.put('/moduls/:id', updateController);
-router.delete('/moduls/:id', deleteController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
 router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
-router.put('/module/:moduleId/exercise/:exerciseId', addExerciseToModule)
-router.put('/module/:moduleId/meditation/:meditationId', addMeditationToModule)
-
+router.put('/module/:moduleId/exercise/:exerciseId', addExerciseToModule);
+router.put('/module/:moduleId/exercise/:exerciseId', addExerciseToModule);
+router.delete('/moduls/:id', deleteController);
 
 // Quiz
 router.get('/quizzes', getAllQuiz);
@@ -76,24 +75,24 @@ router.put('/quiz/:id', updateQuiz);
 router.delete('/quiz/:id', deleteQuiz);
 
 // Questions
-router.get('questions', getAllQuest);
-router.get('quest/:id', getOneQuest);
+router.get('/questions', getAllQuest);
+router.get('/quest/:id', getOneQuest);
 router.delete('/quest/:id', deleteQuest);
 
 // Responses
-router.get('responses', getAllResponses);
-router.get('response/:id', getOneResponse);
+router.get('/responses', getAllResponses);
+router.get('/response/:id', getOneResponse);
 router.delete('/response/:id', deleteResponse);
 
 // Clases
 router.get('/class', getAllClasses);
 router.get('/class/:id', getClassById);
 router.post('/class', createClass);
+router.put('/class/:id', updateClass);
 router.put('/class/:classId/quiz/:quizId', addQuizToClass);
 router.put('/class/:classId/video/:videoId', addVideoToClass);
 router.put('/class/:classId/powerpoint/:powerPointId', addPowerPointToClass);
 router.delete('/class/:id', deleteClass);
-router.put('/class/:id', updateClass);
 
 // Videos
 router.get('/videos', getAllVideos);
@@ -138,8 +137,8 @@ router.put('/feedback-pp', feedbackPP);
 // Stripe
 router.get('/get-prices-sp', getPricesSP);
 router.get('/feedback-sp', feedbackSP);
-router.post('/create-order-sp', createOrderSP);
 router.get('/stripe-cancel', cancelOrderStripe)
+router.post('/create-order-sp', createOrderSP);
 
 // Reseteo de contraseña
 router.post('/auth/forgot', forgotPassword);
@@ -154,8 +153,10 @@ router.put('/approveModule/user/:userId/module/:moduleId', approveModule);
 router.get('/exercise/:id', getOneExercises);
 router.get('/exercises', getAllExercises);
 router.post('/exercise/:moduleId', createExercises);
+router.post('/exercise', onlyCreateExercises);
 router.put('/exercise/:id', updateExercises);
 router.delete('/exercise/:id', deleteExercises);
+router.put('/exercisesToModule', addExercisesToModule);
 
 // Meditations
 router.get('/meditations', getAllMeditations);
@@ -163,6 +164,7 @@ router.get('/meditation/:id', getMeditationById);
 router.post('/meditation', createMeditation);
 router.put('/meditation/:id', updateMeditation)
 router.delete('/meditation/:id', deleteMeditation);
+router.put('/module/:moduleId/meditation/:meditationId', addMeditationToModuls);
 
 // Tracks
 router.get('/tracks', getAllTracks);
@@ -175,5 +177,6 @@ router.get('/selfK/:id', getSelfKnowledgeById);
 router.post('/selfK/:moduleId', createSelfKnowledge);
 router.put('/selfK/:id', updateSelfKnowledge);
 router.delete('/selfK/:id', deleteSelfKnowledge);
+router.post('/selfK', onlyCreateSelfKnowLedge);
 
 module.exports = router;

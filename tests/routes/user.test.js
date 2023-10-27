@@ -36,16 +36,17 @@ describe("Back-End Users Routing Test", () => {
                 expect(response.body).toHaveLength(testingUsers.length + 1);
             });
 
-            it("Return an array.", async () => {
+            it("Return an array of Users.", async () => {
                 const response = await agent.get('/users');
                 const newUser = (await Users.findOne({email: testingUsers[0].email}))._doc;
                 const dbUserId = newUser._id.toString();
-                expect(response.body[0]).toMatchObject({
-                    username: newUser.username,
-                    password: newUser.password,
-                    _id: dbUserId,
-                });
+                expect(response.body[0]).toHaveProperty('_id', dbUserId)
+                expect(response.body[0]).toHaveProperty('username', testingUsers[0].username)
+                expect(response.body[0]).toHaveProperty('role', 1)
+                expect(response.body[1]).toHaveProperty('email', testingUsers[1].email);
+                expect(response.body[1]).not.toHaveProperty('password');
                 expect(response.body).toHaveProperty("length");
+                expect(response.body).toHaveLength(2);
             });
         });
         
@@ -73,9 +74,8 @@ describe("Back-End Users Routing Test", () => {
             it("Return an Object", async () => {
                 const userTest = (await Users.findOne({username: testingUsers[0].username}))._doc;
                 const response = await agent.get(`/user?id=${userTest._id.valueOf()}`);
-                expect(response.body).toHaveProperty("username");
                 expect(response.body).toHaveProperty("email");
-                expect(response.body).toHaveProperty("password");
+                expect(response.body).not.toHaveProperty("password");
                 expect(response.body).toHaveProperty("role");
             });
 
@@ -91,9 +91,9 @@ describe("Back-End Users Routing Test", () => {
                 expect(response.body.email).toMatch(testingUsers[1].email);
             });
 
-            it("Have a password.", async () => {
+            it("Not show the user password.", async () => {
                 const response = await agent.get('/users');
-                expect(response.body[1]).toHaveProperty("password");
+                expect(response.body[1]).not.toHaveProperty("password");
             });
         });
 
@@ -141,9 +141,9 @@ describe("Back-End Users Routing Test", () => {
                 expect(response.body.email).toMatch(testingUsers[1].email);
             });
 
-            it("Have a password.", async () => {
+            it("Not show the user password.", async () => {
                 const response = await agent.get('/users');
-                expect(response.body[1]).toHaveProperty("password");
+                expect(response.body[1]).not.toHaveProperty("password");
             });
         });
 

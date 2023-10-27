@@ -1,28 +1,21 @@
+const Exercises = require("../../models/Exercises");
 const Module = require("../../models/Module");
-const Exercise = require("../../models/Exercises");
 
-async function addExerciseToModule(req, res, next) {
+async function addExerciseToModule(req, res, next){
     const { moduleId, exerciseId } = req.params;
-
     try {
-        const foundModule = await Module.findById(moduleId);
+        const findModule = await Module.findById(moduleId);
+        if(!findModule) throw Error('No se encontró el módulo.');
 
-        if (!foundModule) throw customError('Módulo no encontrado', 400)
+        const findExercise = await Exercises.findById(exerciseId);
+        if(!findExercise) throw Error('No se encontró el ejercicio.');
 
-        const foundExercise = await Exercise.findById(exerciseId);
-
-        if (!foundExercise) throw customError('Ejercicio no encontrado', 400)
-
-        if (foundModule.exercises.includes(exerciseId)) {
-            return res.status(200).json({ message: 'El ejercicio ya había sido agregado al módulo anteriormente' })
-        }
-        
-        foundModule.exercises.addToSet(exerciseId)
-        await foundModule.save()
+        findModule.exercises.push(exerciseId);
+        findModule.save();
 
         return res.status(200).json({ message: 'Ejercicio agregado al módulo con éxito' })
     } catch (error) {
-        next({ message: error.message, statusCode: 400 });
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

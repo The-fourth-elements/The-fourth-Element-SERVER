@@ -8,7 +8,7 @@ async function getAllQuiz (req, res, next){
                 path: 'responses'
             }
         });
-        if(!quiz) throw Error('No se encontraron quiz');
+        if(quiz.length <= 0) throw Error('No se encontraron quiz');
         return res.status(200).json(quiz);
     } catch (error) {
         next({ message: error.message, statusCode: 404});

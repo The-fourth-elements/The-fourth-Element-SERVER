@@ -37,10 +37,10 @@ const ModuleMongoose = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Exercises'
     }],
-    selfKnowledge:{
+    selfKnowledge:[{
         type: mongoose.Types.ObjectId,
         ref: 'SelfKnowledge'
-    },
+    }],
     quiz:[{
         type: mongoose.Types.ObjectId,
         ref: "Quiz"

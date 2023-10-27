@@ -1,8 +1,8 @@
+const mongoose = require('mongoose');
 const { Users } = require('../../src/models/Users');
+const { encrypt } = require('../../src/services/crypt');
 const findOrCreateCity = require('../../src/handler/dataBase/findOrCreateCity')
 const findOrCreateNation = require('../../src/handler/dataBase/findOrCreateNation');
-const { encrypt } = require('../../src/services/crypt');
-const mongoose = require('mongoose');
 const findOrCreateSport = require('../../src/handler/dataBase/findOrCreateSport');
 
 const testCity = "New York";
@@ -21,17 +21,17 @@ const testModule = {
 const createUser = async(user) =>{
     try {
         const city = await findOrCreateCity(user.city);
-        const nation = await findOrCreateNation(user.nation);
+        const nationality = await findOrCreateNation(user.nationality);
         const sport = await findOrCreateSport(user.sport);
         const password = await encrypt(user.password);
 
-        if (!city && !nation) throw Error("City or nation can't be created or found");
+        if (!city && !nationality) throw Error("City or nation can't be created or found");
         const newUser = await Users.create({
             ...user, 
-            city: city._id, 
+            city: city, 
             password: password, 
-            nation: nation._id,
-            sport: sport._id
+            nation: nationality,
+            sport: sport
         });
         if (newUser){
             return newUser;
@@ -49,7 +49,7 @@ const testProgress = {
     assistance: 3
 }
 
-const testRole = {perimision: 1};
+const testRole = { role: 1 };
 
 const testStatus = {
     state: true,
@@ -66,5 +66,8 @@ module.exports = {
     testStatus,
     createUser,
     randomID,
-    testSport
+    testSport,
+    findOrCreateCity,
+    findOrCreateNation,
+    findOrCreateSport
 }
