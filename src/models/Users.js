@@ -17,6 +17,9 @@ const UserSchemas = new mongoose.Schema({
             message: 'Solo se permiten numeros, letras'
         }
     },
+    providerId: {
+        type: String
+    },
     name: {
         type: String,
         validate: {
@@ -72,10 +75,6 @@ const UserSchemas = new mongoose.Schema({
             message: 'Role must be a number'
         }
     },
-    progress: {
-        type: mongoose.Types.ObjectId,
-        ref: "Progress"
-    },
     profile_img: {
         public_id: {
             type: String
@@ -84,6 +83,10 @@ const UserSchemas = new mongoose.Schema({
             type: String,
             validate: [isURL, 'Please enter an URL valid']
         }
+    },
+    progress: {
+        type: mongoose.Types.ObjectId,
+        ref: "Progress"
     },
     email: {
         type: String,
@@ -102,7 +105,12 @@ const UserSchemas = new mongoose.Schema({
             message: 'Please enter a minimun six characters, one number and one capital letter'
         }
     },
-    stripe_payment: { type: String }
+    stripe_payment: { 
+        type: String 
+    },
+    responses: {
+        type: Array
+    }
 },
     {
         timestamps: true

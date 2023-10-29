@@ -1,6 +1,6 @@
 const Nation = require("../../models/Nation");
 
-async function getCountryByName(req, res) {
+async function getCountryByName(req, res, next) {
     const { name } = req.query; 
     try {
         if (name) {

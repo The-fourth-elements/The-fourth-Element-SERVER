@@ -19,9 +19,9 @@ const ModuleMongoose = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "Class"
     }],
-    quiz:[{
+    meditation:[{
         type: mongoose.Types.ObjectId,
-        ref: "Quiz"
+        ref: 'Meditation'
     }],
     startingDate:{
         type: Date,
@@ -32,7 +32,19 @@ const ModuleMongoose = new mongoose.Schema({
     },
     paid: {
         type: Boolean
-    }
+    },
+    exercises:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'Exercises'
+    }],
+    selfKnowledge:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'SelfKnowledge'
+    }],
+    quiz:[{
+        type: mongoose.Types.ObjectId,
+        ref: "Quiz"
+    }]
 });
 
 const Module = mongoose.model("Module", ModuleMongoose);

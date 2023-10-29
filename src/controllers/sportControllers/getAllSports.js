@@ -1,6 +1,6 @@
 const Sport = require("../../models/Sport");
 
-async function getAllSports(req, res){
+async function getAllSports(req, res, next){
     try {
         const sports = await Sport.find({});
         if(!sports.length < 1){

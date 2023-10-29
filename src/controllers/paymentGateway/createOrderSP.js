@@ -3,13 +3,12 @@ const { Stripe } = require('stripe');
 const { Users } = require('../../models/Users');
 const { STRIPE_SECRET_KEY, BACK_URL } = process.env
 
-const createOrderSP = async (request, response) => {
+const createOrderSP = async (req, res, next) => {
     try {
-        const { priceId, userId } = request.body;
+        const { priceId, userId } = req.body;
         if (!priceId) {
             throw Error('No se proporcionó el ID del producto');
         }
-
 
         const stripe = new Stripe(STRIPE_SECRET_KEY);
 
@@ -27,13 +26,13 @@ const createOrderSP = async (request, response) => {
         });
 
         const userFound = await Users.findById(userId);
+        if(!userFound) throw Error(`No se pudo encontrar el usuario con id: ${userId}`);
         userFound.stripe_payment = checkout.id;
-        await userFound.save()
-        response.status(201).json({ url: checkout.url });
+        await userFound.save();
+        res.status(201).json({ url: checkout.url });
     } catch (error) {
-        console.error(error.message);
-        return response.status(400).json({ error: error.message });
+        next({ message: error.message, statusCode: 404 });
     }
-}
+};
 
 module.exports = createOrderSP;

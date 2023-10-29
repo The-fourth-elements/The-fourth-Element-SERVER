@@ -2,17 +2,15 @@ const { Users } = require('../../models/Users');
 
 async function orderUsersByAZ (req, res, next){
     try {
-        const { ASC, DSC } = req.query;
-        if(!ASC) throw Error('Ingrese un filtro');
-        if(!DSC) throw Error('Ingrese un filtro');
-        let users;
-        if(ASC){
-            users = await Users.find({}).sort({username: 1});
-        }
-        if(DSC){
-            users = await Users.find({}).sort({username: -1});
-        }
-        return res.status(200).json(users);
+        if (req.query.hasOwnProperty('ASC')) {
+            const users = await Users.find({}).sort({username: 1});
+            if (users.length <= 0) throw Error('No hay usuarios en la Base de Datos');
+            else res.status(200).json(users);
+        } else if(req.query.hasOwnProperty('DSC')){
+            const users = await Users.find({}).sort({username: -1});
+            if (users.length <= 0) throw Error('No hay usuarios en la Base de Datos');
+            else res.status(200).json(users);
+        } else throw Error('Error al intentar ordenar los usuarios o no ingresó un filtro');
     } catch (error) {
         next({ message: error.message, statusCode: 400});
     }

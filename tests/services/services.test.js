@@ -14,8 +14,8 @@ beforeAll(async() => {
     await mongoose.connect(DB_URI_TEST);
 });
 
-xdescribe('Services Test', () => {
-    xdescribe('Crypting', () => {
+describe('Services Test', () => {
+    describe('Crypting', () => {
         beforeEach(async() => {
             const response = await createUser(individualUserTest);
         });
@@ -28,8 +28,7 @@ xdescribe('Services Test', () => {
 
         it("Should match 2 passwords.", async() => {
             const userFind = await Users.findOne({email: individualUserTest.email});
-            const response = (await agent.get(`/user?id=${userFind._id}`)).body.password;
-            const auth = await compare(individualUserTest.password, response)
+            const auth = await compare(individualUserTest.password, userFind.password)
             expect(auth).toBeTruthy();
         });
 

@@ -65,7 +65,6 @@ async function approveClass(req, res, next) {
         )
         res.status(200).json({ message: "Clase aprobada con éxito" })
     } catch (error) {
-        console.log(error)
         next({ message: error.message, statusCode: error.statusCode })
     }
 }
