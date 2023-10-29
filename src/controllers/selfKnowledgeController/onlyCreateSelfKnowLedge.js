@@ -5,13 +5,13 @@ async function onlyCreateSelfKnowLedge(req, res, next){
         const { selfKnowledge } = req.body;
         if(selfKnowledge.length <= 0) throw Error('Faltan datos');
         const findSelfKnowledge = await Promise.all(selfKnowledge.map(async (selfk) => {
-            if(!selfk.name || !selfk.description || !selfk.question) throw Error('Faltan datos');
+            if(!selfk.name || !selfk.description || !selfk.questions) throw Error('Faltan datos');
             const findSelf = await SelfKnowledge.findOne({name:selfk.name})
             if(findSelf) return findSelf;
             const createSelfk = await SelfKnowledge.create({
                 name: selfk.name,
                 description: selfk.description,
-                question: selfk.question
+                questions: selfk.questions
             });
             return createSelfk;
         }));
