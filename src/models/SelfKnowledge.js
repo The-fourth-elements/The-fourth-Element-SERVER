@@ -7,7 +7,7 @@ const SelfKnowledgeSchema = new mongoose.Schema({
     description:{
         type: String
     },
-    question:{
+    questions:{
         type: Array
     }
 });
