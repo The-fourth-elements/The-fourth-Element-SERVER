@@ -7,7 +7,7 @@ async function getAllModules(req, res, next){
         .populate('classModule')
         .populate('quiz')
         .populate('exercises')
-        .populate('selfKnowledge')
+        .populate('selfRegister')
 
         modules.length <= 0 ?
         res.status(404).json({ message: 'No se encontraron modulos' }) :
