@@ -21,8 +21,8 @@ const createOrderSP = async (req, res, next) => {
                     quantity: 1
                 },
             ],
-            success_url: `${BACK_URL}/feedback-sp?userId=${userId}`,
-            cancel_url: `${BACK_URL}/stripe-cancel?userId=${userId}`,
+            success_url: `https://${BACK_URL}/feedback-sp?userId=${userId}`,
+            cancel_url: `https://${BACK_URL}/stripe-cancel?userId=${userId}`,
         });
 
         const userFound = await Users.findById(userId);
