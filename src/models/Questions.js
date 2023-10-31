@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 
 const QuestionsSchemas = new mongoose.Schema({
-    question: {
-        type: Array
+    selfQuestion: {
+        type: String
     },
-    type: {
+    agree: {
+        type: String
+    },
+    disagree: {
         type: String
     }
 });
 
-const Questions = mongoose.modle('Questions', QuestionsSchemas);
+const Questions = mongoose.model('Questions', QuestionsSchemas);
 module.exports = Questions;
