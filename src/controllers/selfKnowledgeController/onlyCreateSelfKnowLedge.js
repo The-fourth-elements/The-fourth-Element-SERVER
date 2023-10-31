@@ -1,4 +1,4 @@
-const SelfKnowledge = require('../../models/SelfKnowledge');
+const SelfKnowledge = require('../../models/SelfRegister');
 
 async function onlyCreateSelfKnowLedge(req, res, next){
     try {

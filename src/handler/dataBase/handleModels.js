@@ -12,9 +12,9 @@ const Progress = require('../../models/Progress');
 const Quest = require('../../models/Quest');
 const Quiz = require('../../models/Quiz');
 const Responses = require('../../models/Responses');
-const SelfKnowledge = require('../../models/SelfKnowledge');
+const SelfKnowledge = require('../../models/SelfRegister');
 const Sport = require('../../models/Sport');
-const Tracks = require('../../models/SelfKnowledge');
+const Tracks = require('../../models/SelfRegister');
 const { Users } = require('../../models/Users');
 const Videos = require('../../models/Videos');
 
