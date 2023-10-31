@@ -3,7 +3,7 @@ const SelfRegister = require("../../models/SelfRegister");
 async function getAllSelfRegister(req, res, next){
     try {
         const findSelfRegisters = await SelfRegister.find({})
-            .populate('question');
+            .populate('questions');
         if (findSelfRegisters.length <= 0) throw Error('No se encontraron autoconocimientos.');
         else res.status(200).json(findSelfRegisters);
     } catch (error) {
