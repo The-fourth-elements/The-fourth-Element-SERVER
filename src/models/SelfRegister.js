@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
 const SelfRegisterSchema = new mongoose.Schema({
-    training: {
-        type: Array
+    name: {
+        type: String
     },
-    challenge: {
-        type: Array
+    description: {
+        type: String
+    },
+    questions: {
+        type: Array,
+        href: 'Question'
+    },
+    type: {
+        type: String
     }
 });
 

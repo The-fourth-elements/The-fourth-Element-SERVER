@@ -37,9 +37,9 @@ const ModuleMongoose = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Exercises'
     }],
-    selfKnowledge:[{
+    selfRegister:[{
         type: mongoose.Types.ObjectId,
-        ref: 'SelfKnowledge'
+        ref: 'SelfRegister'
     }],
     quiz:[{
         type: mongoose.Types.ObjectId,
