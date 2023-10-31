@@ -108,8 +108,13 @@ const UserSchemas = new mongoose.Schema({
     stripe_payment: { 
         type: String 
     },
-    responses: {
-        type: Array
+    responsesSR: {
+        type: Array,
+        href: "ResponsesSR"
+    },
+    responsesEX: {
+        type: Array,
+        href: "ResponsesEX"
     }
 },
     {

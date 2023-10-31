@@ -1,17 +1,24 @@
 const mongoose = require('mongoose');
+const { default: isURL } = require('validator/lib/isURL');
 
 const ExercisesSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String
     },
-    description:{
+    description: {
         type: String
     },
     questions: {
         type: Array
     },
-    response:{
-        type: String
+    image: {
+        public_id: {
+            type: String
+        },
+        secure_url: {
+            type: String,
+            validate: [isURL, 'Please enter and URL valid']
+        }
     }
 });
 
