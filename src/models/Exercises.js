@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { default: isURL } = require('validator/lib/isURL');
+const { isURL } = require('validator');
 
 const ExercisesSchema = new mongoose.Schema({
     name: {
