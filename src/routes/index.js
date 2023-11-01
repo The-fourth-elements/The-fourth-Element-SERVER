@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge, inviteUser, orderUsersByAZ } = require('../controllers/usersControllers/index');
-const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule, addExerciseToModule, addMeditationToModule } = require('../controllers/modulsController');
+const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule, addExerciseToModule, addMeditationToModule, addSelfRegisterToModule } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addQuizToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
 const { createVideo, updateVideo, getAllVideos, getVideoById, deleteVideo } = require('../controllers/videoControllers/index')
 const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById, deletePowerPoint } = require('../controllers/powerPointControllers/index');
@@ -21,7 +21,7 @@ const { updateExercises, createExercises, deleteExercises, getAllExercises, getO
 const createMeditation = require('../controllers/meditationControllers/createMeditation');
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
-const { createSelfKnowledge, getAllSelfKnowledge, getSelfKnowledgeById, updateSelfKnowledge, deleteSelfKnowledge, onlyCreateSelfKnowLedge } = require('../controllers/selfKnowledgeController');
+const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
 
 // Usuarios
 router.get('/users', getAllUsers);
@@ -64,7 +64,8 @@ router.put('/moduls/:id', updateController);
 router.put('/module/:moduleId/class/:classId', addClassToModule);
 router.put('/module/:moduleId/quiz/:quizId', addQuizToModule);
 router.put('/module/:moduleId/exercise/:exerciseId', addExerciseToModule);
-router.put('/module/:moduleId/exercise/:exerciseId', addExerciseToModule);
+router.put('/module/:moduleId/selfR/:selfRId', addSelfRegisterToModule);
+router.put('/module/:moduleId/meditation/:meditationId', addMeditationToModuls);
 router.delete('/moduls/:id', deleteController);
 
 // Quiz
@@ -164,7 +165,6 @@ router.get('/meditation/:id', getMeditationById);
 router.post('/meditation', createMeditation);
 router.put('/meditation/:id', updateMeditation)
 router.delete('/meditation/:id', deleteMeditation);
-router.put('/module/:moduleId/meditation/:meditationId', addMeditationToModuls);
 
 // Tracks
 router.get('/tracks', getAllTracks);
@@ -172,11 +172,11 @@ router.get('/track/:id', getTrackById);
 router.delete('/track/:id', deleteTrack);
 
 // Autoconocimiento
-router.get('/selfKnowledges', getAllSelfKnowledge);
-router.get('/selfK/:id', getSelfKnowledgeById);
-router.post('/selfK/:moduleId', createSelfKnowledge);
-router.put('/selfK/:id', updateSelfKnowledge);
-router.delete('/selfK/:id', deleteSelfKnowledge);
-router.post('/selfK', onlyCreateSelfKnowLedge);
+router.get('/selfRegisters', getAllSelfRegister);
+router.get('/selfR/:id', getSelfRegisterById);
+router.post('/selfR/:moduleId', createSelfRegister);
+router.post('/selfR', onlyCreateSelfRegister);
+router.put('/selfR/:id', updateSelfRegister);
+router.delete('/selfR/:id', deleteSelfRegister);
 
 module.exports = router;

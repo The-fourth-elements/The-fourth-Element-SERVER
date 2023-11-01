@@ -1,10 +1,10 @@
-const SelfKnowledge = require("../../models/SelfKnowledge");
+const SelfRegister = require("../../models/SelfRegister");
 
 
-async function deleteSelfKnowledge(req, res, next){
+async function deleteSelfRegister(req, res, next){
     const { id } = req.params;
     try {
-        const deleteSelfKnowledge = await SelfKnowledge.findByIdAndDelete(id);
+        const deleteSelfKnowledge = await SelfRegister.findByIdAndDelete(id);
         if(!deleteSelfKnowledge) throw Error('No se pudo eliminar el autoconocimiento.');
         return res.status(200).json({message: 'Autoconocimiento eliminado correctamente.'});
     } catch (error) {
@@ -12,4 +12,4 @@ async function deleteSelfKnowledge(req, res, next){
     }
 }
 
-module.exports = deleteSelfKnowledge;
+module.exports = deleteSelfRegister;
