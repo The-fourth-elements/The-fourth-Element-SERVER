@@ -180,7 +180,4 @@ router.post('/selfR', onlyCreateSelfRegister);
 router.put('/selfR/:id', updateSelfRegister);
 router.delete('/selfR/:id', deleteSelfRegister);
 
-// Middlewares
-router.get('/roleMiddleware', roleToModule);
-
 module.exports = router;

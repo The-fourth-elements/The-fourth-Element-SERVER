@@ -2,6 +2,7 @@ const Module = require("../models/Module");
 const { Users } = require("../models/Users");
 
 async function roleToModule(req, res, next){
+    console.log(req.session);
     const { userId, moduleId } = req.body
     try {
         if (!userId || ! moduleId) throw Error('Faltan datos');
