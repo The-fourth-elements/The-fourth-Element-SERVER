@@ -4,7 +4,6 @@ const findOrCreateExercise = async(name, description, questions, image) => {
     try {
         const findExercise = await Exercises.findOne({name});
         if(findExercise) return findExercise;
-        console.log(image);
         const createExercise = await Exercises.create({name, description, questions, image});
         if (!createExercise) throw Error('No se pudo crear el ejercicio.');
         else return createExercise;
