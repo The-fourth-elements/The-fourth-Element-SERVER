@@ -22,6 +22,7 @@ const createMeditation = require('../controllers/meditationControllers/createMed
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
+const { roleToModule } = require('../middlewares');
 
 // Usuarios
 router.get('/users', getAllUsers);
@@ -178,5 +179,8 @@ router.post('/selfR/:moduleId', createSelfRegister);
 router.post('/selfR', onlyCreateSelfRegister);
 router.put('/selfR/:id', updateSelfRegister);
 router.delete('/selfR/:id', deleteSelfRegister);
+
+// Middlewares
+router.get('/roleMiddleware', roleToModule);
 
 module.exports = router;
