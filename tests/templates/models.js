@@ -5,7 +5,7 @@ const findOrCreateCity = require('../../src/handler/dataBase/findOrCreateCity')
 const findOrCreateNation = require('../../src/handler/dataBase/findOrCreateNation');
 const findOrCreateSport = require('../../src/handler/dataBase/findOrCreateSport');
 
-const testCity = "New York";
+const testCities = ["New York", "Buenos Aires", "Madrid", "Seatle"];
 
 const testSport = "Futbol";
 
@@ -58,7 +58,7 @@ const testStatus = {
 }
 
 module.exports = {
-    testCity,
+    testCities,
     testModule,
     testNation,
     testProgress,
