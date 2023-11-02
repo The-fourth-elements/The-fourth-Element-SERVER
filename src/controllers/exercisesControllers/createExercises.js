@@ -3,10 +3,10 @@ const Module = require('../../models/Module');
 
 async function createExercises(req, res, next){
     const { moduleId } = req.params;
-    const { name, description, questions } = req.body;
+    const { name, description, questions, image } = req.body;
     try {
         if(!questions) throw Error('Faltan datos');
-        const newExercises = await findOrCreateExercise(name, description, questions);
+        const newExercises = await findOrCreateExercise(name, description, questions, image);
         if(!newExercises) throw Error('Error al crear el ejercicio');
         const findModule = await Module.findById(moduleId);
         if (!findModule) throw Error('No se encontro el módulo al que agregar el ejercicio');

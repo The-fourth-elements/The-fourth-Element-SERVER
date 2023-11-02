@@ -21,12 +21,12 @@ const createOrderSP = async (req, res, next) => {
                     quantity: 1
                 },
             ],
-            success_url: `https://${BACK_URL}/feedback-sp?userId=${userId}`,
-            cancel_url: `https://${BACK_URL}/stripe-cancel?userId=${userId}`,
+            success_url: `${BACK_URL}/feedback-sp?userId=${userId}`,
+            cancel_url: `${BACK_URL}/stripe-cancel?userId=${userId}`,
         });
 
         const userFound = await Users.findById(userId);
-        if(!userFound) throw Error(`No se pudo encontrar el usuario con id: ${userId}`);
+        if (!userFound) throw Error(`No se pudo encontrar el usuario con id: ${userId}`);
         userFound.stripe_payment = checkout.id;
         await userFound.save();
         res.status(201).json({ url: checkout.url });

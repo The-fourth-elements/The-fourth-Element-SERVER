@@ -1,8 +1,8 @@
 const handleUserDB = require("../../handler/dataBase/handlerUserDB");
 
 async function getUserById(req, res, next) {
+    const { id } = req.query;
     try {
-        const { id } = req.query;
         if (!id) {
             throw Error('Id es invalido.');
         } else {
