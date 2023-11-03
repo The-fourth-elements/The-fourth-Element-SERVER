@@ -22,6 +22,7 @@ const createMeditation = require('../controllers/meditationControllers/createMed
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
+const { createResponseEX, getOneResponseEX, getAllResponseEX, addResponseEXToUser } = require('../controllers/responsesEXController');
 
 // Usuarios
 router.get('/users', getAllUsers);
@@ -178,5 +179,11 @@ router.post('/selfR/:moduleId', createSelfRegister);
 router.post('/selfR', onlyCreateSelfRegister);
 router.put('/selfR/:id', updateSelfRegister);
 router.delete('/selfR/:id', deleteSelfRegister);
+
+// Respuestas de ejercicios
+router.post('/responseEx/:exerciseId/user/:userId', createResponseEX);
+router.get('/responseEx/:id', getOneResponseEX);
+router.get('/responseEx', getAllResponseEX);
+router.put('/responseEx/:responseId/user/:userId', addResponseEXToUser);
 
 module.exports = router;

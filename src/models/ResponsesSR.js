@@ -2,13 +2,15 @@ const mongoose = require("mongoose");
 
 const ResponsesSRMongoose = new mongoose.Schema({
     selfRegister: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        ref: 'SelfRegister'
     },
     response: {
         type: Array
     },
-    comment: {
-        type: String
+    comments:{
+        type: mongoose.Types.ObjectId,
+        ref: 'CommentsSR'
     }
 });
 
