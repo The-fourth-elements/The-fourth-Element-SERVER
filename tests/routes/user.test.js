@@ -6,6 +6,7 @@ const DB_URI_TEST = require('../templates/URItest');
 const { individualUserTest, testingUsers } = require('../templates/user');
 const { createUser, randomID } = require('../templates/models');
 const { compare } = require('bcrypt');
+const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 
 const agent = request(app);
 
@@ -25,12 +26,12 @@ describe("Back-End Users Routing Test", () => {
                 await createUser(testingUsers[1]);
             });
             
-            it("Users exist", async () => {
+            it("Users exist.", async () => {
                 const response = await agent.get('/users');
                 expect(response.status).toBe(200);
             });
 
-            it("Have the right lenght", async () => {
+            it("Have the right length.", async () => {
                 await agent.post("/auth").send(individualUserTest);
                 const response = await agent.get('/users');
                 expect(response.body).toHaveLength(testingUsers.length + 1);
@@ -88,6 +89,7 @@ describe("Back-End Users Routing Test", () => {
             it("Have an valid email.", async () => {
                 const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
                 const response = await agent.get(`/user?id=${userTest._id.valueOf()}`);
+                expect(response.body.email).toMatch(emailRegex);
                 expect(response.body.email).toMatch(testingUsers[1].email);
             });
 
@@ -98,11 +100,11 @@ describe("Back-End Users Routing Test", () => {
         });
 
         it("Should reply with status 400.", async () => {
-            const response = await agent.get("/auth");
+            await Users.deleteMany({});
+            const response = await agent.get(`/user?id=${new mongoose.Types.ObjectId()}`);
             expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response).toHaveProperty("error");
         });
-        
     });
 
     describe("GET /user?email", () =>{
@@ -138,6 +140,7 @@ describe("Back-End Users Routing Test", () => {
             it("Have an valid email.", async () => {
                 const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
                 const response = await agent.get(`/user/email?email=${userTest.email}`);
+                expect(response.body.email).toMatch(emailRegex);
                 expect(response.body.email).toMatch(testingUsers[1].email);
             });
 
@@ -148,11 +151,11 @@ describe("Back-End Users Routing Test", () => {
         });
 
         it("Should reply with status 400.", async () => {
-            const response = await agent.get("/auth");
+            await Users.deleteMany({});
+            const response = await agent.get(`/user?id=${new mongoose.Types.ObjectId()}`);
             expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response).toHaveProperty("error");
         });
-        
     });
 
     describe('GET /users/deleted', () =>{ 
