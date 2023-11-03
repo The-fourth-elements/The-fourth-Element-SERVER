@@ -22,7 +22,6 @@ const createMeditation = require('../controllers/meditationControllers/createMed
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
-const { roleToModule } = require('../middlewares');
 const { createResponseEX, getOneResponseEX, getAllResponseEX, addResponseEXToUser } = require('../controllers/responsesEXController');
 const { getAllResponseSR, getOneResponseSR, createResponseSR, addResponseSRToUser } = require('../controllers/responsesSRController');
 
