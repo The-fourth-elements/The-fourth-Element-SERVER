@@ -23,6 +23,7 @@ const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
 const { createResponseEX, getOneResponseEX, getAllResponseEX, addResponseEXToUser } = require('../controllers/responsesEXController');
+const { getAllResponseSR, getOneResponseSR, createResponseSR, addResponseSRToUser } = require('../controllers/responsesSRController');
 
 // Usuarios
 router.get('/users', getAllUsers);
@@ -180,10 +181,16 @@ router.post('/selfR', onlyCreateSelfRegister);
 router.put('/selfR/:id', updateSelfRegister);
 router.delete('/selfR/:id', deleteSelfRegister);
 
-// Respuestas de ejercicios
+// Respuestas de los ejercicios
 router.post('/responseEx/:exerciseId/user/:userId', createResponseEX);
 router.get('/responseEx/:id', getOneResponseEX);
 router.get('/responseEx', getAllResponseEX);
 router.put('/responseEx/:responseId/user/:userId', addResponseEXToUser);
+
+// Respuestas del auto-registro
+router.post('/responseSR/:selfRegisterId/user/:userId', createResponseSR);
+router.get('/responseSR', getAllResponseSR);
+router.get('/responseSR/:id', getOneResponseSR);
+router.put('/responseSR/:responseSRId/user/:userId', addResponseSRToUser);
 
 module.exports = router;

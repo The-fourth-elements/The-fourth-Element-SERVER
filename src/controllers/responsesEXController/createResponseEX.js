@@ -1,4 +1,3 @@
-const ResponsesEX = require('../../models/ResponsesEX');
 const Exercises = require('../../models/Exercises');
 const { Users } = require('../../models/Users');
 const findOrCreateResponseEX = require('../../handler/responsesEX/findOrCreateResponseEX');
