@@ -1,15 +1,5 @@
 const mongoose = require("mongoose");
 
-const CommentsSchema = new mongoose.Schema({
-    text: {
-        type: String,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
-});
-
 const ResponsesSRMongoose = new mongoose.Schema({
     selfRegister: {
         type: mongoose.Types.ObjectId,
@@ -17,7 +7,13 @@ const ResponsesSRMongoose = new mongoose.Schema({
     response: {
         type: Array,
     },
-    comments: [CommentsSchema]
+    comment: {
+        type: String,
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const ResponsesSR = mongoose.model('ResponsesSR', ResponsesSRMongoose);
