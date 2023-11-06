@@ -1,6 +1,6 @@
 const { Users } = require("../../models/Users");
 
-async function handleAllUserDB() {
+async function handleAllUserDB(id) {
     try {
         const allUsers = await Users.find({})
             .select('-password')
@@ -9,9 +9,12 @@ async function handleAllUserDB() {
             .populate('sport')
             .populate('progress')
         if (Array.isArray(allUsers) && allUsers.length) {
-            return allUsers;
+            const consultingUser = await Users.findById(id);
+            if (!consultingUser) throw Error('No se encontró el usuario que realiza la consulta, intente nuevamente.');
+            else if(consultingUser.role >= 2) return allUsers;
+            else throw Error('El usuario debe ser al menos rol moderador para ver todos los usuarios');
         }
-        throw Error('Users is empty');
+        else throw Error('Users is empty');
     } catch (error) {
         return { error: error.message }
     }
