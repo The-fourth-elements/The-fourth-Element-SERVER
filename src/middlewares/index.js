@@ -1,5 +1,5 @@
-const roleToModule = require('./roleToModule');
+const roleMiddleware = require('./roleMiddleware');
 
 module.exports = {
-    roleToModule
+    roleMiddleware
 }
