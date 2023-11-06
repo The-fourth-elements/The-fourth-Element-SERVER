@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Module = require('./Module');
 
 const ProgressMongoose = new mongoose.Schema({
     certificated:{

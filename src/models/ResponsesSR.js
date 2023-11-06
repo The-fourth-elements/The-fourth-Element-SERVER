@@ -2,13 +2,17 @@ const mongoose = require("mongoose");
 
 const ResponsesSRMongoose = new mongoose.Schema({
     selfRegister: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
     },
     response: {
-        type: Array
+        type: Array,
     },
     comment: {
-        type: String
+        type: String,
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
