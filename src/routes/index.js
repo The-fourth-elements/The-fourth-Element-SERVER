@@ -10,7 +10,7 @@ const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById
 const { forgotPassword, resetPassword } = require('../controllers/authController');
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
-const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
+const { getAllSports, getSportById, getSportByName, getAllUsersSports } = require('../controllers/sportControllers/index');
 const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('../controllers/quizControllers');
 const { startCourse, approveClass, approveModule } = require('../controllers/progressControllers/index')
 const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questControllers');
@@ -125,6 +125,7 @@ router.get('/countriesC', getCountersCountries);
 router.get('/sports', getAllSports);
 router.get('/sport/:id', getSportById);
 router.get('/sport', getSportByName);
+router.get('/users/sport', getAllUsersSports);
 
 // Pasarela de pagos //
 
