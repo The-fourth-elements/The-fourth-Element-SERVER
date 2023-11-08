@@ -1,7 +1,6 @@
 const roleMiddleware = require("../../middlewares/roleMiddleware");
 const Module = require("../../models/Module");
 const { Users } = require("../../models/Users");
-const { Users } = require("../../models/Users");
 
 async function getModuleById(req, res, next) {
     const { id } = req.params;
