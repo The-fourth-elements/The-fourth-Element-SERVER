@@ -10,7 +10,7 @@ const { updatePowerPoint, createPowerPoint, getAllPowerPoints, getPowerPointById
 const { forgotPassword, resetPassword } = require('../controllers/authController');
 const { getCityById, getAllCities, getCityByName } = require('../controllers/cityControllers/index');
 const { getAllCountries, getCountryById, getCountryByName, getCountersCountries } = require('../controllers/countryControllers/index');
-const { getAllSports, getSportById, getSportByName } = require('../controllers/sportControllers/index');
+const { getAllSports, getSportById, getSportByName, getAllUsersSports } = require('../controllers/sportControllers/index');
 const { createQuiz, deleteQuiz, updateQuiz, getOneQuiz, getAllQuiz } = require('../controllers/quizControllers');
 const { startCourse, approveClass, approveModule } = require('../controllers/progressControllers/index')
 const { deleteQuest, getOneQuest, getAllQuest } = require('../controllers/questControllers');
@@ -18,8 +18,7 @@ const { getAllResponses, getOneResponse, deleteResponse } = require('../controll
 const { createOrderMP, feedbackMP, createOrderPP, feedbackPP, createOrderSP, getPricesSP, feedbackSP, cancelOrderStripe } = require('../controllers/paymentGateway');
 const { createAbout, deleteAbout, getAboutById, getAllAbouts, putAbout } = require('../controllers/aboutControllers/index')
 const { updateExercises, createExercises, deleteExercises, getAllExercises, getOneExercises, onlyCreateExercises, addExercisesToModule } = require('../controllers/exercisesControllers');
-const createMeditation = require('../controllers/meditationControllers/createMeditation');
-const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls } = require('../controllers/meditationControllers');
+const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls, createMeditation } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
 const { createResponseEX, getOneResponseEX, getAllResponseEX, addResponseEXToUser, deleteResponseEX } = require('../controllers/responsesEXController');
@@ -126,6 +125,7 @@ router.get('/countriesC', getCountersCountries);
 router.get('/sports', getAllSports);
 router.get('/sport/:id', getSportById);
 router.get('/sport', getSportByName);
+router.get('/users/sport', getAllUsersSports);
 
 // Pasarela de pagos //
 

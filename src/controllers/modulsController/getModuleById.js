@@ -1,3 +1,4 @@
+const roleMiddleware = require("../../middlewares/roleMiddleware");
 const Module = require("../../models/Module");
 const { Users } = require("../../models/Users");
 const { Users } = require("../../models/Users");
@@ -20,7 +21,7 @@ async function getModuleById(req, res, next) {
                     },
                 });
             if (!module) throw Error("No se pudo encontrar un modulo con ese ID");
-            const userRole = (await Users.findById(jsdklfsdjklfdsjfds)).role;
+            const userRole = await roleMiddleware(jsdklfsdjklfdsjfds);
             if (userRole >= 1 || module.paid === false) return res.status(200).json({ message: "Modulo encontrado", module: module });
             else if(userRole <= 0 && module.paid === true) throw Error('No puede ingresar porque es un módulo pago.');
             else res.status(200).json({ message: "Modulo encontrado", module: module });

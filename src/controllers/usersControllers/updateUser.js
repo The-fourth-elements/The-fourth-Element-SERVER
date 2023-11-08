@@ -1,16 +1,22 @@
 const findOrCreateCity = require("../../handler/dataBase/findOrCreateCity");
 const findOrCreateNation = require("../../handler/dataBase/findOrCreateNation");
 const findOrCreateSport = require("../../handler/dataBase/findOrCreateSport");
+const roleMiddleware = require("../../middlewares/roleMiddleware");
 const { Users } = require("../../models/Users");
 const { encrypt } = require("../../services/crypt");
 const cloudinary = require('cloudinary');
 
 async function updateUser(req, res, next) {
     try {
+        const { jsdklfsdjklfdsjfds } = req.cookies;
         const { id } = req.body;
         if (!id) throw Error('Ingrese un id.');
         const { body } = req;
         if (!body) throw Error('Faltan datos.');
+        if(body.hasOwnProperty("role")){
+            const roleUser = await roleMiddleware(jsdklfsdjklfdsjfds);
+            if (roleUser < 2) throw Error('Debe ser al menos moderador para cambiar el rol del usuario.')
+        }
         if (body.hasOwnProperty("sport")) {
             body.sport = await findOrCreateSport(body.sport);
         }
