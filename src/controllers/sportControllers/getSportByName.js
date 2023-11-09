@@ -1,6 +1,6 @@
 const Sport = require("../../models/Sport");
 
-async function getSportByName(req, res){
+async function getSportByName(req, res, next){
     const { name } = req.query;
     try {
         const sport = await Sport.findOne({name});

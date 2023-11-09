@@ -4,7 +4,8 @@ async function getUserByEmail(req, res, next){
     try {
         const { email } = req.query;
         if(!email) throw Error('Faltan datos');
-        const user = await Users.findOne({email});
+        const user = await Users.findOne({email})
+            .select('-password');
         if(!user) throw Error('No se encontro el email');
         return res.status(200).json(user);
     } catch (error) {
