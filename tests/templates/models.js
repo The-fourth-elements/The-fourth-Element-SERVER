@@ -7,7 +7,7 @@ const findOrCreateSport = require('../../src/handler/dataBase/findOrCreateSport'
 
 const testCities = ["New York", "Buenos Aires", "Madrid", "Seatle"];
 
-const testSport = "Futbol";
+const testSport = ["Futbol", "Voleyball", "Rugby", "Handball"];
 
 const randomID = new mongoose.Types.ObjectId();
 
@@ -41,7 +41,7 @@ const createUser = async(user) =>{
     }
 }
 
-const testNation = "United State";
+const testNation = ["United State", "Mónaco", "Argentina", "Japón", "Australia", "South Africa"];
 
 const testProgress = {
     certificated: false,

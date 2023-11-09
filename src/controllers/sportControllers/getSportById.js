@@ -1,6 +1,6 @@
 const Sport = require("../../models/Sport");
 
-async function getSportById(req, res){
+async function getSportById(req, res, next){
     const { id } = req.params;
     try {
         const sport = await Sport.findById(id);

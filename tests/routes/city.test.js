@@ -91,7 +91,7 @@ describe("Back-End City Routing Test", () => {
         });
     });
 
-    describe("GET /user?name", () =>{
+    describe("GET /city?name", () =>{
         describe("Should reply with status 200. Verify if: ", () =>{
             beforeEach(async() => {
                 await findOrCreateCity(testCities[1]);
@@ -134,7 +134,7 @@ describe("Back-End City Routing Test", () => {
 
         it("Should reply with status 400.", async () => {
             await City.deleteMany({})
-            const response = await agent.get(`/city/${testCities[1]}`);
+            const response = await agent.get(`/city?name=${testCities[1]}`);
             expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response).toHaveProperty("error");
         });
