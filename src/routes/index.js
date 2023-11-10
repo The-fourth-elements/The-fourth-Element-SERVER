@@ -21,7 +21,7 @@ const { updateExercises, createExercises, deleteExercises, getAllExercises, getO
 const { getMeditationById, getAllMeditations, deleteMeditation, updateMeditation, addMeditationToModuls, createMeditation } = require('../controllers/meditationControllers');
 const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/tracksControllers');
 const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
-const { createResponseEX, getOneResponseEX, getAllResponseEX, addResponseEXToUser, deleteResponseEX } = require('../controllers/responsesEXController');
+const { createResponseEX, getOneResponseEX, getAllResponseEX, addResponseEXToUser, deleteResponseEX, getLatestResponsesEX } = require('../controllers/responsesEXController');
 const { getAllResponseSR, getOneResponseSR, createResponseSR, addResponseSRToUser, deleteResponseSR } = require('../controllers/responsesSRController');
 
 // Usuarios
@@ -165,7 +165,7 @@ router.put('/exercisesToModule', addExercisesToModule);
 router.get('/meditations', getAllMeditations);
 router.get('/meditation/:id', getMeditationById);
 router.post('/meditation', createMeditation);
-router.put('/meditation/:id', updateMeditation)
+router.put('/meditation/:id', updateMeditation);
 router.delete('/meditation/:id', deleteMeditation);
 
 // Tracks
@@ -173,7 +173,7 @@ router.get('/tracks', getAllTracks);
 router.get('/track/:id', getTrackById);
 router.delete('/track/:id', deleteTrack);
 
-// Autoconocimiento
+// Autoregistro
 router.get('/selfRegisters', getAllSelfRegister);
 router.get('/selfR/:id', getSelfRegisterById);
 router.post('/selfR/:moduleId', createSelfRegister);
@@ -184,6 +184,7 @@ router.delete('/selfR/:id', deleteSelfRegister);
 // Respuestas de los ejercicios
 router.get('/responseEx/:id', getOneResponseEX);
 router.get('/responseEx', getAllResponseEX);
+router.get('/responseExl/:exerciseId/:userId', getLatestResponsesEX); //Solo funciona con 2 respuestas, no llegué a hacer la recursividad
 router.post('/responseEx/:exerciseId/user/:userId', createResponseEX);
 router.put('/responseEx/:responseExId/user/:userId', addResponseEXToUser);
 router.delete('/responseEx/:responseExId/user/:userId', deleteResponseEX);
