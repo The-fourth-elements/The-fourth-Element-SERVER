@@ -12,7 +12,7 @@ async function createResponseEX (req, res, next){
         const searchExercise = await Exercises.findById(exerciseId);
         if (!searchExercise) throw Error('No se encontró el ejercicio.');
 
-        const newResponse = await Promise.all(responses.map(async response => await createResponseEXHandler(response, searchExercise)));
+        const newResponse = await Promise.all(responses.map(async (response, index) => await createResponseEXHandler(response, index, searchExercise)));
         
         const searchUser = await Users.findById(userId);
         if(!searchUser) throw Error(`No se pudo encontrar el usuario con ID: ${userId}`);

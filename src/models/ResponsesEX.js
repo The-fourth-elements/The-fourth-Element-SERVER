@@ -8,6 +8,9 @@ const ResponsesEXSchemas = new mongoose.Schema({
     response: {
         type: String
     },
+    index: {
+        type: Number
+    },
     date:{
         type: Date,
         default: Date.now
