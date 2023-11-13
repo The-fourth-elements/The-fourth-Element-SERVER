@@ -10,12 +10,8 @@ async function getLatestResponsesEX(req, res, next){
         if (!findUser) throw Error('No se encontró el usuario.'); 
         if (findUser.responsesEX.length <= 0) throw Error('No hay respuestas en el usuario');
         const userResponsesEX = findUser.responsesEX.filter(response => response.exercise.valueOf() === exerciseId);
-        
         const latestResponses = latestResponsesEX(userResponsesEX);
-        console.log(latestResponses);
-        
-
-        res.status(200).end();
+        res.status(200).send(latestResponses);
     } catch (error) {
         next({ message: error.message, statusCode: 404 });
     }
