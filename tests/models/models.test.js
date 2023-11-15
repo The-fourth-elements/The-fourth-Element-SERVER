@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const { DB_URI_TEST } = process.env
 const { individualUserTest, testingUsers } = require('../templates/user');
-const { testCities, testModule, testNation, testSport, createUser, findOrCreateCity, findOrCreateNation, findOrCreateSport } = require('../templates/models');
+const { testCities, testModule, testNation, testSport, createUser, findOrCreateCity, findOrCreateNation, findOrCreateSport, emailRegex } = require('../templates/models');
 const { isEmail, isURL, isAscii } = require('validator');
 const { regexPass } = require('../../src/models/Users');
 const { Users, City, Module, Nation, Role, Progress, Sport } = require('../../src/handler/dataBase/handleModels');
@@ -40,6 +40,7 @@ describe('Data Base Modules Test', () => {
             expect(newUser).toHaveProperty('role', foundUser.role);
             expect(newUser).toHaveProperty('age', foundUser.age);
             expect(newUser).toHaveProperty('expYearsSports', foundUser.expYearsSports);
+            expect(newUser._doc.email).toMatch(emailRegex);
         });
     });
 
