@@ -30,13 +30,11 @@ describe("Back-End Sports Routing Test", () => {
             it ("Have the right length.", async () =>{
                 await findOrCreateSport(testSport[3]);
                 const response = await agent.get('/sports');
-                console.log(response.body.length);
                 expect(response.body).toHaveLength(3);
             });
             it("Return an array of Sports.", async () => {
                 const response = await agent.get('/sports');
                 const newSports = await Sports.findOne({name: testSport[1]});
-                console.log(newSports);
                 expect(response.body[1]).toHaveProperty('_id', newSports._id.valueOf())
                 expect(response.body[0]).toHaveProperty('name', testSport[0]);
                 expect(response.body[1]).toHaveProperty('name', testSport[1]);

@@ -4,9 +4,8 @@ const app = require('../../src/app');
 const { Users } = require('../../src/models/Users');
 const DB_URI_TEST = require('../templates/URItest');
 const { individualUserTest, testingUsers, adminUser } = require('../templates/user');
-const { createUser, randomID } = require('../templates/models');
+const { createUser, randomID, emailRegex } = require('../templates/models');
 const { compare } = require('bcrypt');
-const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 
 const agent = request(app);
 
@@ -355,7 +354,6 @@ describe("Back-End Users Routing Test", () => {
             it('The response length of Data Base is right.', async() => {
                 const response = (await agent.get('/users')
                     .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`)).body.length;
-                console.log(response);
                 const findUser = await Users.findOne({email: individualUserTest.email});
                 await agent.delete(`/user/${findUser._id}`);
                 const { body } = await agent.get('/users')

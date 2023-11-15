@@ -57,6 +57,8 @@ const testStatus = {
     ending_date: null
 }
 
+const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+
 module.exports = {
     testCities,
     testModule,
@@ -69,5 +71,6 @@ module.exports = {
     testSport,
     findOrCreateCity,
     findOrCreateNation,
-    findOrCreateSport
+    findOrCreateSport,
+    emailRegex
 }

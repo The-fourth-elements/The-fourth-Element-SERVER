@@ -184,7 +184,7 @@ router.delete('/selfR/:id', deleteSelfRegister);
 // Respuestas de los ejercicios
 router.get('/responseEx/:id', getOneResponseEX);
 router.get('/responseEx', getAllResponseEX);
-router.get('/responseExl/:exerciseId/:userId', getLatestResponsesEX); //Solo funciona con 2 respuestas, no llegué a hacer la recursividad
+router.get('/responseExl/:exerciseId/:userId', getLatestResponsesEX);
 router.post('/responseEx/:exerciseId/user/:userId', createResponseEX);
 router.put('/responseEx/:responseExId/user/:userId', addResponseEXToUser);
 router.delete('/responseEx/:responseExId/user/:userId', deleteResponseEX);
