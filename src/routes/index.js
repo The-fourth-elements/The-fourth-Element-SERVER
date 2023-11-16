@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent } = require('../controllers/landingContent');
+const { getOneLandingContent, createLandingContent, deleteLandingContent, uppdateLandingContent, getAllLandingContent, getAllCountContents } = require('../controllers/landingContent');
 const { createUserWithBody, loginUser, getAllUsers, updateUser, deleteUser, getUserById, getAllUsersDeleted, getUserReset, getUserByEmail, getAllUsersAge, getUsersAge, inviteUser, orderUsersByAZ } = require('../controllers/usersControllers/index');
 const { createController, updateController, deleteController, getAllModules, addClassToModule, getModuleById, addQuizToModule, addExerciseToModule, addMeditationToModule, addSelfRegisterToModule } = require('../controllers/modulsController');
 const { createClass, addVideoToClass, addQuizToClass, addPowerPointToClass, getAllClasses, getClassById, deleteClass, updateClass } = require('../controllers/classControllers/index');
@@ -23,7 +23,6 @@ const { getTrackById, getAllTracks, deleteTrack } = require('../controllers/trac
 const { createSelfRegister, getAllSelfRegister, getSelfRegisterById, updateSelfRegister, deleteSelfRegister, onlyCreateSelfRegister } = require('../controllers/selfRegisterController');
 const { createResponseEX, getOneResponseEX, getAllResponseEX, addResponseEXToUser, deleteResponseEX, getLatestResponsesEX } = require('../controllers/responsesEXController');
 const { getAllResponseSR, getOneResponseSR, createResponseSR, addResponseSRToUser, deleteResponseSR } = require('../controllers/responsesSRController');
-
 // Usuarios
 router.get('/users', getAllUsers);
 router.get('/user', getUserById);
@@ -45,6 +44,7 @@ router.get('/content/:id', getOneLandingContent);
 router.post('/content', createLandingContent);
 router.put('/content/:id', uppdateLandingContent);
 router.delete('/content/:id', deleteLandingContent);
+router.get('/counter-contents', getAllCountContents);
 
 // About de about us
 router.get('/about', getAllAbouts);
