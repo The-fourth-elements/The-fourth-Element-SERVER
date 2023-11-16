@@ -6,21 +6,22 @@ const Exercise = require('../../models/Exercises');
 
 const getAllCountContent = async (req, res) => {
     try {
-        const numberClass = await Class.count();
-        const numberMeditations = await Meditation.count();
-        const numberSelfRegister = await SelfRegister.count();
-        const numberModules = await Module.count();
-        const numberExercises = await Exercise.count();
-        const counts = [{ classes: numberClass }, { meditations: numberMeditations }, { selfRegister: numberSelfRegister }, { modules: numberModules }, { exercises: numberExercises }];
-
-        for (let index = 0; index < counts.length; index++) {
-            console.log(counts[index]);
+        const numberModules = await Module.countDocuments();
+        const numberClass = await Class.countDocuments();
+        const numberExercises = await Exercise.countDocuments();
+        const numberMeditations = await Meditation.countDocuments();
+        const numberSelfRegister = await SelfRegister.countDocuments();
+        const counter = {
+            modules: numberModules,
+            classes: numberClass,
+            exercises: numberExercises,
+            meditations: numberMeditations,
+            charlas: 47,
+            selfRegisters: numberSelfRegister
         }
-
-
-        return res.status(200).send(counts)
+        return res.status(200).json(counter)
     } catch (error) {
-        return res.status(500).send({ error: "server error", message: "No se pudo realizar el conteo del contenido" });
+        return res.status(500).json({ error: "server error", message: "No se pudo realizar el conteo del contenido" });
     }
 
 }
