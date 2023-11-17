@@ -55,15 +55,16 @@ async function approveClass(req, res, next) {
             modules[moduleIndex].classes.push(getNextProgressClass(dbModules, moduleIndex, classIndex + 1))
         }
 
-        await Progress.updateOne(
+        const updatedProgress = await Progress.findOneAndUpdate(
             { _id: user.progress._id },
             {
                 $set: {
                     'modules': modules,
                 },
-            }
-        )
-        res.status(200).json({ message: "Clase aprobada con éxito" })
+            },
+            { new: true }
+        );
+        res.status(200).json({ message: "Clase aprobada con éxito", data: updatedProgress })
     } catch (error) {
         next({ message: error.message, statusCode: error.statusCode })
     }
