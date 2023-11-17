@@ -1,0 +1,232 @@
+paths:
+  /powerpoints:
+    get:
+      summary: Obtener todas las presentaciones de PowerPoint
+      description: Obtiene una lista de todas las presentaciones de PowerPoint.
+      tags:
+        - PowerPoint
+      responses:
+        '200':
+          description: Lista de presentaciones de PowerPoint obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/powerPointResponse"
+        '404':
+          description: No se encontraron presentaciones de PowerPoint.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que no se encontraron presentaciones de PowerPoint.
+                    example: No se encontraron presentaciones de PowerPoint
+  /powerpoint/{id}:
+    get:
+      summary: Obtener presentación de PowerPoint por ID
+      description: Obtiene una presentación de PowerPoint por su ID.
+      tags:
+        - PowerPoint
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID único de la presentación de PowerPoint.
+          schema:
+            type: string
+          example: 654005bd09c7e09dc82b9294
+      responses:
+        '200':
+          description: Presentación de PowerPoint obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/powerPointResponse"
+        '404':
+          description: Presentación de PowerPoint no encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que la presentación de PowerPoint no fue encontrada.
+                    example: Presentación de PowerPoint no encontrada
+        '400':
+          description: Error al obtener la presentación de PowerPoint.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando el problema al obtener la presentación de PowerPoint.
+    put:
+      summary: Actualizar presentación de PowerPoint
+      description: Actualiza una presentación de PowerPoint existente.
+      tags:
+        - PowerPoint
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la presentación de PowerPoint a actualizar.
+          schema:
+            type: string
+            example: 654005bd09c7e09dc82b9294
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: Nueva URL de la presentación de PowerPoint.
+                  example: https://example.com/updated_presentation.pptx
+      responses:
+        '200':
+          description: Presentación de PowerPoint actualizada con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ID de la presentación de PowerPoint actualizada.
+                    example: 654005bd09c7e09dc82b9294
+                  url:
+                    type: string
+                    description: Nueva URL de la presentación de PowerPoint.
+                    example: https://example.com/updated_presentation.pptx
+        '400':
+          description: Error al actualizar la presentación de PowerPoint.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando el problema al actualizar la presentación de PowerPoint.
+        '404':
+          description: Presentación de PowerPoint no encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que la presentación de PowerPoint no fue encontrada.
+                    example: Presentación de PowerPoint no encontrada
+    delete:
+      summary: Eliminar presentación de PowerPoint
+      description: Elimina una presentación de PowerPoint existente.
+      tags:
+        - PowerPoint
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID único de la presentación de PowerPoint a eliminar.
+          schema:
+            type: string
+            example: 654005bd09c7e09dc82b9294
+      responses:
+        '200':
+          description: Presentación de PowerPoint eliminada con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que la presentación de PowerPoint fue eliminada con éxito.
+                    example: Presentación eliminada exitosamente
+        '400':
+          description: Error al eliminar la presentación de PowerPoint.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando el problema al eliminar la presentación de PowerPoint.
+                    example: Ocurrió un error al eliminar la presentación de PowerPoint
+        '404':
+          description: Presentación de PowerPoint no encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que la presentación de PowerPoint no fue encontrada.
+                    example: Presentación de PowerPoint no encontrada
+  /powerpoint:
+    post:
+      summary: Crear presentación de PowerPoint
+      description: Crea una nueva presentación de PowerPoint.
+      tags:
+        - PowerPoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/powerPoint"
+      responses:
+        '201':
+          description: Presentación de PowerPoint creada con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/powerPointResponse"
+        '400':
+          description: Error al crear la presentación de PowerPoint.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando el problema al crear la presentación de PowerPoint.
+                    example: Ocurrió un error al crear la presentación de PowerPoint
+components:
+  schemas:
+    powerPointResponse:
+      type: object
+      description: Detalles de la presentación de PowerPoint asociada a la clase.
+      properties:
+        _id:
+          type: string
+          description: ID de la presentación de PowerPoint.
+          example: 6540068d09c7e09dc82b9473
+        url:
+          type: string
+          format: uri
+          description: URL de la presentación de PowerPoint.
+          example: https://example.com/presentation.pptx
+    powerPoint:
+      type: object
+      description: Detalles de la presentación de PowerPoint asociada a la clase.
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL de la presentación de PowerPoint.
+          required: true
+          example: https://example.com/presentation.pptx

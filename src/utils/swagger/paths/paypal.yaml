@@ -1,0 +1,66 @@
+paths:
+  /create-order-pp:
+    post:
+      tags:
+        - Paypal
+      summary: Crear Orden PayPal
+      responses:
+        '200':
+          description: Orden PayPal creada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID de la orden PayPal creada.
+                    # example:
+        '404':
+          description: Error al crear la orden PayPal.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error.
+                    # example:
+  /feedback-pp:
+    put:
+      tags:
+        - Paypal
+      summary: Feedback de Pago PayPal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idUser:
+                  type: string
+                  description: ID del usuario para la retroalimentación de PayPal.
+              required:
+                - idUser
+      responses:
+        '200':
+          description: Feedback de Pago PayPal exitosa, usuario actualizado con rol 1.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '404':
+          description: Error en la retroalimentación de Pago PayPal.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se pudo cambiar el rol del usuario
+
+imports:
+  - path: ./quest.yaml

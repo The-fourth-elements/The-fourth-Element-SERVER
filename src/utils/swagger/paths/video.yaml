@@ -1,0 +1,225 @@
+paths:
+  /videos:
+    get:
+      summary: Obtener todos los videos
+      description: Recupera todos los videos disponibles.
+      tags:
+        - Videos
+      responses:
+        '200':
+          description: Videos recuperados con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/videoResponse"
+        '404':
+          description: No se encontraron videos.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se encontraron videos
+  /video:
+    post:
+      summary: Crear un nuevo video
+      description: Crea un nuevo video proporcionando su URL.
+      tags:
+        - Videos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                video:
+                  type: object
+                  properties:
+                    public_id:
+                      type: string
+                      description: ID público del video (cloudinary).
+                    url:
+                      type: string
+                      description: URL del video.
+                      example: https://example.com/sample_video.mp4
+              required:
+                - url
+      responses:
+        '201':
+          description: Video creado con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/videoResponse"
+        '400':
+          description: Error al crear el video.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando el problema al crear el video.
+                    example: No se proporcionó URL del video
+  /video/{id}:
+    get:
+      summary: Obtener video por ID
+      description: Recupera un video por su ID.
+      tags:
+        - Videos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del video a recuperar.
+          schema:
+            type: string
+          example: 654005bd09c7e09dc82b9292
+      responses:
+        '200':
+          description: Video recuperado con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/videoResponse"
+        '404':
+          description: Video no encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: Video no encontrado
+    put:
+      summary: Actualizar video por ID
+      description: Actualiza la URL de un video existente por su ID.
+      tags:
+        - Videos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del video a actualizar.
+          schema:
+            type: string
+        - in: body
+          name: video
+          required: true
+          description: Objeto que contiene la nueva URL del video.
+          schema:
+            type: object
+            properties:
+              public_id:
+                type: string
+                description: ID del video (cloudinary)
+              url:
+                type: string
+                description: Nueva URL del video.
+                example: https://nueva-url.com/video.mp4
+      responses:
+        '200':
+          description: Video actualizado con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/videoResponse"
+        '400':
+          description: Error al actualizar el video.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se proporcionó una nueva URL para actualizar el video
+        '404':
+          description: Video no encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: Video no encontrado 
+    delete:
+      summary: Eliminar video por ID
+      description: Elimina un video existente por su ID.
+      tags:
+        - Videos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del video a eliminar.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Video eliminado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que el video fue eliminado con éxito.
+                    example: Video eliminado exitosamente
+        '404':
+          description: Video no encontrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que el video no fue encontrado.
+                    example: El video no fue encontrado
+
+components:
+  schemas:
+    video:
+      type: object
+      description: Detalles del video asociado a la clase.
+      properties:
+        id:
+          type: string
+          description: ID del video en cloudinary.
+          example: Video/ddpvcbhqiccckacuhg2f
+        url:
+          type: string
+          format: uri
+          description: URL del video.
+          example: https://example.com/video.mp4
+    videoResponse:
+      type: object
+      description: Detalles del video asociado a la clase.
+      properties:
+        _id:
+          type: string
+          description: id del video en DB
+          example: 654005bd09c7e09dc82b9292
+        id:
+          type: string
+          description: ID del video en cloudinary.
+          example: Video/qjmt6b2nzov6u67hhqt7
+        url:
+          type: string
+          format: uri
+          description: URL del video.
+          example: https://example.com/video.mp4

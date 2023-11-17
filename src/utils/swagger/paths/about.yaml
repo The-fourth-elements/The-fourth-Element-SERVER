@@ -1,0 +1,166 @@
+paths:
+  /about:
+    get:
+      summary: Obtener información "About"
+      description: Obtiene todos los elementos de información "About".
+      tags:
+        - About endpoints
+      responses:
+        "200":
+          description: Información "About" obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/aboutResponse"
+        "404":
+          description: No se pudo obtener la información "About" o error en la solicitud.
+          content:
+            application/json:
+              example:
+                message: "No se pudo obtener la infomación"
+    post:
+      tags:
+        - About endpoints
+      summary: Crear información "About"
+      description: Crea un nuevo elemento de información "About".
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Titulo:
+                  type: string
+                  description: El título del elemento "About".
+                Contenido:
+                  type: string
+                  description: El contenido del elemento "About".
+      responses:
+        "201":
+          description: Elemento "About" creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/aboutResponse"
+        "404":
+          description: Error al crear el elemento "About" o error en la solicitud.
+          content:
+            application/json:
+              example:
+                message: "Error al crear contenido"
+  /about/{id}:
+    get:
+      tags:
+        - About endpoints
+      summary: Obtener información "About" por ID
+      description: Obtiene un elemento de información "About" por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: El ID del elemento "About" que se desea obtener.
+      responses:
+        "200":
+          description: Información "About" obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/aboutResponse"
+        "404":
+          description: No se ha encontrado la información "About" o error en la solicitud.
+          content:
+            application/json:
+              example:
+                message: "Error contenido no encontrado"
+    put:
+      tags:
+        - About endpoints
+      summary: Actualizar información "About" por ID
+      description: Actualiza un elemento de información "About" por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: El ID del elemento "About" que se desea actualizar.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Titulo:
+                  type: string
+                  description: El nuevo título del elemento "About".
+                Contenido:
+                  type: string
+                  description: El nuevo contenido del elemento "About".
+      responses:
+        "200":
+          description: Elemento "About" actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/aboutResponse"
+        "404":
+          description: Error al actualizar el elemento "About" o error en la solicitud.
+          content:
+            application/json:
+              example:
+                message: "Contenido no encontrado"
+    delete:
+      tags:
+        - About endpoints
+      summary: Eliminar información "About" por ID
+      description: Elimina un elemento de información "About" por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: El ID del elemento "About" que se desea eliminar.
+      responses:
+        "200":
+          description: Elemento "About" eliminado exitosamente.
+          content:
+            application/json:
+              example:
+                message: "Contenido eliminado con éxito"
+        "404":
+          description: Error al eliminar el about
+          content:
+            application/json:
+              example:
+                message: "Error al eliminar el about"
+
+components:
+  schemas:
+    about:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Titutlo del elemento a añadir en "About us"
+        content:
+          type: string
+          description: Contenido del elemento a añadir en "About us"
+    aboutResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del elemento en base de datos
+        title:
+          type: string
+          description: Titutlo del about us
+        content:
+          type: string
+          description: Contenido del elemento about us

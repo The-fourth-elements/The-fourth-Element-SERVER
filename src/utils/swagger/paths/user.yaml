@@ -1,0 +1,324 @@
+paths:
+  /user:
+    get:
+      tags:
+        - user endpoints
+      summary: Obtener usuario por ID
+      description: Obtiene un usuario por su ID.
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: El ID del usuario que se desea obtener.
+      responses:
+        "200":
+          description: Respuesta exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Error de solicitud.
+    put:
+      tags:
+        - user endpoints
+      summary: Actualizar usuario
+      description: Actualiza un usuario con los datos proporcionados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userRequest"
+      responses:
+        '200':
+          description: Usuario actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '404':
+          description: Error al actualizar o error en la solicitud.
+  /users:
+    get:
+      tags:
+        - user endpoints
+      summary: Obtener todos los usuarios
+      description: Obtiene la lista de todos los usuarios.
+      responses:
+        "200":
+          description: Respuesta exitosa.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "404":
+          description: Usuarios no encontrados.
+  /user/{email}:
+    get:
+      tags:
+        - user endpoints
+      summary: Obtener usuario por email
+      description: Obtiene un usuario por su dirección de correo electrónico.
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+          description: La dirección de correo electrónico del usuario que se desea obtener.
+      responses:
+        "200":
+          description: Respuesta exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /users/ages:
+    get:
+      tags:
+        - user endpoints
+      summary: Obtener edades de usuarios
+      description: Obtiene las edades de todos los usuarios.
+      responses:
+        "200":
+          description: Respuesta exitosa.
+          content:
+            application/json:
+              example:
+                - 30
+                - 25
+                - 35
+                - 22
+        "400":
+          description: No hay usuarios o error en la solicitud.
+  /users/average:
+    get:
+      tags:
+        - user endpoints
+      summary: Obtener estadísticas de edades de usuarios
+      description: Obtiene estadísticas de edades de usuarios, categorizados en grupos de edades.
+      responses:
+        "200":
+          description: Respuesta exitosa.
+          content:
+            application/json:
+              example:
+                menor18: 10
+                menor26: 20
+                menor30: 15
+                menor40: 5
+                menor120: 30
+        "400":
+          description: No hay usuarios o error en la solicitud.
+  /users/deleted:
+    get:
+      tags:
+        - user endpoints
+      summary: Obtener usuarios eliminados
+      description: Obtiene la lista de usuarios eliminados.
+      responses:
+        "200":
+          description: Respuesta exitosa.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "404":
+          description: No hay usuarios eliminados o error en la solicitud.
+  /orderUsersByAZ:
+    get:
+      tags:
+        - user endpoints
+      summary: Obtener usuarios ordenados alfabéticamente
+      description: Obtiene la lista de usuarios ordenados alfabéticamente por nombre de usuario.
+      parameters:
+        - name: ASC
+          in: query
+          description: Ordenar en orden ascendente (ASC).
+          schema:
+            type: boolean
+        - name: DSC
+          in: query
+          description: Ordenar en orden descendente (DSC).
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Respuesta exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: No hay usuarios en la Base de Datos o error en la solicitud.
+  /user/reset:
+    put:
+      tags:
+        - user endpoints
+      summary: Restablecer usuario
+      description: Restablece un usuario que fue previamente eliminado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: La dirección de correo electrónico del usuario que se desea restablecer.
+      responses:
+        '200':
+          description: Usuario restablecido exitosamente.
+          content:
+            application/json:
+              example:
+                success: "Usuario restablecido exitosamente"
+        '404':
+          description: No se hallaron coincidencias o error en la solicitud.
+  /user/{id}:
+    delete:
+      tags:
+        - user endpoints
+      summary: Eliminar usuario
+      description: Elimina un usuario por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: El ID del usuario que se desea eliminar.
+      responses:
+        '200':
+          description: Usuario eliminado exitosamente.
+          content:
+            application/json:
+              example:
+                message: "Usuario eliminado exitosamente."
+        '404':
+          description: Usuario no encontrado o error en la solicitud.
+  /invite:
+    post:
+      tags:
+        - user endpoints
+      summary: Invitar usuario
+      description: Envía una invitación por correo electrónico a un usuario.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: La dirección de correo electrónico del usuario que se desea invitar.
+      responses:
+        '200':
+          description: Invitación enviada exitosamente.
+          content:
+            application/json:
+              example:
+                message: "El usuario ya es invitado"
+        '400':
+          description: Error al enviar la invitación o error en la solicitud.      
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del usuario.
+        username:
+          type: string
+          description: Nombre de usuario.
+        providerId:
+          type: string
+          description: ID del proveedor.
+        role:
+          type: integer
+          description: Rol del usuario.
+        email:
+          type: string
+          description: Dirección de correo electrónico del usuario.
+        responses:
+          type: array
+          description: Respuestas del usuario.
+        deleted:
+          type: boolean
+          description: Indicador de eliminación.
+        city:
+          $ref: "#/components/schemas/city"
+        nation:
+          $ref: "#/components/schemas/country"
+        sport:
+          $ref: "#/components/schemas/Sport"
+        age:
+          type: integer
+          description: Edad del usuario.
+        expYearsSports:
+          type: integer
+          description: Años de experiencia en deportes.
+        stripe_payment:
+          type: string
+          description: Información de pago con Stripe.
+        profile_img:
+          type: object
+          properties:
+            public_id:
+              type: string
+              description: ID público de la imagen del perfil.
+            secure_url:
+              type: string
+              format: uri
+              description: URL segura de la imagen de perfil.
+    userRequest:
+      type: object
+      properties:
+        username: 
+          type: string
+          description: Nombre de usuario
+          example: usuariodeprueba
+        email:
+          type: string
+          description: email del usuario
+          example: ansony.rojitas@gmail.com
+        password:
+          type: string
+          description: contraseña del usuario
+          example: 1234Holamundo
+        city:
+          type: string
+          description: ciudad del usuario
+          example: New York
+        nationality: 
+          type: string
+          description: nacionalidad del usuario
+          example: United State
+        sport:
+          type: string
+          description: Deporte que practica el usuario
+          example: Fútbol
+        age:
+          type: integer
+          description: años de edad del usuario
+          example: 28
+        expYearsSports:
+          type: integer
+          description: Años de experiencia en el deporte
+          example: 12
+
+imports:
+  - path: ./country.yaml
+  - path: ./city.yaml
+  - path: ./sport.yaml
