@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const { DB_URI_TEST } = process.env
 const { individualUserTest, testingUsers } = require('../templates/user');
-const { testCity, testModule, testNation, testSport, createUser, findOrCreateCity, findOrCreateNation, findOrCreateSport } = require('../templates/models');
+const { testCities, testModule, testNation, testSport, createUser, findOrCreateCity, findOrCreateNation, findOrCreateSport, emailRegex } = require('../templates/models');
 const { isEmail, isURL, isAscii } = require('validator');
 const { regexPass } = require('../../src/models/Users');
 const { Users, City, Module, Nation, Role, Progress, Sport } = require('../../src/handler/dataBase/handleModels');
@@ -40,18 +40,19 @@ describe('Data Base Modules Test', () => {
             expect(newUser).toHaveProperty('role', foundUser.role);
             expect(newUser).toHaveProperty('age', foundUser.age);
             expect(newUser).toHaveProperty('expYearsSports', foundUser.expYearsSports);
+            expect(newUser._doc.email).toMatch(emailRegex);
         });
     });
 
     describe('City Model', () => {
         it('Insert a City', async() =>{
-            const createCity = (await findOrCreateCity(testCity)).name;
+            const createCity = (await findOrCreateCity(testCities[0])).name;
             const foundCity = (await City.find()).map(city => city.name);
             expect(foundCity).toContain(createCity);
         });
 
         it('City saves in DB as ObjectId', async() => {
-            await findOrCreateCity(testCity);
+            await findOrCreateCity(testCities[0]);
             const foundCity = (await City.find()).map(city => city._doc);
             expect(foundCity[0]).toHaveProperty('_id');
             expect(foundCity[0]).toHaveProperty('name');
@@ -59,7 +60,7 @@ describe('Data Base Modules Test', () => {
         });
 
         it('Name must be an ASCII valid', async() =>{
-            const createCity = (await findOrCreateCity(testCity))._id;
+            const createCity = (await findOrCreateCity(testCities[0]))._id;
             const foundCity = (await City.findOne({_id: createCity._id})).name;
             expect(isAscii(foundCity)).toBeTruthy();
         });

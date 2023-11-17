@@ -1,68 +1,25 @@
- 
+require('dotenv').config();
 const Class = require("../../models/Class");
 const Video = require('../../models/Videos')
 const PowerPoint = require('../../models/PowerPoint')
-const mongoose = require('mongoose');
+const cloudinary = require('../../utils/cloudinary');
+const { CLOUDINARY_API_SECRET } = process.env;
 
 async function createClass(req, res, next) {
-    let session = null
     try {
         const { name, description, video, powerPoint } = req.body
-        if (!name || !description) {
-            const error = new Error("Faltan datos")
-            error.statusCode = 400
-            throw error
-        }
+        if (!name || !description || !video || !powerPoint) throw Error("Faltan datos");
 
-        session = await mongoose.startSession();
-        session.startTransaction();
-
-        let videoId, powerPointId;
-
-        if (video) {
-            const newVideo = new Video({
-                id: video.id,
-                url: video.url
-            })
-            await newVideo.save()
-            videoId = newVideo._id
-        } else {
-            const error = new Error('Falta el video.')
-            error.statusCode = 400
-            throw error
-        }
-
-        if (powerPoint) {
-            const newPresentacion = new PowerPoint({
-                id: powerPoint.id,
-                url: powerPoint.url
-            })
-            await newPresentacion.save()
-            powerPointId = newPresentacion._id
-        } else {
-            const error = new Error('Falta el Power Point.')
-            error.statusCode = 400
-            throw error
-        }
-
-        const newClass = new Class({
-            name,
-            description,
-            video: videoId,
-            powerPoint: powerPointId
-        })
-        await newClass.save()
-
-        await session.commitTransaction();
-        session.endSession()
-
-        if (newClass) res.status(201).json(newClass)
+        const newVideo = await Video.create({id: video.id, url: video.url});
+        const newPowerPoint = await PowerPoint.create({url: powerPoint.url})
+        
+        const newClass = await Class.create({name, description, video: newVideo._id, powerPoint: newPowerPoint._id});
+        console.log(newClass);
+        if (newClass) res.status(201).json(newClass);
+        else throw Error('No se pudo crear la nueva clase')
+        
     } catch (error) {
-        if (session) {
-            await session.abortTransaction();
-            session.endSession();
-        }
-        next({ message: error.message, statusCode: error.statusCode });
+        next({ message: error.message, statusCode: 404 });
     }
 }
 

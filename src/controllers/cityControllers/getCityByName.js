@@ -1,6 +1,6 @@
 const City = require("../../models/City");
 
-async function getCityByName(req, res) {
+async function getCityByName(req, res, next) {
     const { name } = req.query;
     try {
         if (name) {

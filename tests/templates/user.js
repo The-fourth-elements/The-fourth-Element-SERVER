@@ -35,7 +35,20 @@ const testingUsers = [
     }
 ];
 
+const adminUser = {
+    username: "FedeDev",
+    city: "Mendoza",
+    nationality: "Argentina",    
+    email: "gabe.bastias10@gmail.com",
+    password: "FGDEV123",
+    sport: "Futbol",
+    role: 3,
+    age: 25,
+    expYearsSports: 2
+}
+
 module.exports = {
     individualUserTest,
-    testingUsers
+    testingUsers,
+    adminUser
 }

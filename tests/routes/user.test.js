@@ -3,8 +3,8 @@ const request = require('supertest');
 const app = require('../../src/app');
 const { Users } = require('../../src/models/Users');
 const DB_URI_TEST = require('../templates/URItest');
-const { individualUserTest, testingUsers } = require('../templates/user');
-const { createUser, randomID } = require('../templates/models');
+const { individualUserTest, testingUsers, adminUser } = require('../templates/user');
+const { createUser, randomID, emailRegex } = require('../templates/models');
 const { compare } = require('bcrypt');
 
 const agent = request(app);
@@ -23,21 +23,25 @@ describe("Back-End Users Routing Test", () => {
             beforeEach(async() => {
                 await createUser(testingUsers[0]);
                 await createUser(testingUsers[1]);
+                admin = await createUser(adminUser);
             });
             
-            it("Users exist", async () => {
-                const response = await agent.get('/users');
+            it("Users exist.", async () => {
+                const response = await agent.get('/users')
+                    .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`)
                 expect(response.status).toBe(200);
             });
 
-            it("Have the right lenght", async () => {
+            it("Have the right length.", async () => {
                 await agent.post("/auth").send(individualUserTest);
-                const response = await agent.get('/users');
-                expect(response.body).toHaveLength(testingUsers.length + 1);
+                const response = await agent.get('/users')
+                    .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`)
+                expect(response.body).toHaveLength(testingUsers.length + 2);
             });
 
             it("Return an array of Users.", async () => {
-                const response = await agent.get('/users');
+                const response = await agent.get('/users')
+                    .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`)
                 const newUser = (await Users.findOne({email: testingUsers[0].email}))._doc;
                 const dbUserId = newUser._id.toString();
                 expect(response.body[0]).toHaveProperty('_id', dbUserId)
@@ -46,13 +50,14 @@ describe("Back-End Users Routing Test", () => {
                 expect(response.body[1]).toHaveProperty('email', testingUsers[1].email);
                 expect(response.body[1]).not.toHaveProperty('password');
                 expect(response.body).toHaveProperty("length");
-                expect(response.body).toHaveLength(2);
+                expect(response.body).toHaveLength(3);
             });
         });
         
         it("Should reply with status 400.", async () => {
             await Users.deleteMany({});
-            const response = await agent.get("/users");
+            const response = await agent.get('/users')
+                .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`)
             expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response.body).toHaveProperty("error");
         }); 
@@ -88,21 +93,23 @@ describe("Back-End Users Routing Test", () => {
             it("Have an valid email.", async () => {
                 const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
                 const response = await agent.get(`/user?id=${userTest._id.valueOf()}`);
+                expect(response.body.email).toMatch(emailRegex);
                 expect(response.body.email).toMatch(testingUsers[1].email);
             });
 
             it("Not show the user password.", async () => {
-                const response = await agent.get('/users');
-                expect(response.body[1]).not.toHaveProperty("password");
+                const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
+                const response = await agent.get(`/user?id=${userTest._id.valueOf()}`);
+                expect(response.body).not.toHaveProperty("password");
             });
         });
 
         it("Should reply with status 400.", async () => {
-            const response = await agent.get("/auth");
+            await Users.deleteMany({});
+            const response = await agent.get(`/user?id=${new mongoose.Types.ObjectId()}`);
             expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response).toHaveProperty("error");
         });
-        
     });
 
     describe("GET /user?email", () =>{
@@ -138,21 +145,23 @@ describe("Back-End Users Routing Test", () => {
             it("Have an valid email.", async () => {
                 const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
                 const response = await agent.get(`/user/email?email=${userTest.email}`);
+                expect(response.body.email).toMatch(emailRegex);
                 expect(response.body.email).toMatch(testingUsers[1].email);
             });
 
             it("Not show the user password.", async () => {
-                const response = await agent.get('/users');
-                expect(response.body[1]).not.toHaveProperty("password");
+                const userTest = (await Users.findOne({username: testingUsers[1].username}))._doc;
+                const response = await agent.get(`/user/email?email=${userTest.email}`);
+                expect(response.body).not.toHaveProperty("password");
             });
         });
 
         it("Should reply with status 400.", async () => {
-            const response = await agent.get("/auth");
+            await Users.deleteMany({});
+            const response = await agent.get('/user?email=hola@mundo.com');
             expect(response.status).toBeGreaterThanOrEqual(400);
             expect(response).toHaveProperty("error");
         });
-        
     });
 
     describe('GET /users/deleted', () =>{ 
@@ -196,7 +205,9 @@ describe("Back-End Users Routing Test", () => {
     describe('PUT /user/reset', () => {
         beforeEach(async() => {
             await createUser(individualUserTest);
-            const userToDelete = (await agent.get('/users')).body[0];
+            admin = await createUser(adminUser);
+            const userToDelete = (await agent.get('/users')
+                .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`)).body[0];
             await agent.delete(`/user/${userToDelete._id}`);
         });
         describe("Should reply with status 200. Verify if: ", () =>{
@@ -324,6 +335,7 @@ describe("Back-End Users Routing Test", () => {
         beforeEach(async() => {
             await createUser(individualUserTest);
             await createUser(testingUsers[1]);
+            admin = await createUser(adminUser);
         });
         describe("Should reply with status 200. Verify if: ", () =>{
             it('User delete successful.', async() => {
@@ -340,10 +352,12 @@ describe("Back-End Users Routing Test", () => {
             });
 
             it('The response length of Data Base is right.', async() => {
-                const response = (await agent.get('/users')).body.length;
+                const response = (await agent.get('/users')
+                    .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`)).body.length;
                 const findUser = await Users.findOne({email: individualUserTest.email});
                 await agent.delete(`/user/${findUser._id}`);
-                const { body } = await agent.get('/users');
+                const { body } = await agent.get('/users')
+                    .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`);
                 expect(body).toHaveLength(response - 1);
             })
         });
@@ -355,8 +369,9 @@ describe("Back-End Users Routing Test", () => {
     });
 
     describe('POST /auth', () => {
-        beforeAll(async() => {
+        beforeEach(async() => {
             await Users.deleteMany({});
+            admin = await createUser(adminUser);
         })
         describe("Should reply with status 200. Verify if: ", () => {
             it('The post was successful', async() => {
@@ -374,9 +389,10 @@ describe("Back-End Users Routing Test", () => {
 
             it('User created match with user in DB', async() => {
                 await agent.post("/auth").send(individualUserTest);
-                const matchedUser = await agent.get(`/users`);
+                const matchedUser = await agent.get(`/users`)
+                    .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`);
                 const dbUser = (await Users.findOne({username: individualUserTest.username}))._doc;
-                expect(matchedUser.body[0]._id.valueOf()).toEqual(dbUser._id.valueOf());
+                expect(matchedUser.body[1]._id.valueOf()).toEqual(dbUser._id.valueOf());
             });
         });
 
@@ -389,6 +405,7 @@ describe("Back-End Users Routing Test", () => {
     describe('POST /login', () => {
         beforeEach(async() => {
             await createUser(testingUsers[1]);
+            admin = await createUser(adminUser);
         });
         describe("Should reply with status 200. Verify if: ", () => {
             it('Post (userCreateController)', async() => {
@@ -406,7 +423,8 @@ describe("Back-End Users Routing Test", () => {
             });
 
             it('Data Base ID is the same.', async() => {
-                const matchedUser = await agent.get(`/users`);
+                const matchedUser = await agent.get(`/users`)
+                    .set('Cookie', `jsdklfsdjklfdsjfds=${admin._doc._id.valueOf()}`);
                 const dbUser = (await Users.findOne({username: testingUsers[1].username}))._doc;
                 expect(matchedUser.body[0]._id.valueOf()).toEqual(dbUser._id.valueOf());
             });

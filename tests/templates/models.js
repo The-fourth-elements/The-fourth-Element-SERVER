@@ -5,9 +5,9 @@ const findOrCreateCity = require('../../src/handler/dataBase/findOrCreateCity')
 const findOrCreateNation = require('../../src/handler/dataBase/findOrCreateNation');
 const findOrCreateSport = require('../../src/handler/dataBase/findOrCreateSport');
 
-const testCity = "New York";
+const testCities = ["New York", "Buenos Aires", "Madrid", "Seatle"];
 
-const testSport = "Futbol";
+const testSport = ["Futbol", "Voleyball", "Rugby", "Handball"];
 
 const randomID = new mongoose.Types.ObjectId();
 
@@ -41,7 +41,7 @@ const createUser = async(user) =>{
     }
 }
 
-const testNation = "United State";
+const testNation = ["United State", "Mónaco", "Argentina", "Japón", "Australia", "South Africa"];
 
 const testProgress = {
     certificated: false,
@@ -57,8 +57,10 @@ const testStatus = {
     ending_date: null
 }
 
+const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+
 module.exports = {
-    testCity,
+    testCities,
     testModule,
     testNation,
     testProgress,
@@ -69,5 +71,6 @@ module.exports = {
     testSport,
     findOrCreateCity,
     findOrCreateNation,
-    findOrCreateSport
+    findOrCreateSport,
+    emailRegex
 }
