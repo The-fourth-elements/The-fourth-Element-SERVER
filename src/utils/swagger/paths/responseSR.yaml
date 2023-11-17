@@ -1,0 +1,222 @@
+paths:
+  /responseSR/{selfRegisterId}/user/{userId}:
+    post:
+      summary: Crear Respuesta de Auto-Registro para Usuario
+      description: Crea una nueva respuesta de auto-registro para un usuario.
+      tags:
+        - Respuestas de Auto-Registro
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: ID del usuario al cual se le agregará la respuesta de auto-registro.
+          schema:
+            type: string
+        - in: path
+          name: selfRegisterId
+          required: true
+          description: ID del auto-registro al cual se responderá.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/responseSrRequest"
+      responses:
+        '200':
+          description: Respuesta de auto-registro creada y agregada al usuario con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Respuesta de auto-registro agregada al usuario de forma correcta.
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se pudo encontrar el usuario, el auto-registro o hubo un error al crear la respuesta.
+    put:
+      summary: Agregar Respuesta de Auto-Registro a Usuario
+      description: Agrega una respuesta de auto-registro específica a un usuario según sus IDs.
+      tags:
+        - Respuestas de Auto-Registro
+      parameters:
+        - in: path
+          name: responseSRId
+          required: true
+          description: ID único de la respuesta de auto-registro.
+          schema:
+            type: string
+        - in: path
+          name: userId
+          required: true
+          description: ID único del usuario.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta agregada al usuario con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Respuesta agregada al usuario de forma exitosa.
+        '404':
+          description: No se encontró el usuario o la respuesta de auto-registro.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: "No se pudo encontrar el usuario con ID: xxxxxxxxxxx."
+    delete:
+      summary: Eliminar Respuesta de Auto-Registro de Usuario
+      description: Elimina una respuesta de auto-registro específica de un usuario según sus IDs.
+      tags:
+        - Respuestas de Auto-Registro
+      parameters:
+        - in: path
+          name: responseSRId
+          required: true
+          description: ID único de la respuesta de auto-registro.
+          schema:
+            type: string
+        - in: path
+          name: userId
+          required: true
+          description: ID único del usuario.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta eliminada correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Respuesta eliminada correctamente.
+        '404':
+          description: No se encontró el usuario o la respuesta de auto-registro.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: "No se pudo encontrar el usuario con ID: xxxxxxxxxxxxxxxxx"
+  /responseSR:
+    get:
+      summary: Obtener Todas las Respuestas de Auto-Registro
+      description: Obtiene todas las respuestas de auto-registro registradas.
+      tags:
+        - Respuestas de Auto-Registro
+      responses:
+        '200':
+          description: Respuestas de auto-registro obtenidas con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/responseSR'
+        '404':
+          description: No se encontraron respuestas de auto-registro.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se encontraron respuestas de auto-registro.
+  /responseSR/{id}:
+    get:
+      summary: Obtener una Respuesta de Auto-Registro por ID
+      description: Obtiene una respuesta de auto-registro específica según su ID.
+      tags:
+        - Respuestas de Auto-Registro
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID único de la respuesta de auto-registro.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta de auto-registro obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSR'
+        '404':
+          description: No se encontró la respuesta de auto-registro.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se encontró la respuesta de auto-registro.
+components:
+  schemas:
+    responseSR:
+      type: object
+      properties:
+        id_:
+          type: string
+          description: id de la respuesta
+        selfRegister:
+          $ref: "#/components/schemas/selfRegister"
+        response:
+          type: string
+          description: respuesta del ejercicio
+        comment:
+          type: string
+          description: Comentario
+        date:
+          type: string
+          format: date
+
+    responseSrRequest:
+      type: object
+      properties:
+        exercise:
+          type: string
+          description: id del ejercicio al que corresponde la respuesta
+        comment:
+          type: string
+          description: Comentario
+        response:
+          type: string
+          description: respuesta del ejercicio
+imports:
+  - path: ./selfRegister.yaml

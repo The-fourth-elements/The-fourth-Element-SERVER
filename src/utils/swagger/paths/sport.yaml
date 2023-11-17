@@ -1,0 +1,91 @@
+paths:
+  /sports:
+    get:
+      tags:
+        - Deportes
+      summary: Obtener todos los deportes
+      description: retorna lista de deportes en base de datos.
+      responses:
+        '200':
+          description: Lista de deportes obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/Sport"
+        '404':
+          description: No se encontraron deportes
+          content:
+            application/json:
+              example:
+                message: No hay deportes
+
+  /sport/{id}:
+    get:
+      tags:
+        - Deportes
+      summary: Obtener información de un deporte por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del deporte
+          schema:
+            type: string
+          example: 653fe8e509c7e09dc82b89ae
+      responses:
+        '200':
+          description: Información del deporte obtenida con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sport"
+        '404':
+          description: Deporte no encontrado
+          content:
+            application/json:
+              example:
+                message: No se encontró el deporte
+
+  /sport:
+    get:
+      tags:
+        - Deportes
+      summary: Obtener información de un deporte por nombre
+      parameters:
+        - in: query
+          name: name
+          required: true
+          description: Nombre del deporte
+          schema:
+            type: string
+          example: Fútbol
+      responses:
+        '200':
+          description: Información del deporte obtenida con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sport"
+        '404':
+          description: Deporte no encontrado
+          content:
+            application/json:
+              example:
+                message: No se encontró el deporte
+
+components:
+  schemas:
+    Sport:
+      type: object
+      description: Deporte añadido a base de datos.
+      properties:
+        _id:
+          type: string
+          description: ID del deporte
+          example: 653fe8e509c7e09dc82b89ae
+        name:
+          type: string
+          description: Nombre del deporte
+          example: Fútbol

@@ -1,0 +1,370 @@
+paths:
+  /class:
+    get:
+      summary: Obtener todas las clases
+      description: Obtiene la información de todas las clases, incluyendo detalles de video y presentación de PowerPoint asociados.
+      tags:
+        - Clases
+      responses:
+        '200':
+          description: Lista de clases obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/classResponse"
+        '404':
+          description: No se encontraron clases.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando la falta de clases.
+                    example: No se encontraron clases
+    post:
+      summary: Crear una nueva clase
+      description: Crea una nueva clase con información detallada, incluyendo un video y una presentación de PowerPoint.
+      tags:
+        - Clases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/class"
+      responses:
+        "201":
+          description: Clase creada con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/newClassResponse"
+        "400":
+          description: Faltan datos o hay un error en la solicitud.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Faltan datos
+
+  /class/{id}:
+    get:
+      summary: Obtener una clase por ID
+      description: Obtiene la información de una clase específica por su ID, incluyendo detalles de video, presentación de PowerPoint y quiz asociados.
+      tags:
+        - Clases
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la clase a obtener.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9475
+      responses:
+        '200':
+          description: Clase obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/classResponse"
+        '404':
+          description: No se encontró la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando la falta de la clase.
+                    example: Clase no encontrada
+    put:
+      summary: Actualizar una clase por ID
+      description: Actualiza la información de una clase específica por su ID, incluyendo detalles de video, presentación de PowerPoint, y otros detalles.
+      tags:
+        - Clases
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la clase a actualizar.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9475
+        - in: body
+          name: body
+          required: true
+          description: Datos de la clase a actualizar.
+          schema:
+            $ref: "#/components/schemas/class"
+      responses:
+        '200':
+          description: Clase actualizada con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/newClassResponse"
+        '400':
+          description: Error al actualizar la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: Faltan datos
+    delete:
+      summary: Eliminar una clase
+      description: Elimina una clase específica por su ID.
+      tags:
+        - Clases
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la clase que se eliminará.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9475
+      responses:
+        '200':
+          description: Clase eliminada con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Clase eliminada con éxito
+        '400':
+          description: Error al eliminar la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se proporcionó un id
+        '500':
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error interno.
+                    example: Error al eliminar la clase
+  /class/{classId}/quiz/{quizId}:
+    put:
+      summary: Agregar un quiz a una clase
+      description: Agrega un quiz existente a una clase específica.
+      tags:
+        - Clases
+      parameters:
+        - in: path
+          name: classId
+          required: true
+          description: ID de la clase a la que se agregará el quiz.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9475
+        - in: path
+          name: quizId
+          required: true
+          description: ID del quiz que se agregará a la clase.
+          schema:
+            type: string
+          example: 654005a209c7e09dc82b928f
+      responses:
+        '200':
+          description: Quiz agregado con éxito a la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Quiz agregado a la clase con éxito
+        '404':
+          description: Error al agregar el quiz a la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: Clase no encontrada o Quiz no encontrado
+  /class/{classId}/video/{videoId}:
+    put:
+      summary: Agregar un video a una clase
+      description: Agrega un video existente a una clase específica.
+      tags:
+        - Clases
+      parameters:
+        - in: path
+          name: classId
+          required: true
+          description: ID de la clase a la que se agregará el video.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9475
+        - in: path
+          name: videoId
+          required: true
+          description: ID del video que se agregará a la clase.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9471
+      responses:
+        '200':
+          description: Video agregado con éxito a la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Video agregado a la clase con éxito
+        '404':
+          description: Error al agregar el video a la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: Clase no encontrada o Video no encontrado
+  /class/{classId}/powerpoint/{powerPointId}:
+    put:
+      summary: Agregar una presentación de PowerPoint a una clase
+      description: Agrega una presentación de PowerPoint existente a una clase específica.
+      tags:
+        - Clases
+      parameters:
+        - in: path
+          name: classId
+          required: true
+          description: ID de la clase a la que se agregará la presentación de PowerPoint.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9475
+        - in: path
+          name: powerPointId
+          required: true
+          description: ID de la presentación de PowerPoint que se agregará a la clase.
+          schema:
+            type: string
+          example: 6540068d09c7e09dc82b9473
+      responses:
+        '200':
+          description: Presentación de PowerPoint agregada con éxito a la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Presentación agregada a la clase con éxito
+        '404':
+          description: Error al agregar la presentación de PowerPoint a la clase.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: Clase no encontrada o Presentación de PowerPoint no encontrada
+components:
+  schemas:
+    class:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la clase.
+          required: true
+          example: Clase 1
+        description:
+          type: string
+          description: Descripción de la clase.
+          required: true
+          example: Descripción de la clase 1
+        video:
+          $ref: "#/components/schemas/video"
+        powerPoint:
+          $ref: "#/components/schemas/powerPoint"
+
+    classResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id de la clase
+          example: 6540068d09c7e09dc82b9475
+        name:
+          type: string
+          description: Nombre de la clase.
+          example: Clase 1
+        description:
+          type: string
+          description: Descripción de la clase.
+          example: Descripción de la clase 1
+        video:
+          $ref: "#/components/schemas/videoResponse"
+        powerPoint:
+          $ref: "#/components/schemas/powerPointResponse"
+        quiz:
+          $ref: "#/components/schemas/quizResponse"
+
+    newClassResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id de la clase
+          example: 6540068d09c7e09dc82b9475
+        name:
+          type: string
+          description: Nombre de la clase.
+          example: Clase 1
+        description:
+          type: string
+          description: Descripción de la clase.
+          example: Descripción de la clase 1
+        video:
+          $ref: "#/components/schemas/videoResponse"
+        powerPoint:
+          $ref: "#/components/schemas/powerPointResponse"
+
+imports:
+  - path: ./video.yaml
+  - path: ./powerpoint.yaml
+  - path: ./quiz.yaml

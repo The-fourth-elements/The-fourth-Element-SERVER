@@ -1,0 +1,74 @@
+paths:
+  /create-order-mp:
+    get:
+      tags:
+        - MercadoPago
+      summary: Crear Orden MercadoPago
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          description: Orden creada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la operación.
+                    # example:
+                  url:
+                    type: string
+                    description: URL para iniciar el pago.
+                  id:
+                    type: string
+                    description: ID de la orden en MercadoPago.
+        '404':
+          description: Fallo al crear la orden.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+  /feedback:
+    get:
+      tags:
+        - MercadoPago
+      summary: Feedback de pago
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+          description: El ID de usuario.
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: true
+          description: Estado de la transacción en MercadoPago.
+      responses:
+        '302':
+          description: |
+            Redirección después de la retroalimentación
+            si el estado approved redirecciona a http://localhost:3000/paid-success, 
+            sino a http://localhost:3000/prices
+        '400':
+          description: Error en la retroalimentación.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error.

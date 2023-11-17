@@ -1,0 +1,224 @@
+paths:
+  /responseEx/{exerciseId}/user/{userId}:
+    post:
+      summary: Agregar Respuesta a Ejercicio de Usuario
+      description: Agrega una respuesta a un ejercicio para un usuario específico.
+      tags:
+        - Respuestas a Ejercicios
+      parameters:
+        - name: exerciseId
+          in: path
+          description: ID del ejercicio al que se responderá.
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          description: ID del usuario que responde al ejercicio.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                responses:
+                  type: array
+                  description: Respuestas al ejercicio.
+                  items:
+                    $ref: "#/components/schemas/responseExRequest"
+      responses:
+        "200":
+          description: Respuesta agregada con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Respuesta agregada al usuario con éxito.
+        "404":
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se encontró el ejercicio.
+  /responseEx/{id}:
+    get:
+      summary: Obtener Respuesta a Ejercicio por ID
+      description: Obtiene una respuesta específica a un ejercicio por su ID.
+      tags:
+        - Respuestas a Ejercicios
+      parameters:
+        - name: id
+          in: path
+          description: ID de la respuesta al ejercicio.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Respuesta obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseEx"
+        "404":
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: "No se pudo encontrar la respuesta con ID: xxxxxxxxxxxx"
+  /responseEx:
+    get:
+      summary: Obtener Todas las Respuestas a Ejercicios
+      description: Obtiene todas las respuestas a ejercicios.
+      tags:
+        - Respuestas a Ejercicios
+      responses:
+        "200":
+          description: Respuestas obtenidas con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/responseEx"
+        "404":
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se pudieron encontrar respuestas a ejercicios.
+  /responseEx/{responseExId}/user/{userId}:
+    put:
+      summary: Agregar Respuesta de Ejercicio a Usuario
+      description: Agrega una respuesta de ejercicio a un usuario.
+      tags:
+        - Respuestas a Ejercicios
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: ID del usuario al que se le agregará la respuesta.
+          schema:
+            type: string
+        - in: path
+          name: responseExId
+          required: true
+          description: ID de la respuesta de ejercicio que se agregará al usuario.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta de ejercicio agregada al usuario con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Respuesta de ejercicio agregada al usuario de forma correcta.
+        '400':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: Ingrese un ID.
+    delete:
+      summary: Eliminar Respuesta de Ejercicio de Usuario
+      description: Elimina una respuesta de ejercicio de un usuario.
+      tags:
+        - Respuestas a Ejercicios
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: ID del usuario del cual se eliminará la respuesta de ejercicio.
+          schema:
+            type: string
+        - in: path
+          name: responseExId
+          required: true
+          description: ID de la respuesta de ejercicio que se eliminará del usuario.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta de ejercicio eliminada del usuario con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Respuesta de ejercicio eliminada correctamente.
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se pudo eliminar la respuesta de ejercicio o el usuario.
+
+components:
+  schemas:
+    responseEx:
+      type: object
+      properties:
+        id_:
+          type: string
+          description: id de la respuesta
+        exercise:
+          $ref: "#/components/schemas/Exercise"
+        response:
+          type: string
+          description: respuesta del ejercicio
+        date:
+          type: string
+          format: date
+
+    responseExRequest:
+      type: object
+      properties:
+        exercise:
+          type: string
+          description: id del ejercicio al que corresponde la respuesta
+        response:
+          type: string
+          description: respuesta del ejercicio
+imports:
+  - path: ./exercise.yaml

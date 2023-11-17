@@ -1,0 +1,116 @@
+paths:
+  /cities:
+    get:
+      summary: Obtener todas las ciudades
+      description: Obtiene información de todas las ciudades disponibles.
+      tags:
+        - City
+      responses:
+        '200':
+          description: Lista de ciudades obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: "#/components/schemas/city"
+        '404':
+          description: Ciudades no encontradas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que no se encontraron ciudades.
+                    example: Ciudades esta vacio.
+  /city/{id}:
+    get:
+      summary: Obtener información de una ciudad por ID
+      description: Obtiene información detallada de una ciudad específica según su ID.
+      tags:
+        - City
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la ciudad.
+          schema:
+            type: string
+          example: 653fe8e509c7e09dc82b89b1
+      responses:
+        '200':
+          description: Información de la ciudad obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/city"
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que la ciudad no fue encontrada.
+                    example: Ciudad no encontrada
+  /city:
+    get:
+      summary: Obtener información de una ciudad por nombre
+      description: Obtiene información de una ciudad específica según su nombre.
+      tags:
+        - City
+      parameters:
+        - in: query
+          name: name
+          required: true
+          description: Nombre de la ciudad.
+          schema:
+            type: string
+          example: Osaka
+      responses:
+        '200':
+          description: Información de la ciudad obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/city"
+        '404':
+          description: Ciudad no encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que la ciudad no fue encontrada.
+                    example: Ciudad no encontrada
+        '400':
+          description: Faltan datos.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que se deben proporcionar datos.
+                    example: Debe brindar un nombre
+components:
+  schemas:
+    city:
+      type: object
+      description: ciudad añadida por el usuario
+      properties:
+        _id:
+          type: string
+          description: ID de la ciudad
+          example: 653fe8e509c7e09dc82b89b1
+        name:
+          type: string
+          description: Nombre de la ciudad
+          example: Osaka

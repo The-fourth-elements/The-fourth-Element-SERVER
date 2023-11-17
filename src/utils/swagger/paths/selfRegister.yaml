@@ -1,0 +1,327 @@
+paths:
+  /selfRegisters:
+    get:
+      summary: Obtener todos los Autoconocimientos
+      description: Obtiene la lista de todos los autoconocimientos.
+      tags:
+        - Autoconocimiento
+      responses:
+        '200':
+          description: Lista de autoconocimientos obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/selfRegister"
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se encontraron autoconocimientos.
+
+  /selfR/{id}:
+    get:
+      summary: Obtener Autoconocimiento por ID
+      description: Obtiene un autoconocimiento específico según su ID.
+      tags:
+        - Autoconocimiento
+      parameters:
+        - name: id
+          in: path
+          description: ID del autoconocimiento a obtener.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Autoconocimiento obtenido con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/selfRegister"
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se encontró el autoconocimiento.
+    put:
+      summary: Actualizar Autoconocimiento
+      description: Actualiza un autoconocimiento existente por su ID.
+      tags:
+        - Autoconocimiento
+      parameters:
+        - name: id
+          in: path
+          description: ID del autoconocimiento a actualizar.
+          required: true
+          schema:
+            type: string
+        - name: body
+          in: body
+          description: Datos actualizados del autoconocimiento.
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/questionUpdate"
+      responses:
+        '200':
+          description: Autoconocimiento actualizado con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/selfRegister"
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se pudo modificar el autoconocimiento.
+    delete:
+      summary: Eliminar Autoconocimiento
+      description: Elimina un autoconocimiento por su ID.
+      tags:
+        - Autoconocimiento
+      parameters:
+        - name: id
+          in: path
+          description: ID del autoconocimiento a eliminar.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Autoconocimiento eliminado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Autoconocimiento eliminado correctamente.
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se pudo eliminar el autoconocimiento.
+  /selfR:
+    post:
+      summary: Crear Autoconocimiento
+      description: Crea un nuevo autoconocimiento.
+      tags:
+        - Autoconocimiento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/selfRegisterRequest"
+              required:
+                - moduleId
+                - selfRegister
+      responses:
+        '200':
+          description: Autoconocimiento creado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Autoconocimiento creado
+                  data:
+                    type: array
+                    description: Lista de autoconocimientos creados.
+                    items:
+                      $ref: "#/components/schemas/selfRegister"
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se pudo crear el Autoconocimiento
+  /selfR/{moduleId}:
+    post:
+      summary: Crear Autoconocimiento en un Módulo
+      description: Crea un nuevo autoconocimiento y lo asocia a un módulo específico.
+      tags:
+        - Autoconocimiento
+      parameters:
+        - name: moduleId
+          in: path
+          description: ID del módulo al que se asociará el autoconocimiento.
+          required: true
+          schema:
+            type: string
+        - name: selfRegister
+          in: body
+          description: Datos del autoconocimiento a crear.
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  selfRegister:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/selfRegister"
+      responses:
+        '200':
+          description: Autoconocimiento creado con éxito y asociado al módulo.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: Autoconocimiento creado
+                  data:
+                    type: array
+                    description: Lista de autoconocimientos creados.
+                    items:
+                      $ref: "#/components/schemas/selfRegister"
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error.
+                    example: No se encontró el módulo.
+components:
+  schemas:
+    selfRegister:
+      type: object
+      description: Autoconocimiento añadido por el usuario
+      properties:
+        _id:
+          type: string
+          description: ID del autoconocimiento
+          example: 653fe8e509c7e09dc82b89b1
+        name:
+          type: string
+          description: Nombre del autoconocimiento
+          example: Motivación
+        type:
+          type: string
+          description: Tipo del autoconocimiento
+          example: Training
+        questions:
+          type: array
+          description: Lista de preguntas asociadas al autoconocimiento
+          items:
+            $ref: "#/components/schemas/question"
+    selfRegisterRequest:
+      type: object
+      description: Autoconocimiento añadido por el usuario
+      properties:
+        name:
+          type: string
+          description: Nombre del autoconocimiento
+          example: Motivación
+        type:
+          type: string
+          description: Tipo del autoconocimiento
+          example: Training
+        questions:
+          type: array
+          description: Lista de preguntas asociadas al autoconocimiento
+          items:
+            $ref: "#/components/schemas/questionRequest"
+
+    question:
+      type: object
+      description: Pregunta añadida por el usuario
+      properties:
+        _id:
+          type: string
+          description: ID de la pregunta
+          example: 653fe8e509c7e09dc82b89b1
+        selfQuestion:
+          type: string
+          description: Pregunta del autoconocimiento
+          example: ¿Que tan motivado se siente?
+        agree:
+          type: string
+          description: Respuesta afirmativa
+          example: Realmente mucho
+        disagree:
+          type: string
+          description: Respuesta negativa
+          example: Realmente poco
+    questionRequest:
+      type: object
+      description: Pregunta añadida por el usuario
+      properties:
+        selfQuestion:
+          type: string
+          description: Pregunta del autoconocimiento
+          example: ¿Que tan motivado se siente?
+        agree:
+          type: string
+          description: Respuesta afirmativa
+          example: Realmente mucho
+        disagree:
+          type: string
+          description: Respuesta negativa
+          example: Realmente poco
+
+    selfRegisterUpdate:
+      type: object
+      properties:
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/questionUpdate"
+
+    questionUpdate:
+      type: object
+      properties:
+        selfQuestion:
+          type: string
+          description: Pregunta del autoconocimiento.
+        agree:
+          type: string
+          description: Descripción de la opción "de acuerdo".
+        disagree:
+          type: string
+          description: Descripción de la opción "en desacuerdo"

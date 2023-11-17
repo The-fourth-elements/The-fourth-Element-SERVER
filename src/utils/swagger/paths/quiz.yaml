@@ -1,0 +1,226 @@
+paths:
+  /quiz:
+    post:
+      summary: Crear un nuevo quiz
+      description: Crea un nuevo quiz con preguntas y respuestas.
+      tags:
+        - Quiz
+      requestBody:
+        description: Datos del quiz
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/quiz"
+      responses:
+        "200":
+          description: Quiz creada con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quizResponse"
+        "400":
+          description: Error al crear la Quiz.
+  /quizzes:
+    get:
+      summary: Obtener todos los quizzes
+      description: Obtiene una lista de todos los quizzes con sus preguntas y respuestas.
+      tags:
+        - Quiz
+      responses:
+        '200':
+          description: Lista de quizzes obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/quizResponse"
+        '404':
+          description: No se encontraron quizzes.
+  /quiz/{id}:
+    get:
+      summary: Obtener un quiz por ID
+      description: Obtiene un quiz específico por su ID con sus preguntas y respuestas.
+      tags:
+        - Quiz
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del quiz a obtener.
+          schema:
+            type: string
+          example: 654005a209c7e09dc82b928f
+      responses:
+        '200':
+          description: Quiz obtenido con éxito.
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/quizResponse"
+        '404':
+          description: 'No se encontro la quiz con ID: 654005a209c7e09dc82b928f'
+    put:
+      summary: Actualizar un quiz por ID
+      description: Actualiza un quiz específico por su ID.
+      tags:
+        - Quiz
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del quiz a actualizar.
+          schema:
+            type: string
+          example: 12345
+        - in: body
+          name: quiz
+          description: Datos actualizados del quiz.
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nuevo nombre del quiz.
+                example: Nuevo nombre
+              description:
+                type: string
+                description: Nueva descripción del quiz.
+                example: Nueva descripción
+              results:
+                type: integer
+                description: Nueva cantidad de resultados.
+                example: 50
+              quest:
+                $ref: "#/components/schemas/Quest"
+
+      responses:
+        '200':
+          description: Quiz actualizado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ID del quiz actualizado.
+                    example: 654005a209c7e09dc82b928f
+                  name:
+                    type: string
+                    description: Nombre del quiz actualizado.
+                    example: Nuevo nombre
+                  description:
+                    type: string
+                    description: Descripción del quiz actualizado.
+                    example: Nueva descripción
+                  results:
+                    type: integer
+                    description: Nueva cantidad de resultados.
+                    example: 5
+                  quest:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          description: ID de la quest actualizada.
+                          example: 654005a209c7e09dc82b928b
+                        question:
+                          type: string
+                          description: Pregunta de la quest actualizada.
+                          example: Nueva pregunta
+                        approved:
+                          type: boolean
+                          description: Estado de aprobación de la quest actualizada.
+                          example: true
+                        responses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              _id:
+                                type: string
+                                description: ID de la Response actualizada.
+                                example: 654005a209c7e09dc82b9285
+                              verdadera:
+                                type: boolean
+                                description: Indica si la respuesta es verdadera o falsa.
+                                example: true
+                              response:
+                                type: string
+                                description: Respuesta actualizada.
+                                example: Nueva respuesta
+        '404':
+          description: No se encontró la Quiz con el ID proporcionado o error al actualizar.
+
+    delete:
+      summary: Eliminar un quiz por ID
+      description: Elimina un quiz específico por su ID.
+      tags:
+        - Quiz
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del quiz a eliminar.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Quiz eliminado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que el quiz fue eliminada con éxito.
+                    example: Quiz borrado con exito
+        '404':
+          description: No se encontró quiz con el ID proporcionado o error al eliminar.
+components:
+  schemas:
+    quiz:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del quiz.
+          example: Quiz de Ejemplo
+        description:
+          type: string
+          description: Descripción del quiz
+          example: Esta es la descripción del quiz
+        quest:
+          $ref: "#/components/schemas/Quest"
+
+    quizResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id del quiz
+          example: 654005a209c7e09dc82b928f
+        name:
+          type: string
+          description: Nombre del quiz.
+          example: Quiz de Ejemplo
+        description:
+          type: string
+          description: Descripción del quiz
+          example: Esta es la descripción del quiz
+        quest:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuestResponse"
+        results:
+          type: number
+          description: resultados del quiz
+          example: 20
+
+imports:
+  - path: ./quest.yaml

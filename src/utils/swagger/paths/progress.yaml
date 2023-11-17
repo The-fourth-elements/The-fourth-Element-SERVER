@@ -1,0 +1,87 @@
+paths:
+  /startCourse/{userId}:
+    post:
+      tags:
+        - Progreso
+      summary: Iniciar curso para un usuario
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+          example: "5f4d3a2b1c234567890abcdef"
+      responses:
+        '200':
+          description: Usuario inscrito con éxito al curso
+          content:
+            application/json:
+              example:
+                message: "Usuario inscrito con éxito"
+        '400':
+          description: ID de usuario no válido
+          content:
+            application/json:
+              example:
+                message: "ID de usuario no válido"
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              example:
+                message: "Usuario no encontrado"
+  /approve/user/{userId}/module/{moduleId}/class/{classId}:
+    put:
+      tags:
+        - Progreso
+      summary: Aprobar clase para un usuario en un módulo
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+          example: "5f4d3a2b1c234567890abcdef"
+        - in: path
+          name: moduleId
+          required: true
+          description: ID del módulo
+          schema:
+            type: string
+          example: "5f4d3a2b1c234567890abcde1"
+        - in: path
+          name: classId
+          required: true
+          description: ID de la clase
+          schema:
+            type: string
+          example: "5f4d3a2b1c234567890abcde2"
+      responses:
+        '200':
+          description: Clase aprobada con éxito
+          content:
+            application/json:
+              example:
+                message: "Clase aprobada con éxito"
+        '400':
+          description: ID de usuario, ID de módulo o ID de clase no válido
+          content:
+            application/json:
+              example:
+                message: "ID de usuario, ID de módulo o ID de clase no válido"
+        '404':
+          description: Usuario no encontrado, Progreso del módulo no encontrado o Progreso de la clase no encontrado
+          content:
+            application/json:
+              example:
+                message: "Usuario no encontrado"
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Mensaje de error
