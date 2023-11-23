@@ -7,7 +7,7 @@ const ResponsesSRMongoose = new mongoose.Schema({
     response: {
         type: Array,
     },
-    comment: {
+    comments: {
         type: String,
     },
     date: {
