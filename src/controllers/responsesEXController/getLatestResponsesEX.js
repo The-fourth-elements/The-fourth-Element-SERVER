@@ -13,6 +13,7 @@ async function getLatestResponsesEX(req, res, next){
         const latestResponses = latestResponsesEX(userResponsesEX);
         res.status(200).send(latestResponses);
     } catch (error) {
+        console.log(error.message);
         next({ message: error.message, statusCode: 404 });
     }
 }

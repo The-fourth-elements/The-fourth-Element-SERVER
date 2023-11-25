@@ -1,0 +1,129 @@
+paths:
+  /tracks:
+    get:
+      summary: Obtener todos los tracks
+      description: Obtiene información de todos los tracks registrados.
+      tags:
+        - Tracks
+      responses:
+        '200':
+          description: Lista de tracks obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Track"
+        '404':
+          description: No hay tracks registrados.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que no se encontraron tracks.
+                    example: No hay tracks registrados.
+  /track/{id}:
+    get:
+      summary: Obtener información de un track por ID
+      description: Obtiene información detallada de un track específico según su ID.
+      tags:
+        - Tracks
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del track.
+          schema:
+            type: string
+          example: 653fe8e509c7e09dc82b89b1
+      responses:
+        '200':
+          description: Información del track obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Track"
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que el track no fue encontrado.
+                    example: Track no encontrado
+    delete:
+      summary: Eliminar un track por ID
+      description: Elimina un track específico según su ID.
+      tags:
+        - Tracks
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del track a eliminar.
+          schema:
+            type: string
+          example: 653fe8e509c7e09dc82b89b1
+      responses:
+        '200':
+          description: Track eliminado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de exito indicando que el track fue eliminado.
+                    example: Track eliminado
+        '404':
+          description: Mensajes de error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error indicando que el track no fue encontrado.
+                    example: Track no encontrado
+components:
+  schemas:
+    Track:
+      type: object
+      description: Audio de meditacion
+      properties:
+        _id:
+          type: string
+          description: ID en DB del audio de meditacion
+          example: 654008d509c7e09dc82b96c9
+        public_id:
+          type: string
+          description: ID (cloudinary) del audio de meditacion
+          example: Video/qjmt6b2nzov6u67hhqt7
+        url:
+          type: string
+          description: URL del audio de meditacion
+          format: uri
+          example: https://example.com/audio.mp3
+    TrackRequest:
+      type: object
+      description: Audio de meditacion
+      properties:
+        public_id:
+          type: string
+          description: ID (cloudinary) del audio de meditacion
+          required: true
+          example: Video/qjmt6b2nzov6u67hhqt7
+        url:
+          type: string
+          description: URL del audio de meditacion
+          format: uri
+          required: true
+          example: https://example.com/audio.mp3

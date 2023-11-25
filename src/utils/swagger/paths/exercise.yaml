@@ -1,0 +1,266 @@
+paths:
+  /exercise:
+    post:
+      tags:
+        - Ejercicio
+      summary: Crear ejercicio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExerciseInput"
+      responses:
+        "200":
+          description: Ejercicio creado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Exercise"
+        "400":
+          description: Faltan datos
+          content:
+            application/json:
+              example:
+                message: "Faltan datos"
+        "404":
+          description: Error al crear el ejercicio
+          content:
+            application/json:
+              example:
+                message: "Error al crear el ejercicio"
+  /exercise/{id}:
+    get:
+      tags:
+        - Ejercicio
+      summary: Obtener ejercicio por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del ejercicio
+          schema:
+            type: string
+          example: "65400a4909c7e09dc82b984b"
+      responses:
+        "200":
+          description: Ejercicio obtenido con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Exercise"
+        "404":
+          description: No se pudo encontrar el ejercicio
+          content:
+            application/json:
+              example:
+                message: "No se pudo encontrar el ejercicio con ID: 65400a4909c7e09dc82b984b"
+    put:
+      tags:
+        - Ejercicio
+      summary: Actualizar ejercicio por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del ejercicio a actualizar
+          schema:
+            type: string
+          example: "65400a4909c7e09dc82b984b"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExerciseInput"
+      responses:
+        "200":
+          description: Ejercicio actualizado con éxito
+          content:
+            application/json:
+              example:
+                message: "Ejercicio actualizado"
+        "404":
+          description: No se pudo modificar el ejercicio
+          content:
+            application/json:
+              example:
+                message: "No se pudo modificar el ejercicio"
+    delete:
+      tags:
+        - Ejercicio
+      summary: Eliminar ejercicio por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del ejercicio a eliminar
+          schema:
+            type: string
+          example: "65400a4909c7e09dc82b984b"
+      responses:
+        '200':
+          description: Ejercicio eliminado de forma exitosa
+          content:
+            application/json:
+              example:
+                message: "Ejercicio eliminado de forma exitosa"
+        '404':
+          description: No se encontró el ejercicio
+          content:
+            application/json:
+              example:
+                message: "No se encontró el ejercicio"
+  /exercises:
+    get:
+      tags:
+        - Ejercicio
+      summary: Obtener todos los ejercicios
+      responses:
+        "200":
+          description: Lista de ejercicios obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Exercise"
+        "404":
+          description: No hay ejercicios aún
+          content:
+            application/json:
+              example:
+                message: "No hay ejercicios aún"
+  /exercise/{moduleId}:
+    post:
+      tags:
+        - Ejercicio
+      summary: Crear y agregar ejercicio a un módulo
+      parameters:
+        - in: path
+          name: moduleId
+          required: true
+          description: ID del módulo al que se agregará el ejercicio
+          schema:
+            type: string
+          example: "65400a4909c7e09dc82b984b"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExerciseInput"
+      responses:
+        "200":
+          description: Ejercicio creado y agregado al módulo con éxito
+          content:
+            application/json:
+              example:
+                message: "Ejercicio creado y agregado al módulo con exito"
+        "400":
+          description: Faltan datos o error al crear el ejercicio o al agregarlo al módulo
+          content:
+            application/json:
+              example:
+                message: "Error al crear el ejercicio"
+  /exercisesToModule:
+    put:
+      tags:
+        - Ejercicio
+      summary: Agregar ejercicios a un módulo
+      requestBody:
+        description: body de la req para agregar ejercicios a un módulo
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                moduleId:
+                  type: string
+                  description: ID del módulo al que se agregarán los ejercicios
+                  example: "6f4d3a2b1c234567890abcdef"
+                exercisesId:
+                  type: string
+                  description: ID del ejercicio que se agregará al módulo
+                  example: "65400a4909c7e09dc82b984b"
+      responses:
+        '200':
+          description: Ejercicio agregado al módulo con éxito
+          content:
+            application/json:
+              example:
+                message: "Ejercicio agregado al modulo con exito"
+        '400':
+          description: Faltan datos o no se encontró el ejercicio o el módulo
+          content:
+            application/json:
+              example:
+                message: "Faltan datos"
+
+components:
+  schemas:
+    ExerciseInput:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del ejercicio
+          example: "Ejercicio 1"
+          required: true
+        description:
+          type: string
+          description: Descripción del ejercicio
+          example: "Descripción del ejercicio 1"
+          required: true
+        questions:
+          type: array
+          description: arreglo de preguntas del ejercicio
+          required: true
+          items:
+            type: string
+          example:
+            - "Pregunta 1"
+            - "Pregunta 2"
+        image:
+          type: object
+          description: imagen agregada al ejercicio
+          properties:
+            public_id:
+              type: string
+            secure_url:
+              type: string
+              format: uri
+
+    Exercise:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del ejercicio
+          example: "65400a4909c7e09dc82b984b"
+        name:
+          type: string
+          description: Nombre del ejercicio
+          example: "Ejercicio 1"
+        description:
+          type: string
+          description: Descripción del ejercicio
+          example: "Descripción del ejercicio 1"
+        questions:
+          type: array
+          description: arreglo de preguntas del ejercicio
+          items:
+            type: string
+          example:
+            - "Pregunta 1"
+            - "Pregunta 2"
+        image:
+          type: object
+          description: imagen agregada al ejercicio
+          properties:
+            public_id:
+              type: string
+            secure_url:
+              type: string
+              format: uri

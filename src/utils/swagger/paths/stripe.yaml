@@ -1,0 +1,126 @@
+paths:
+  /get-prices-sp:
+    get:
+      tags:
+        - Stripe
+      summary: Obtener Precios desde Stripe
+      responses:
+        '200':
+          description: Precios obtenidos exitosamente desde Stripe.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: price_1O3RkGA35kiSBfa0vOkqq7dw
+                        unit_amount:
+                          type: integer
+                          example: 10000
+                        currency:
+                          type: string
+                          example: usd
+        '404':
+          description: Error al obtener los precios desde Stripe.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error.
+                    # example:
+  /feedback-sp:
+    get:
+      tags:
+        - Stripe
+      summary: Feedback de Pago Stripe
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: ID del usuario para feedback de Stripe.
+      responses:
+        '302':
+          description: Redirección después del feedback exitoso (http://localhost:3000/paid-success).
+        '404':
+          description: Error en feedback de Pago Stripe.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error.
+                    example: Error al encontrar la orden
+  /stripe-cancel:
+    get:
+      tags:
+        - Stripe
+      summary: Cancelar Orden de Stripe
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: ID del usuario para cancelar la orden de Stripe.
+      responses:
+        '302':
+          description: |
+            Redirección después de cancelar la orden de Stripe.
+            Se redirige a la página de precios.
+        '404':
+          description: |
+            Error al cancelar la orden de Stripe.
+  /create-order-sp:
+    post:
+      tags:
+        - Stripe
+      summary: Crear Orden de Stripe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                priceId:
+                  type: string
+                  description: ID del producto para la orden de Stripe.
+                userId:
+                  type: string
+                  description: ID del usuario para la orden de Stripe.
+              required:
+                - priceId
+                - userId
+      responses:
+        '201':
+          description: Orden de Stripe creada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: URL para redireccionar al usuario a la página de pago de Stripe.
+        '404':
+          description: Error al crear la orden de Stripe.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error.

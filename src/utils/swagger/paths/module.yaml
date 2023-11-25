@@ -1,0 +1,291 @@
+paths:
+  /moduls:
+    get:
+      summary: Obtener todos los módulos
+      description: Obtiene una lista de todos los módulos disponibles.
+      tags:
+        - Módulos
+      responses:
+        "200":
+          description: Retorna la lista de módulos.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/moduleResponse"
+        "404":
+          description: Error al recuperar la lista de módulos.
+    post:
+      summary: Crear un nuevo módulo
+      description: Crea un nuevo módulo con los detalles proporcionados.
+      tags:
+        - Módulos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/module'
+
+      responses:
+        '201':
+          description: Módulo creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/moduleResponse'
+        '400':
+          description: Error al crear el módulo.
+  /moduls/{id}:
+    get:
+      summary: Obtener un módulo por ID
+      description: Obtiene un módulo específico por su ID.
+      tags:
+        - Módulos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del módulo a obtener.
+          schema:
+            type: string
+            # example: 6540027509c7e09dc82b90eb
+      responses:
+        "200":
+          description: Módulo encontrado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito.
+                    example: "Módulo encontrado"
+                  module:
+                    $ref: "#/components/schemas/moduleResponse"
+        "400":
+          description: Error al obtener el módulo.
+    put:
+      tags:
+        - Módulos
+      summary: Actualizar un módulo existente
+      description: Actualiza un módulo existente con los detalles proporcionados.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del módulo a actualizar.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del módulo.
+                description:
+                  type: string
+                  description: Descripción actualizada del módulo.
+                paid:
+                  type: boolean
+                  description: Indica si el módulo es de pago o gratuito.
+      responses:
+        '200':
+          description: Módulo actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/moduleResponse'
+        '400':
+          description: Error al actualizar el módulo.
+    delete:
+      summary: Eliminar un módulo
+      description: Elimina un módulo existente por su ID.
+      tags:
+        - Módulos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del módulo que se eliminará.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Módulo eliminado con éxito.
+        '400':
+          description: Error al eliminar el módulo.
+  /module/{moduleId}/class/{classId}:
+    put:
+      summary: Agregar una clase a un módulo
+      description: Agrega una clase existente a un módulo.
+      tags:
+        - Módulos
+      parameters:
+        - in: path
+          name: moduleId
+          required: true
+          description: ID del módulo al que se agregará la clase.
+          schema:
+            type: string
+        - in: path
+          name: classId
+          required: true
+          description: ID de la clase que se agregará al módulo.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Clase agregada al módulo con éxito.
+        '404':
+          description: Error al agregar la clase al módulo.
+  /module/{moduleId}/quiz/{quizId}:
+    put:
+      summary: Agregar un quiz a un módulo
+      description: Agrega un quiz existente a un módulo.
+      tags:
+        - Módulos
+      parameters:
+        - in: path
+          name: moduleId
+          required: true
+          description: ID del módulo al que se agregará el quiz.
+          schema:
+            type: string
+        - in: path
+          name: quizId
+          required: true
+          description: ID del quiz que se agregará al módulo.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Quiz agregado al módulo con éxito.
+        '404':
+          description: Error al agregar el quiz al módulo.
+  /module/{moduleId}/exercise/{exerciseId}:
+    put:
+      summary: Agregar un ejercicio a un módulo
+      description: Agrega un ejercicio existente a un módulo.
+      tags:
+        - Módulos
+      parameters:
+        - in: path
+          name: moduleId
+          required: true
+          description: ID del módulo al que se agregará el ejercicio.
+          schema:
+            type: string
+        - in: path
+          name: exerciseId
+          required: true
+          description: ID del ejercicio que se agregará al módulo.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ejercicio agregado al módulo con éxito.
+        '404':
+          description: Error al agregar el ejercicio al módulo.
+  /module/{moduleId}/selfR/{selfRId}:
+    put:
+      summary: Agregar un autorregistro a un módulo
+      description: Agrega un autorregistro existente a un módulo.
+      tags:
+        - Módulos
+      parameters:
+        - in: path
+          name: moduleId
+          required: true
+          description: ID del módulo al que se agregará el autorregistro.
+          schema:
+            type: string
+        - in: path
+          name: selfRId
+          required: true
+          description: ID del autorregistro que se agregará al módulo.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Autorregistro agregado al módulo con éxito.
+        '404':
+          description: Error al agregar el autorregistro al módulo.
+  /module/{moduleId}/meditation/{meditationId}:
+    put:
+      summary: Agregar una meditación a un módulo
+      description: Agrega una meditación existente a un módulo.
+      tags:
+        - Módulos
+      parameters:
+        - in: path
+          name: moduleId
+          required: true
+          description: ID del módulo al que se agregará la meditación.
+          schema:
+            type: string
+        - in: path
+          name: meditationId
+          required: true
+          description: ID de la meditación que se agregará al módulo.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Meditación agregada al módulo con éxito.
+        '400':
+          description: Error al agregar la meditación al módulo
+
+components:
+  schemas:
+    module:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del módulo
+        description:
+          type: string
+          description: Descripción del módulo
+        paid:
+          type: boolean
+          description: Indica si el módulo es de pago (true) o gratuito (false).
+
+    moduleResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del módulo.
+        name:
+          type: string
+          description: Nombre del módulo.
+        description:
+          type: string
+          description: Descripción del módulo.
+        classModule:
+          type: object
+        meditation:
+          type: object
+        paid:
+          type: boolean
+          description: Indica si el módulo es de pago (true) o gratuito (false).
+        exercises:
+          type: array
+          items:
+            $ref: "#/components/schemas/Exercise"
+        selfKnowledge:
+          type: object
+        quiz:
+          type: object
+        startingDate:
+          type: date
+
+imports:
+  - path: ./exercise.yaml

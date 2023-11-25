@@ -1,0 +1,137 @@
+paths:
+  /auth:
+    post:
+      tags:
+        - Autenticación
+      summary: Crear un usuario
+      description: Crea un nuevo usuario con los datos proporcionados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                username:
+                  type: string
+                provider:
+                  type: string
+                providerId:
+                  type: string
+                city:
+                  type: string
+                nationality:
+                  type: string
+                sport:
+                  type: string
+                expYearsSports:
+                  type: integer
+                age:
+                  type: integer
+      responses:
+        '200':
+          description: Cuenta creada correctamente.
+          content:
+            application/json:
+              example:
+                success: "Cuenta creada correctamente"
+        '404':
+          description: Error al crear la cuenta o faltan datos en la solicitud.
+  /login:
+    post:
+      tags:
+        - Autenticación
+      summary: Iniciar sesión
+      description: Inicia sesión con un usuario existente proporcionando correo electrónico y contraseña o usando un proveedor de autenticación.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                provider:
+                  type: string
+      responses:
+        '200':
+          description: Inicio de sesión exitoso.
+          content:
+            application/json:
+              example:
+                token: "jwt_token"
+                success: true
+                message: "Inicio de sesión exitosa"
+        '404':
+          description: Error en el inicio de sesión o datos inválidos en la solicitud.
+  /auth/forgot:
+    post:
+      tags:
+        - Autenticación
+      summary: Enviar correo electrónico para restablecer la contraseña
+      requestBody:
+        description: Detalles para restablecer la contraseña
+        required: true
+        content:
+          application/json:
+            example:
+              email: "usuario@example.com"
+      responses:
+        '200':
+          description: Correo electrónico enviado con éxito
+          content:
+            application/json:
+              example:
+                successful: "Correo electrónico enviado correctamente"
+        '400':
+          description: No se pudo enviar el correo electrónico
+          content:
+            application/json:
+              example:
+                message: "Debe ingresar un email"
+  /reset-password:
+    post:
+      tags:
+        - Autenticación
+      summary: Restablecer la contraseña
+      requestBody:
+        description: Detalles para restablecer la contraseña
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+      responses:
+        '200':
+          description: Contraseña restablecida con éxito
+          content:
+            application/json:
+              example:
+                message: "Access true"
+        '404':
+          description: No se pudo restablecer la contraseña
+          content:
+            application/json:
+              example:
+                message: "No se pudo cambiar la contraseña, revisar datos."
+
+components:
+  schemas:
+    ResetPasswordRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token generado para restablecer la contraseña
+          example: "token_generado"
+        newPassword:
+          type: string
+          description: Nueva contraseña del usuario
+          example: "nueva_contraseña"

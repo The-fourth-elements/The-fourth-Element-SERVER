@@ -1,0 +1,135 @@
+paths:
+  /content:
+    get:
+      tags:
+        - Landing content
+      summary: Obtener contenido
+      description: Obtiene todo el contenido
+      responses:
+        "200":
+          description: Contenido obtenido exitosamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LandingContentResponse"
+        "404":
+          description: No se ha encontrado contenido.
+    post:
+      tags:
+        - Landing content
+      summary: Crear contenido
+      description: Crea un nuevo contenido.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LandingContent"
+      responses:
+        "201":
+          description: Contenido creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LandingContentResponse"
+        "404":
+          description: Error al crear contenido o error en la solicitud.
+  /content/{id}:
+    get:
+      tags:
+        - Landing content
+      summary: Obtener contenido por ID
+      description: Obtiene un contenido específico por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: El ID del contenido que se desea obtener.
+      responses:
+        "200":
+          description: Contenido obtenido exitosamente.
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/LandingContentResponse"
+        "404":
+          description: No se ha encontrado el contenido o error en la solicitud.
+    put:
+      tags:
+        - Landing content
+      summary: Actualizar contenido por ID
+      description: Actualiza un contenido existente por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: El ID del contenido que se desea actualizar.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LandingContent"
+      responses:
+        "200":
+          description: Contenido actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LandingContentResponse"
+        "404":
+          description: No se ha encontrado el contenido a actualizar o error en la solicitud.
+    delete:
+      tags:
+        - Landing content
+      summary: Eliminar contenido por ID
+      description: Elimina un contenido existente por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: El ID del contenido que se desea eliminar.
+      responses:
+        "200":
+          description: Contenido eliminado exitosamente.
+          content:
+            application/json:
+              example:
+                message: "Contenido eliminado con éxito"
+        "404":
+          description: No se ha encontrado el contenido a eliminar o error en la solicitud.
+
+components:
+  schemas:
+    LandingContent:
+      type: object
+      properties:
+        testimonials:
+          type: string
+          description: Testimonios del contenido.
+        image:
+          type: string
+          description: URL de la imagen asociada al contenido.
+          format: uri
+
+    LandingContentResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del contenido.
+        testimonials:
+          type: string
+          description: Testimonios del contenido.
+        image:
+          type: string
+          description: URL de la imagen asociada al contenido.
+          format: uri

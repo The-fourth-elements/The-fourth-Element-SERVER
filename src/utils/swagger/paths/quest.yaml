@@ -1,0 +1,128 @@
+paths:
+  /questions:
+    get:
+      summary: Obtener todas las preguntas
+      description: Recupera todas las preguntas con sus respuestas.
+      tags:
+        - Questions
+      responses:
+        '200':
+          description: Lista de preguntas recuperadas con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuestResponse'
+        '404':
+          description: No se encontraron preguntas.
+
+  /quest/{id}:
+    get:
+      summary: Obtener una pregunta por ID
+      description: Recupera una pregunta específica por su ID con sus respuestas asociadas.
+      tags:
+        - Questions
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la pregunta a recuperar.
+          schema:
+            type: string
+          # example: 12345
+      responses:
+        '200':
+          description: Pregunta recuperada con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestResponse'
+        '404':
+          description: La pregunta no fue encontrada.
+
+    delete:
+      summary: Eliminar una pregunta por ID
+      description: Elimina una pregunta específica por su ID.
+      tags:
+        - Questions
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la pregunta a eliminar.
+          schema:
+            type: string
+          # example: 12345
+      responses:
+        '200':
+          description: Pregunta eliminada con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que la pregunta fue eliminada con éxito.
+                    example: Pregunta borrada con éxito
+        '404':
+          description: La pregunta no fue encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que la pregunta no fue encontrada.
+                    example: Pregunta no encontrada
+components:
+  schemas:
+    Quest:
+      type: array
+      items:
+        type: object
+        properties:
+          question:
+            type: string
+            description: Pregunta del cuestionario
+            example: ¿Esta es una pregunta del cuestionario?
+          answers:
+            type: array
+            items:
+              $ref: "#/components/schemas/response"
+
+    QuestResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id de la pregunta 
+          example: 654005a209c7e09dc82b928b
+        question:
+          type: string
+          description: Pregunta del cuestionario
+          example: Esta es una pregunta del cuestionario?
+        responses:
+          type: array
+          items:
+            $ref: "#/components/schemas/finalResponse"
+        approved:
+          type: boolean
+          description: Indica si la pregunta está aprobada (false por default)
+          example: false
+
+    QuestUpdate:
+      type: object
+      properties:
+        question:
+          type: string
+          description: Pregunta a actualizar
+          example: ¿Esta es una pregunta del cuestionario?
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/response"
+imports:
+  - path: ./responses.yaml

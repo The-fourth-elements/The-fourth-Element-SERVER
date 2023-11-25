@@ -6,6 +6,29 @@ const handlerError = require('./handler/handlerError');
 const cookieParser = require('cookie-parser');
 const mercadopago = require('mercadopago');
 const { URL, MP_TOKEN } = process.env;
+const swaggerUI = require("swagger-ui-express")
+const swaggerJsDoc = require("swagger-jsdoc")
+const path = require("path")
+
+const swaggerSpec = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: 'The Fourth Element API Documentation',
+        },
+        servers: [
+            {
+                url: 'http://localhost:3001',
+                description: "Sandbox server (uses test data)"
+            },
+            {
+                url: 'https://the-fourth-element-server-production.up.railway.app',
+                description: "Production server (uses live data)"
+            }
+        ]
+    },
+    apis: [`${path.join(__dirname, "./utils/swagger/paths/*.yaml")}`]
+}
 
 mercadopago.configure({
 	access_token: MP_TOKEN,
@@ -24,6 +47,7 @@ server.use((req, res, next) => {
     next();
 });
 server.use('/', routes);
+server.use("/api-documentation", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)))
 server.use(handlerError);
 
 module.exports = server;

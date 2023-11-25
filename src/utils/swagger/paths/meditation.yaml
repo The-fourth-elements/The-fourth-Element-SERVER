@@ -1,0 +1,180 @@
+paths:
+  /meditations:
+    get:
+      tags:
+        - Meditaciones
+      summary: Obtener todas las meditaciones
+      responses:
+        "200":
+          description: Lista de meditaciones obtenida con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Meditation"
+        "404":
+          description: No hay meditaciones registradas
+          content:
+            application/json:
+              example:
+                message: "No hay meditaciones registradas."
+  /meditation:
+    post:
+      tags:
+        - Meditaciones
+      summary: Crear Meditación
+      requestBody:
+        description: Objeto de solicitud para crear una nueva meditación
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeditationRequest"
+              required:
+                - name
+                - description
+                - tracks
+      responses:
+        "200":
+          description: Meditación creada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meditation"
+        "400":
+          description: Faltan datos o no se pudo crear la meditación
+          content:
+            application/json:
+              example:
+                message: "Faltan datos"
+
+  /meditation/{id}:
+    get:
+      tags:
+        - Meditaciones
+      summary: Obtener información de una meditación por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la meditación
+          schema:
+            type: string
+          example: 654008d509c7e09dc82b96cc
+      responses:
+        "200":
+          description: Información de la meditación obtenida con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meditation"
+        "404":
+          description: Mensaje de error
+          content:
+            application/json:
+              example:
+                message: "No se encontró la meditación"
+    put:
+      tags:
+        - Meditaciones
+      summary: Actualizar Meditación por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la meditación
+          schema:
+            type: string
+          example: 654008d509c7e09dc82b96cc
+      requestBody:
+        description: Objeto de solicitud para actualizar una meditación
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeditationRequest"
+      responses:
+        '200':
+          description: Meditación actualizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meditation"
+        '400':
+          description: Faltan datos o no se pudo actualizar la meditación
+          content:
+            application/json:
+              example:
+                message: "Faltan datos"
+        '404':
+          description: No se encontró la meditación
+          content:
+            application/json:
+              example:
+                message: "No se encontró la meditación"
+    delete:
+      tags:
+        - Meditaciones
+      summary: Eliminar Meditación por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la meditación
+          schema:
+            type: string
+          example: 654008d509c7e09dc82b96cc
+      responses:
+        '200':
+          description: Meditación eliminada con éxito
+          content:
+            application/json:
+              example:
+                message: "Meditación eliminada correctamente"
+        '404':
+          description: No se encontró la meditación
+          content:
+            application/json:
+              example:
+                message: "No se encontró la meditación"
+components:
+  schemas:
+    Meditation:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID de la meditación
+          example: 654008d509c7e09dc82b96cc
+        name:
+          type: string
+          description: Nombre de la meditación
+          example: Meditación Relajante
+        description:
+          type: string
+          description: Descripción de la meditación
+          example: Una meditación para relajarse y liberar el estrés
+        tracks:
+          type: array
+          description: Lista de pistas asociadas a la meditación
+          items:
+            $ref: "#/components/schemas/Track"
+    MeditationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la meditación
+          example: Meditación Relajante
+        description:
+          type: string
+          description: Descripción de la meditación
+          example: Una meditación para relajarse y liberar el estrés
+        tracks:
+          type: array
+          description: Lista de pistas asociadas a la meditación
+          items:
+            $ref: "#/components/schemas/TrackRequest"
+imports:
+  - path: ./track.yaml

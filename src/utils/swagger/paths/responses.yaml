@@ -1,0 +1,126 @@
+paths:
+  /responses:
+    get:
+      summary: Obtener todas las respuestas
+      description: Recupera todas las respuestas almacenadas.
+      tags:
+        - Responses
+      responses:
+        '200':
+          description: Respuestas recuperadas con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/finalResponse"
+                  
+        '404':
+          description: No se encontraron respuestas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que no se encontraron respuestas.
+                    example: No se encontraron respuestas.
+  /response/{id}:
+    get:
+      summary: Obtener una respuesta por ID
+      description: Recupera una respuesta específica por su ID.
+      tags:
+        - Responses
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la respuesta a recuperar.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta recuperada con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/finalResponse"
+        '404':
+          description: No se pudo encontrar la respuesta.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que no se pudo encontrar la respuesta.
+                    example: No se pudo encontrar la respuesta.
+    delete:
+      summary: Eliminar una respuesta por ID
+      description: Elimina una respuesta específica por su ID.
+      tags:
+        - Responses
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la respuesta a eliminar.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta eliminada con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que la respuesta se eliminó con éxito.
+                    example: Respuesta borrada con éxito.
+        '404':
+          description: No se pudo encontrar la respuesta.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje indicando que no se pudo encontrar la respuesta.
+                    example: No se pudo encontrar la respuesta.
+components:
+  schemas:
+    response:
+      type: object
+      properties:
+        verdadera:
+          type: boolean
+          description: Indica si la respuesta es verdadera o falsa.
+          example: true
+        response:
+          type: string
+          description: opción de respuesta
+          example: respuesta correcta
+      required:
+        - verdadera
+        - response
+
+    finalResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID de la respuesta en DB
+          example: 654005a209c7e09dc82b9285
+        verdadera:
+          type: boolean
+          description: Indica si la respuesta es verdadera o falsa.
+          example: true
+        response:
+          type: string
+          description: opción de respuesta
+          example: opción verdadera
