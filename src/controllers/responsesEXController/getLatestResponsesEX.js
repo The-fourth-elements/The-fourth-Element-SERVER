@@ -8,7 +8,6 @@ async function getLatestResponsesEX(req, res, next){
 
         const findUser = await Users.findById(userId);
         if (!findUser) throw Error('No se encontró el usuario.'); 
-        console.log("findUser ", findUser);
         if (findUser.responsesEX.length <= 0) throw Error('No hay respuestas en el usuario');
         const userResponsesEX = findUser.responsesEX.filter(response => response.exercise.valueOf() === exerciseId);
         const latestResponses = latestResponsesEX(userResponsesEX);
